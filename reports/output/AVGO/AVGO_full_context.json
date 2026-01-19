@@ -1,0 +1,110 @@
+{
+  "ticker": "AVGO",
+  "company_name": "Broadcom Inc.",
+  "sector": "Technology",
+  "company_profile_analysis": {},
+  "sec_filings_analysis": {},
+  "financial_metrics": {},
+  "news_analysis": {},
+  "sentiment_analysis": {},
+  "technical_analysis": {},
+  "industry_analysis": {},
+  "transcript_analysis": {},
+  "etf_analysis": {},
+  "moat_analysis": {},
+  "forensics_analysis": {},
+  "risk_assessment": {},
+  "valuation_analysis": {},
+  "synthesis": {},
+  "execution_summary": {
+    "start_time": "2026-01-16T23:56:46.421681",
+    "end_time": "2026-01-16T23:57:00.860928",
+    "total_duration_seconds": 14.439247,
+    "agent_results": [
+      {
+        "agent": "Company Profiler",
+        "status": "failed",
+        "duration_seconds": 3.446931,
+        "error": "APIError: LLM API error: OpenAI API error: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+      },
+      {
+        "agent": "SEC Filings Analyst",
+        "status": "failed",
+        "duration_seconds": 3.394931,
+        "error": "APIError: LLM API error: OpenAI API error: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+      },
+      {
+        "agent": "Financial Metrics Analyst",
+        "status": "failed",
+        "duration_seconds": 4.098752,
+        "error": "APIError: LLM API error: OpenAI API error: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+      },
+      {
+        "agent": "News & Events Analyst",
+        "status": "failed",
+        "duration_seconds": 2.873593,
+        "error": "APIError: LLM API error: OpenAI API error: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+      },
+      {
+        "agent": "Social Sentiment Analyst",
+        "status": "failed",
+        "duration_seconds": 4.226521,
+        "error": "APIError: LLM API error: OpenAI API error: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+      },
+      {
+        "agent": "Technical Analyst",
+        "status": "failed",
+        "duration_seconds": 3.797335,
+        "error": "APIError: LLM API error: OpenAI API error: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+      },
+      {
+        "agent": "Industry Analyst",
+        "status": "failed",
+        "duration_seconds": 2.589002,
+        "error": "APIError: LLM API error: OpenAI API error: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+      },
+      {
+        "agent": "Transcript Analyst",
+        "status": "failed",
+        "duration_seconds": 3.081817,
+        "error": "APIError: LLM API error: OpenAI API error: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+      },
+      {
+        "agent": "ETF Exposure Analyst",
+        "status": "failed",
+        "duration_seconds": 2.404374,
+        "error": "APIError: LLM API error: OpenAI API error: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+      },
+      {
+        "agent": "Moat Analyzer",
+        "status": "failed",
+        "duration_seconds": 1.582653,
+        "error": "APIError: LLM API error: OpenAI API error: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+      },
+      {
+        "agent": "Financial Forensics Analyst",
+        "status": "failed",
+        "duration_seconds": 1.642432,
+        "error": "APIError: LLM API error: OpenAI API error: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+      },
+      {
+        "agent": "Risk Assessment Analyst",
+        "status": "failed",
+        "duration_seconds": 1.38249,
+        "error": "APIError: LLM API error: OpenAI API error: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+      },
+      {
+        "agent": "Valuation Analyst",
+        "status": "failed",
+        "duration_seconds": 1.49688,
+        "error": "APIError: LLM API error: OpenAI API error: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+      },
+      {
+        "agent": "Research Synthesis",
+        "status": "failed",
+        "duration_seconds": 1.500764,
+        "error": "APIError: LLM API error: OpenAI API error: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+      }
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(pip install:*)",
+      "Bash(brew install:*)",
+      "Bash(ls:*)",
+      "Bash(open:*)",
+      "Bash(DYLD_LIBRARY_PATH=/opt/homebrew/lib python:*)",
+      "WebFetch(domain:site.financialmodelingprep.com)",
+      "WebFetch(domain:hedgefollow.com)",
+      "WebFetch(domain:whalewisdom.com)",
+      "WebSearch",
+      "WebFetch(domain:www.sec.gov)"
+    ]
+  }
+}

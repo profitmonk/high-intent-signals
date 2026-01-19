@@ -1,0 +1,712 @@
+{
+  "scan_date": "2026-01-19",
+  "scan_time": "07:10:15",
+  "total_stocks_scanned": 111,
+  "signals_detected": 32,
+  "stocks_with_signals": 30,
+  "execution_time_seconds": 30.17,
+  "stocks": [
+    {
+      "ticker": "LCFY",
+      "company": "Locafy Limited",
+      "sector": "",
+      "price": 4.55,
+      "change_pct": 45.37,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM",
+        "SMA_CROSSOVER"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+45.4% today)"
+        },
+        {
+          "type": "SMA_CROSSOVER",
+          "strength": "moderate",
+          "description": "Price crossing above 200-day SMA ($4.53)"
+        }
+      ],
+      "score": 5,
+      "news_count": 2,
+      "narrative": "Locafy Limited (LCFY) is showing high-intent signals (Momentum, Sma Crossover) with a +45.4% move to $4.55. See news articles for details."
+    },
+    {
+      "ticker": "RIOX",
+      "company": "Defiance Daily Target 2X Long RIOT ETF",
+      "sector": "",
+      "price": 15.43,
+      "change_pct": 32.67,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM",
+        "SMA_CROSSOVER"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+32.7% today)"
+        },
+        {
+          "type": "SMA_CROSSOVER",
+          "strength": "weak",
+          "description": "Price crossing above 50-day SMA ($15.09)"
+        }
+      ],
+      "score": 4,
+      "news_count": 0,
+      "narrative": "Defiance Daily Target 2X Long RIOT ETF (RIOX) moved +32.7% higher to $15.43, showing strong momentum. No significant news catalysts were identified for this move, suggesting the activity may be driven by technical factors, sector rotation, or broader market dynamics."
+    },
+    {
+      "ticker": "VERO",
+      "company": "Venus Concept Inc.",
+      "sector": "",
+      "price": 7.891,
+      "change_pct": 451.82,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+451.8% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 4,
+      "narrative": "Venus Concept Inc. (VERO) is showing high-intent signals (Momentum) with a +451.8% move to $7.89. See news articles for details."
+    },
+    {
+      "ticker": "CRKN",
+      "company": "Crown ElectroKinetics Corp.",
+      "sector": "",
+      "price": 0.3,
+      "change_pct": 172.73,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+172.7% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 0,
+      "narrative": "Crown ElectroKinetics Corp. (CRKN) moved +172.7% higher to $0.30, showing strong momentum. No significant news catalysts were identified for this move, suggesting the activity may be driven by technical factors, sector rotation, or broader market dynamics."
+    },
+    {
+      "ticker": "JFBR",
+      "company": "Jeffs' Brands Ltd",
+      "sector": "",
+      "price": 1.29,
+      "change_pct": 131.18,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+131.2% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 10,
+      "narrative": "Jeffs' Brands Ltd (JFBR) is showing high-intent signals (Momentum) with a +131.2% move to $1.29. See news articles for details."
+    },
+    {
+      "ticker": "JAGX",
+      "company": "Jaguar Health, Inc.",
+      "sector": "",
+      "price": 1.43,
+      "change_pct": 87.05,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+87.1% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 10,
+      "narrative": "Jaguar Health, Inc. (JAGX) is showing high-intent signals (Momentum) with a +87.1% move to $1.43. See news articles for details."
+    },
+    {
+      "ticker": "TNMG",
+      "company": "TNL Mediagene",
+      "sector": "",
+      "price": 3.91,
+      "change_pct": 65.68,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+65.7% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 10,
+      "narrative": "TNL Mediagene (TNMG) is showing high-intent signals (Momentum) with a +65.7% move to $3.91. See news articles for details."
+    },
+    {
+      "ticker": "BIYA",
+      "company": "Baiya International Group Inc. Ordinary Shares",
+      "sector": "",
+      "price": 7.05,
+      "change_pct": 56.32,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+56.3% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 3,
+      "narrative": "Baiya International Group Inc. Ordinary Shares (BIYA) is showing high-intent signals (Momentum) with a +56.3% move to $7.05. See news articles for details."
+    },
+    {
+      "ticker": "IBRX",
+      "company": "ImmunityBio, Inc.",
+      "sector": "",
+      "price": 5.52,
+      "change_pct": 39.75,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+39.7% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 10,
+      "narrative": "ImmunityBio, Inc. (IBRX) is showing high-intent signals (Momentum) with a +39.7% move to $5.52. See news articles for details."
+    },
+    {
+      "ticker": "PRFX",
+      "company": "PainReform Ltd.",
+      "sector": "",
+      "price": 1.13,
+      "change_pct": 37.96,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+38.0% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 9,
+      "narrative": "PainReform Ltd. (PRFX) is showing high-intent signals (Momentum) with a +38.0% move to $1.13. See news articles for details."
+    },
+    {
+      "ticker": "CELG-RI",
+      "company": "Bristol-Myers Squibb Company Ce",
+      "sector": "",
+      "price": 0.2099,
+      "change_pct": 34.55,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+34.6% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 0,
+      "narrative": "Bristol-Myers Squibb Company Ce (CELG-RI) moved +34.6% higher to $0.21, showing strong momentum. No significant news catalysts were identified for this move, suggesting the activity may be driven by technical factors, sector rotation, or broader market dynamics."
+    },
+    {
+      "ticker": "NEOV",
+      "company": "NeoVolta Inc.",
+      "sector": "",
+      "price": 4.59,
+      "change_pct": 33.82,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+33.8% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 8,
+      "narrative": "NeoVolta Inc. (NEOV) is showing high-intent signals (Momentum) with a +33.8% move to $4.59. See news articles for details."
+    },
+    {
+      "ticker": "TYGO",
+      "company": "Tigo Energy, Inc.",
+      "sector": "",
+      "price": 2.95,
+      "change_pct": 31.11,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+31.1% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 10,
+      "narrative": "Tigo Energy, Inc. (TYGO) is showing high-intent signals (Momentum) with a +31.1% move to $2.95. See news articles for details."
+    },
+    {
+      "ticker": "SXTP",
+      "company": "60 Degrees Pharmaceuticals, Inc.",
+      "sector": "",
+      "price": 0.61,
+      "change_pct": 31.01,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+31.0% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 7,
+      "narrative": "60 Degrees Pharmaceuticals, Inc. (SXTP) is showing high-intent signals (Momentum) with a +31.0% move to $0.61. See news articles for details."
+    },
+    {
+      "ticker": "SEGG",
+      "company": "Lottery.com Inc.",
+      "sector": "",
+      "price": 1.28,
+      "change_pct": 28.08,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+28.1% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 10,
+      "narrative": "Lottery.com Inc. (SEGG) is showing high-intent signals (Momentum) with a +28.1% move to $1.28. See news articles for details."
+    },
+    {
+      "ticker": "CGTL",
+      "company": "Creative Global Technology Holdings Limited Ordinary Shares",
+      "sector": "",
+      "price": 4.84,
+      "change_pct": 27.03,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+27.0% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 0,
+      "narrative": "Creative Global Technology Holdings Limited Ordinary Shares (CGTL) moved +27.0% higher to $4.84, showing strong momentum. No significant news catalysts were identified for this move, suggesting the activity may be driven by technical factors, sector rotation, or broader market dynamics."
+    },
+    {
+      "ticker": "CTMX",
+      "company": "CytomX Therapeutics, Inc.",
+      "sector": "",
+      "price": 5.39,
+      "change_pct": 26.82,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+26.8% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 10,
+      "narrative": "CytomX Therapeutics, Inc. (CTMX) is showing high-intent signals (Momentum) with a +26.8% move to $5.39. See news articles for details."
+    },
+    {
+      "ticker": "JCSE",
+      "company": "JE Cleantech Holdings Limited",
+      "sector": "",
+      "price": 2,
+      "change_pct": 25.79,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+25.8% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 4,
+      "narrative": "JE Cleantech Holdings Limited (JCSE) is showing high-intent signals (Momentum) with a +25.8% move to $2.00. See news articles for details."
+    },
+    {
+      "ticker": "KWM",
+      "company": "K Wave Media Ltd.",
+      "sector": "",
+      "price": 0.6716,
+      "change_pct": 25.23,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+25.2% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 5,
+      "narrative": "K Wave Media Ltd. (KWM) is showing high-intent signals (Momentum) with a +25.2% move to $0.67. See news articles for details."
+    },
+    {
+      "ticker": "SJ",
+      "company": "Scienjoy Holding Corporation",
+      "sector": "",
+      "price": 0.896,
+      "change_pct": 24.43,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+24.4% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 9,
+      "narrative": "Scienjoy Holding Corporation (SJ) is showing high-intent signals (Momentum) with a +24.4% move to $0.90. See news articles for details."
+    },
+    {
+      "ticker": "QNCX",
+      "company": "Quince Therapeutics, Inc.",
+      "sector": "",
+      "price": 3.55,
+      "change_pct": 23.26,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+23.3% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 8,
+      "narrative": "Quince Therapeutics, Inc. (QNCX) is showing high-intent signals (Momentum) with a +23.3% move to $3.55. See news articles for details."
+    },
+    {
+      "ticker": "VELO",
+      "company": "Velo3D, Inc.",
+      "sector": "",
+      "price": 21.62,
+      "change_pct": 23.12,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+23.1% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 10,
+      "narrative": "Velo3D, Inc. (VELO) is showing high-intent signals (Momentum) with a +23.1% move to $21.62. See news articles for details."
+    },
+    {
+      "ticker": "LIPO",
+      "company": "Lipella Pharmaceuticals Inc.",
+      "sector": "",
+      "price": 0.215,
+      "change_pct": 22.86,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+22.9% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 2,
+      "narrative": "Lipella Pharmaceuticals Inc. (LIPO) is showing high-intent signals (Momentum) with a +22.9% move to $0.21. See news articles for details."
+    },
+    {
+      "ticker": "IRE",
+      "company": "Tidal Trust II - Defiance Daily Target 2X Long IREN ETF",
+      "sector": "",
+      "price": 12.98,
+      "change_pct": 22.4,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+22.4% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 1,
+      "narrative": "Tidal Trust II - Defiance Daily Target 2X Long IREN ETF (IRE) is showing high-intent signals (Momentum) with a +22.4% move to $12.98. See news articles for details."
+    },
+    {
+      "ticker": "IREG",
+      "company": "Leverage Shares 2X Long IREN Daily ETF",
+      "sector": "",
+      "price": 36.0406,
+      "change_pct": 22.08,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+22.1% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 0,
+      "narrative": "Leverage Shares 2X Long IREN Daily ETF (IREG) moved +22.1% higher to $36.04, showing strong momentum. No significant news catalysts were identified for this move, suggesting the activity may be driven by technical factors, sector rotation, or broader market dynamics."
+    },
+    {
+      "ticker": "SMCX",
+      "company": "Defiance Daily Target 2X Long SMCI ETF",
+      "sector": "",
+      "price": 13.76,
+      "change_pct": 21.88,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+21.9% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 2,
+      "narrative": "Defiance Daily Target 2X Long SMCI ETF (SMCX) is showing high-intent signals (Momentum) with a +21.9% move to $13.76. See news articles for details."
+    },
+    {
+      "ticker": "SOWG",
+      "company": "Sow Good Inc.",
+      "sector": "",
+      "price": 0.97,
+      "change_pct": 21.69,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+21.7% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 7,
+      "narrative": "Sow Good Inc. (SOWG) is showing high-intent signals (Momentum) with a +21.7% move to $0.97. See news articles for details."
+    },
+    {
+      "ticker": "DTSS",
+      "company": "Datasea Inc.",
+      "sector": "",
+      "price": 1,
+      "change_pct": 21.67,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+21.7% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 9,
+      "narrative": "Datasea Inc. (DTSS) is showing high-intent signals (Momentum) with a +21.7% move to $1.00. See news articles for details."
+    },
+    {
+      "ticker": "SDOT",
+      "company": "Sadot Group Inc.",
+      "sector": "",
+      "price": 3.44,
+      "change_pct": 21.55,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+21.6% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 2,
+      "narrative": "Sadot Group Inc. (SDOT) is showing high-intent signals (Momentum) with a +21.6% move to $3.44. See news articles for details."
+    },
+    {
+      "ticker": "RPID",
+      "company": "Rapid Micro Biosystems, Inc.",
+      "sector": "",
+      "price": 4.18,
+      "change_pct": 21.16,
+      "volume": 0,
+      "volume_vs_avg": 0.0,
+      "distance_to_52wk_high_pct": 0.0,
+      "signals": [
+        "MOMENTUM"
+      ],
+      "signal_details": [
+        {
+          "type": "MOMENTUM",
+          "strength": "strong",
+          "description": "Strong momentum (+21.2% today)"
+        }
+      ],
+      "score": 3,
+      "news_count": 10,
+      "narrative": "Rapid Micro Biosystems, Inc. (RPID) is showing high-intent signals (Momentum) with a +21.2% move to $4.18. See news articles for details."
+    }
+  ]
+}

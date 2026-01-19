@@ -1,0 +1,1518 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>AAPL (AAPL) - Equity Research</title>
+    <style>
+        
+        @page {
+            size: A4;
+            margin: 1.5cm 2cm;
+            @top-right {
+                content: "Equity Research";
+                font-size: 9pt;
+                color: #666;
+            }
+            @bottom-center {
+                content: counter(page);
+                font-size: 9pt;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 10pt;
+            line-height: 1.5;
+            color: #1a1a1a;
+            max-width: 100%;
+        }
+
+        /* Header styling */
+        h1 {
+            font-size: 22pt;
+            font-weight: 700;
+            color: #003366;
+            border-bottom: 3px solid #003366;
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            page-break-after: avoid;
+        }
+
+        h2 {
+            font-size: 14pt;
+            font-weight: 700;
+            color: #003366;
+            border-bottom: 2px solid #003366;
+            padding-bottom: 5px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            page-break-after: avoid;
+        }
+
+        h3 {
+            font-size: 12pt;
+            font-weight: 600;
+            color: #003366;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            page-break-after: avoid;
+        }
+
+        h4 {
+            font-size: 11pt;
+            font-weight: 600;
+            color: #444;
+            margin-top: 15px;
+            margin-bottom: 8px;
+        }
+
+        /* Cover page styling */
+        .cover-section {
+            background: linear-gradient(135deg, #003366 0%, #004488 100%);
+            color: white;
+            padding: 30px;
+            margin: -20px -20px 30px -20px;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .company-title {
+            font-size: 28pt;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .ticker-line {
+            font-size: 14pt;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .rating-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .rating-item {
+            background: rgba(255,255,255,0.15);
+            padding: 12px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .rating-label {
+            font-size: 9pt;
+            opacity: 0.8;
+            text-transform: uppercase;
+        }
+
+        .rating-value {
+            font-size: 16pt;
+            font-weight: 700;
+        }
+
+        .rating-buy { color: #00ff88; }
+        .rating-sell { color: #ff6666; }
+        .rating-hold { color: #ffcc00; }
+
+        /* Tables - institutional style */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 9pt;
+            page-break-inside: avoid;
+        }
+
+        th {
+            background-color: #003366;
+            color: white;
+            padding: 10px 8px;
+            text-align: left;
+            font-weight: 600;
+            border: 1px solid #003366;
+        }
+
+        td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            vertical-align: top;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        /* Key metrics highlight */
+        .positive { color: #006600; font-weight: 600; }
+        .negative { color: #cc0000; font-weight: 600; }
+
+        /* Sensitivity matrix - special styling */
+        .sensitivity-matrix {
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .sensitivity-matrix table {
+            font-size: 9pt;
+            min-width: 500px;
+        }
+
+        .sensitivity-matrix th {
+            background-color: #003366;
+            padding: 8px 12px;
+            text-align: center;
+        }
+
+        .sensitivity-matrix td {
+            text-align: center;
+            padding: 8px 12px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+
+        .sensitivity-matrix .highlight {
+            background-color: #ffffcc;
+            font-weight: 700;
+            border: 2px solid #003366;
+        }
+
+        .sensitivity-matrix .row-header {
+            background-color: #e8f4ff;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        /* Bull/Bear points */
+        .bull-point {
+            background-color: #e8f5e9;
+            border-left: 4px solid #2e7d32;
+            padding: 15px 20px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .bear-point {
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            padding: 15px 20px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .point-title {
+            font-weight: 700;
+            font-size: 11pt;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .point-detail {
+            font-size: 9pt;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .point-detail strong {
+            color: #333;
+        }
+
+        /* WACC calculation box */
+        .wacc-box {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 9pt;
+            line-height: 1.8;
+        }
+
+        .wacc-box .section-title {
+            font-weight: 700;
+            color: #003366;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+        .wacc-box .section-title:first-child {
+            margin-top: 0;
+        }
+
+        .wacc-box .total-line {
+            border-top: 1px solid #003366;
+            padding-top: 5px;
+            margin-top: 5px;
+            font-weight: 700;
+        }
+
+        /* Code blocks for structured data */
+        pre {
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
+            font-size: 8.5pt;
+            overflow-x: auto;
+            white-space: pre;
+            line-height: 1.4;
+            margin: 15px 0;
+        }
+
+        /* Chart placeholders */
+        .chart-placeholder {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            border: 2px dashed #aaa;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .chart-title {
+            font-weight: 600;
+            font-size: 11pt;
+            color: #003366;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .chart-data {
+            background: white;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 8.5pt;
+            line-height: 1.5;
+        }
+
+        .chart-note {
+            font-size: 8pt;
+            font-style: italic;
+            color: #666;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* Blockquotes for key insights */
+        blockquote {
+            border-left: 4px solid #003366;
+            margin: 15px 0;
+            padding: 10px 20px;
+            background-color: #f0f5ff;
+            font-style: italic;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+
+        /* Horizontal rules */
+        hr {
+            border: none;
+            border-top: 2px solid #003366;
+            margin: 30px 0;
+        }
+
+        /* Disclaimer footer */
+        .disclaimer {
+            font-size: 7pt;
+            color: #666;
+            border-top: 1px solid #ccc;
+            padding-top: 15px;
+            margin-top: 40px;
+            line-height: 1.4;
+        }
+
+        /* Page breaks */
+        .page-break {
+            page-break-before: always;
+        }
+        
+        body { max-width: 900px; margin: 0 auto; padding: 20px; }
+    </style>
+</head>
+<body>
+    
+<div class="cover-section">
+    <div class="company-title">AAPL</div>
+    <div class="ticker-line">NASDAQ: AAPL</div>
+
+    <div class="rating-grid">
+        <div class="rating-item">
+            <div class="rating-label">Rating</div>
+            <div class="rating-value rating-hold">HOLD</div>
+        </div>
+        <div class="rating-item">
+            <div class="rating-label">Price Target</div>
+            <div class="rating-value">$175.00</div>
+        </div>
+        <div class="rating-item">
+            <div class="rating-label">Current Price</div>
+            <div class="rating-value">$185.92</div>
+        </div>
+        <div class="rating-item">
+            <div class="rating-label">Upside/Downside</div>
+            <div class="rating-value rating-hold">-5.9%</div>
+        </div>
+        <div class="rating-item">
+            <div class="rating-label">Risk Level</div>
+            <div class="rating-value">MODERATE</div>
+        </div>
+        <div class="rating-item">
+            <div class="rating-label">Report Date</div>
+            <div class="rating-value">Jan 16, 2026</div>
+        </div>
+    </div>
+</div>
+
+    <h1 id="equity-research">EQUITY RESEARCH</h1>
+<pre><code>                          EQUITY RESEARCH
+</code></pre>
+<p>APPLE INC.
+NASDAQ: AAPL</p>
+<p>RATING: HOLD                                   RISK LEVEL: MODERATE-HIGH
+PRICE TARGET: $175.00                          CURRENT PRICE: $185.92
+UPSIDE/DOWNSIDE: -5.9%                         CONVICTION: MEDIUM-HIGH</p>
+<p>REPORT DATE: January 16, 2024
+SECTOR: Information Technology
+INDUSTRY: Technology Hardware, Storage &amp; Peripherals
+MARKET CAP: $3,775.8B
+ENTERPRISE VALUE: $2,729.0B</p>
+<p>KEY METRICS SNAPSHOT</p>
+<table>
+<tr>
+<th>Metric</th>
+<th>FY2022A</th>
+<th>FY2023A</th>
+<th>FY2024E</th>
+<th>FY2025E</th>
+</tr>
+<tr>
+<td>Revenue ($M)</td>
+<td>394,328</td>
+<td>383,285</td>
+<td>390,000</td>
+<td>405,000</td>
+</tr>
+<tr>
+<td>Revenue Growth</td>
+<td class="positive">7.8%</td>
+<td class="negative">-2.8%</td>
+<td class="positive">1.7%</td>
+<td class="positive">3.8%</td>
+</tr>
+<tr>
+<td>Gross Margin</td>
+<td class="positive">43.3%</td>
+<td class="positive">44.1%</td>
+<td class="positive">44.0%</td>
+<td class="positive">44.0%</td>
+</tr>
+<tr>
+<td>EBITDA ($M)</td>
+<td>130,541</td>
+<td>125,820</td>
+<td>127,000</td>
+<td>132,000</td>
+</tr>
+<tr>
+<td>EBITDA Margin</td>
+<td class="positive">33.1%</td>
+<td class="positive">32.8%</td>
+<td class="positive">32.6%</td>
+<td class="positive">32.6%</td>
+</tr>
+<tr>
+<td>EPS (Diluted)</td>
+<td>$6.11</td>
+<td>$6.13</td>
+<td>$6.35</td>
+<td>$6.75</td>
+</tr>
+<tr>
+<td>P/E Ratio</td>
+<td>30.4x</td>
+<td>30.3x</td>
+<td>29.3x</td>
+<td>27.5x</td>
+</tr>
+<tr>
+<td>EV/EBITDA</td>
+<td>20.9x</td>
+<td>21.7x</td>
+<td>21.5x</td>
+<td>20.7x</td>
+</tr>
+<tr>
+<td>FCF Yield</td>
+<td class="positive">3.5%</td>
+<td class="positive">3.5%</td>
+<td class="positive">3.6%</td>
+<td class="positive">3.8%</td>
+</tr>
+<tr>
+<td>ROIC</td>
+<td class="positive">56.1%</td>
+<td class="positive">55.2%</td>
+<td class="positive">54.5%</td>
+<td class="positive">54.0%</td>
+</tr>
+<tr>
+<td>Net Debt/EBITDA</td>
+<td class="negative">-1.3x</td>
+<td class="negative">-1.3x</td>
+<td class="negative">-1.3x</td>
+<td class="negative">-1.2x</td>
+</tr>
+</table>
+
+<p>52-WEEK RANGE: $124.17 - $199.62
+AVG DAILY VOLUME: 57.2M shares
+SHORT INTEREST: 0.5% of float
+DIVIDEND YIELD: 0.5%
+NEXT EARNINGS: February 1, 2024</p>
+<h2 id="section-1-investment-summary">SECTION 1: INVESTMENT SUMMARY</h2>
+<h3 id="11-investment-thesis-3-4-sentences">1.1 Investment Thesis (3-4 sentences)</h3>
+<p>Apple is an exceptional business with a wide moat trading at a full valuation that offers inadequate margin of safety given elevated geopolitical and regulatory risks. While the company's ecosystem lock-in and services transition remain intact, China competitive pressures (19% of revenue) and regulatory assault on App Store economics create asymmetric downside risk. At current levels, the market is pricing in sustained mid-single-digit growth and stable margins despite these headwinds - an optimistic scenario that leaves little room for disappointment.</p>
+<h3 id="12-rating-rationale">1.2 Rating Rationale</h3>
+<p><strong>Our View vs. Consensus:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Street Consensus</th>
+<th>Our Estimate</th>
+<th>Delta</th>
+<th>Implication</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FY2024 Revenue</td>
+<td>$392.5B</td>
+<td>$390.0B</td>
+<td class="negative">-0.6%</td>
+<td>Bearish - China weakness</td>
+</tr>
+<tr>
+<td>FY2024 EPS</td>
+<td>$6.55</td>
+<td>$6.35</td>
+<td class="negative">-3.1%</td>
+<td>Bearish - margin pressure</td>
+</tr>
+<tr>
+<td>FY2025 Revenue</td>
+<td>$410.0B</td>
+<td>$405.0B</td>
+<td class="negative">-1.2%</td>
+<td>Bearish - slower growth</td>
+</tr>
+<tr>
+<td>FY2025 EPS</td>
+<td>$7.00</td>
+<td>$6.75</td>
+<td class="negative">-3.6%</td>
+<td>Bearish - regulatory impact</td>
+</tr>
+</tbody>
+</table>
+<h3 id="13-bull-case-4-5-points">1.3 Bull Case (4-5 points)</h3>
+<p>Each point MUST include quantified evidence and confidence level:</p>
+<div class="bull-point"><div class="point-title">Services Revenue Momentum Creates Margin Expansion</div><div class="point-detail"><strong>Evidence:</strong> Services at $85B growing 16% YoY with 72% gross margins vs 35% for products<br><strong>Confidence:</strong> HIGH<br><strong>Impact:</strong> Every 5pp mix shift to services adds 185bps to gross margin, $0.50+ to EPS</div></div>
+
+<div class="bull-point"><div class="point-title">AI-Driven iPhone Supercycle Potential</div><div class="point-detail"><strong>Evidence:</strong> 1.2B iPhone installed base with average 4-year replacement cycle<br><strong>Confidence:</strong> MEDIUM<br><strong>Impact:</strong> 1-year cycle acceleration = 25% unit boost, $50B+ incremental revenue</div></div>
+
+<div class="bull-point"><div class="point-title">Ecosystem Lock-in Widening with Cross-Device Integration</div><div class="point-detail"><strong>Evidence:</strong> 92% retention rate, 5.2 devices per user, 1B+ services subscribers<br><strong>Confidence:</strong> HIGH<br><strong>Impact:</strong> Supports 2-3% pricing power annually, protects 44% gross margins</div></div>
+
+<div class="bull-point"><div class="point-title">India/Emerging Markets Offset China Weakness</div><div class="point-detail"><strong>Evidence:</strong> India revenue +40% YoY, manufacturing capacity expanding<br><strong>Confidence:</strong> MEDIUM<br><strong>Impact:</strong> Could add $20B revenue by 2027, partially offset China headwinds</div></div>
+
+<div class="bull-point"><div class="point-title">Capital Return Supports Stock Despite Fundamentals</div><div class="point-detail"><strong>Evidence:</strong> $99B FCF, $90B+ annual buybacks reducing share count 3-4% annually<br><strong>Confidence:</strong> HIGH<br><strong>Impact:</strong> EPS growth 3-4pp higher than net income growth via buybacks</div></div>
+
+<h3 id="14-bear-case-4-5-points">1.4 Bear Case (4-5 points)</h3>
+<p>Same format as Bull Case - equal rigor required.</p>
+<div class="bear-point"><div class="point-title">China Competitive Collapse Accelerating</div><div class="point-detail"><strong>Evidence:</strong> Huawei Mate 60 Pro taking premium share, government restrictions expanding<br><strong>Confidence:</strong> HIGH<br><strong>Impact:</strong> China 19% of revenue - 30% share loss = $22B revenue hit, $0.85 EPS impact</div></div>
+
+<div class="bear-point"><div class="point-title">App Store Regulatory Pressure Intensifying Globally</div><div class="point-detail"><strong>Evidence:</strong> EU DMA forcing sideloading by March 2024, DOJ case ongoing<br><strong>Confidence:</strong> HIGH<br><strong>Impact:</strong> App Store $25B revenue - forced to 15% take rate = $12.5B revenue loss</div></div>
+
+<div class="bear-point"><div class="point-title">iPhone Maturation and Cycle Extension</div><div class="point-detail"><strong>Evidence:</strong> Upgrade cycles extending from 3 to 4+ years, unit growth negative<br><strong>Confidence:</strong> MEDIUM<br><strong>Impact:</strong> 20% fewer annual upgrades = $40B revenue headwind over time</div></div>
+
+<div class="bear-point"><div class="point-title">Services Growth Deceleration Risk</div><div class="point-detail"><strong>Evidence:</strong> Law of large numbers at $85B base, subscription saturation signals<br><strong>Confidence:</strong> MEDIUM<br><strong>Impact:</strong> Deceleration from 15% to 5% growth = $8.5B annual revenue shortfall</div></div>
+
+<div class="bear-point"><div class="point-title">Valuation Offers No Margin of Safety</div><div class="point-detail"><strong>Evidence:</strong> Trading at 28x P/E vs 26x historical, 15% premium to quality peers<br><strong>Confidence:</strong> HIGH<br><strong>Impact:</strong> Multiple compression to historical average = 15% downside to $158</div></div>
+
+<h3 id="15-key-debates">1.5 Key Debates</h3>
+<p>What are the 2-3 most contested issues among investors?</p>
+<table>
+<thead>
+<tr>
+<th>Debate Topic</th>
+<th>Bull Argument</th>
+<th>Bear Argument</th>
+<th>Our View</th>
+<th>Conviction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>China Risk Severity</td>
+<td>Brand strength and premium positioning protect share; government restrictions limited to state enterprises</td>
+<td>Huawei resurgence real; local preference shifting; restrictions expanding beyond government</td>
+<td>Bear case - Huawei momentum accelerating, market underestimates speed of deterioration</td>
+<td>HIGH</td>
+</tr>
+<tr>
+<td>Services Sustainability</td>
+<td>1B+ subscribers with low penetration; new categories (fintech, health) drive growth</td>
+<td>App Store regulatory pressure; subscription fatigue; law of large numbers</td>
+<td>Mixed - Growth slows to HSD but remains accretive to margins</td>
+<td>MEDIUM</td>
+</tr>
+<tr>
+<td>AI Impact on iPhone</td>
+<td>Generative AI features drive meaningful upgrade cycle like 5G</td>
+<td>Incremental improvements won't move needle for 4-year upgrade cycles</td>
+<td>Bear case - AI features not compelling enough to accelerate upgrades materially</td>
+<td>MEDIUM</td>
+</tr>
+</tbody>
+</table>
+<h3 id="16-catalysts-timeline">1.6 Catalysts &amp; Timeline</h3>
+<p><strong>Upcoming Catalysts (Next 12 Months):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Date/Period</th>
+<th>Event</th>
+<th>Expected Impact</th>
+<th>Probability</th>
+<th>Direction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>March 2024</td>
+<td>EU DMA Compliance Deadline</td>
+<td class="negative">-2% to -5% stock</td>
+<td class="positive">90%</td>
+<td class="negative">↓</td>
+</tr>
+<tr>
+<td>Sept 2024</td>
+<td>iPhone 16 Launch with AI</td>
+<td class="positive">+3% to +5% stock</td>
+<td class="positive">70%</td>
+<td class="positive">↑</td>
+</tr>
+<tr>
+<td>Q4 2024</td>
+<td>Holiday Quarter Results</td>
+<td class="positive">+/- 8% stock</td>
+<td class="positive">50%</td>
+<td class="negative">↑/↓</td>
+</tr>
+<tr>
+<td>2024-2025</td>
+<td>DOJ Antitrust Ruling</td>
+<td class="negative">-5% to -10% stock</td>
+<td class="positive">60%</td>
+<td class="negative">↓</td>
+</tr>
+<tr>
+<td>Ongoing</td>
+<td>China Market Share Data</td>
+<td class="negative">-2% per quarter if bad</td>
+<td class="positive">70%</td>
+<td class="negative">↓</td>
+</tr>
+</tbody>
+</table>
+<p><strong>De-Risking Events (would increase conviction):</strong>
+1. China revenue stabilizes at current levels for 2+ quarters
+2. Services growth reaccelerates above 15% despite regulatory pressure</p>
+<p><strong>Risk Events (would decrease conviction):</strong>
+1. China revenue declines &gt;10% YoY for any quarter
+2. EU DMA triggers global regulatory copycat actions</p>
+<hr />
+<h2 id="section-2-valuation-price-target">SECTION 2: VALUATION &amp; PRICE TARGET</h2>
+<h3 id="21-price-target-derivation">2.1 Price Target Derivation</h3>
+<p><strong>Methodology Weighting:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Weight</th>
+<th>Implied Value</th>
+<th>Contribution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DCF (Base Case)</td>
+<td class="positive">40%</td>
+<td>$175.00</td>
+<td>$70.00</td>
+</tr>
+<tr>
+<td>Comparable Companies</td>
+<td class="positive">30%</td>
+<td>$170.00</td>
+<td>$51.00</td>
+</tr>
+<tr>
+<td>Historical Multiples</td>
+<td class="positive">15%</td>
+<td>$172.00</td>
+<td>$25.80</td>
+</tr>
+<tr>
+<td>Sum-of-Parts</td>
+<td class="positive">15%</td>
+<td>$180.00</td>
+<td>$27.00</td>
+</tr>
+<tr>
+<td><strong>Blended Price Target</strong></td>
+<td><strong>100%</strong></td>
+<td></td>
+<td><strong>$173.80</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Rounded Price Target: $175.00</strong></p>
+<h3 id="22-discounted-cash-flow-analysis">2.2 Discounted Cash Flow Analysis</h3>
+<p><strong>DCF Key Assumptions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Projection Period</td>
+<td>10 years</td>
+<td>Standard for mature tech</td>
+</tr>
+<tr>
+<td>Revenue CAGR (Yr 1-5)</td>
+<td class="positive">4.0%</td>
+<td>China headwinds offset by services</td>
+</tr>
+<tr>
+<td>Revenue CAGR (Yr 6-10)</td>
+<td class="positive">3.0%</td>
+<td>Convergence to GDP+</td>
+</tr>
+<tr>
+<td>Terminal Growth Rate</td>
+<td class="positive">2.5%</td>
+<td>Mature market growth</td>
+</tr>
+<tr>
+<td>WACC</td>
+<td class="positive">10.7%</td>
+<td>See calculation below</td>
+</tr>
+<tr>
+<td>Terminal EV/EBITDA Cross-Check</td>
+<td>15.0x</td>
+<td>Mature tech multiple</td>
+</tr>
+</tbody>
+</table>
+<p><strong>WACC Calculation:</strong></p>
+<div class="wacc-box">
+<div class="section-title">COST OF EQUITY (CAPM):</div>
+<div>  Risk-Free Rate (10-yr UST):     4.50%</div>
+<div>  Equity Risk Premium:            5.50%</div>
+<div>  Beta (2-yr weekly, adj):        1.20</div>
+<div>  Size Premium:                   0.00%</div>
+<div class="total-line">  Cost of Equity:                 11.10%</div>
+<br>
+<div class="section-title">COST OF DEBT:</div>
+<div>  Pre-tax Cost of Debt:           4.50%</div>
+<div>  Marginal Tax Rate:              21.0%</div>
+<div class="total-line">  After-tax Cost of Debt:         3.56%</div>
+<br>
+<div class="section-title">CAPITAL STRUCTURE (Market Values):</div>
+<div>  Equity Weight:                  95.0%</div>
+<div>  Debt Weight:                    5.0%</div>
+<div class="total-line">  WACC:                           10.73%</div>
+</div>
+
+<p><strong>DCF Scenario Analysis:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Probability</th>
+<th>Terminal Growth</th>
+<th>WACC</th>
+<th>Implied Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bull Case</td>
+<td class="positive">20%</td>
+<td class="positive">3.0%</td>
+<td class="positive">10.0%</td>
+<td>$205.00</td>
+</tr>
+<tr>
+<td>Base Case</td>
+<td class="positive">50%</td>
+<td class="positive">2.5%</td>
+<td class="positive">10.7%</td>
+<td>$175.00</td>
+</tr>
+<tr>
+<td>Bear Case</td>
+<td class="positive">30%</td>
+<td class="positive">2.0%</td>
+<td class="positive">11.5%</td>
+<td>$145.00</td>
+</tr>
+<tr>
+<td><strong>Probability-Weighted</strong></td>
+<td class="positive">100%</td>
+<td></td>
+<td></td>
+<td><strong>$175.00</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>DCF Sensitivity Matrix:</strong></p>
+<div class="sensitivity-matrix">
+<table>
+<thead><tr>
+<th>Terminal Growth</th>
+<th class="positive">9.5%</th>
+<th class="positive">10.0%</th>
+<th class="positive">10.5%</th>
+<th class="positive">11.0%</th>
+<th class="positive">11.5%</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="row-header">Growth   1.5%</td>
+<td>$165</td>
+<td>$158</td>
+<td>$152</td>
+<td>$146</td>
+<td>$140</td>
+</tr>
+<tr>
+<td class="row-header">2.0%</td>
+<td>$175</td>
+<td>$167</td>
+<td>$160</td>
+<td>$153</td>
+<td>$147</td>
+</tr>
+<tr>
+<td class="row-header">2.5%</td>
+<td>$187</td>
+<td class="highlight">$175</td>
+<td>$169</td>
+<td>$161</td>
+<td>$154</td>
+</tr>
+<tr>
+<td class="row-header">3.0%</td>
+<td>$201</td>
+<td>$189</td>
+<td>$179</td>
+<td>$170</td>
+<td>$162</td>
+</tr>
+<tr>
+<td class="row-header">3.5%</td>
+<td>$218</td>
+<td>$204</td>
+<td>$191</td>
+<td>$180</td>
+<td>$171</td>
+</tr>
+</tbody>
+</table>
+<p style="font-size: 8pt; color: #666; text-align: center;">[Highlighted cell = Base Case]</p>
+</div>
+<p>[Bracketed value = Base Case]</p>
+<h3 id="23-comparable-company-analysis">2.3 Comparable Company Analysis</h3>
+<p><strong>Selected Peer Group:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Company</th>
+<th>Ticker</th>
+<th>EV ($B)</th>
+<th>EV/Rev NTM</th>
+<th>EV/EBITDA NTM</th>
+<th>P/E NTM</th>
+<th>PEG</th>
+<th>Rev Gr</th>
+<th>EBITDA Mgn</th>
+<th>ROIC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Microsoft</td>
+<td>MSFT</td>
+<td>$2,750</td>
+<td>12.5x</td>
+<td>22.0x</td>
+<td>32.0x</td>
+<td>2.3x</td>
+<td class="positive">14.0%</td>
+<td class="positive">45.0%</td>
+<td class="positive">28.0%</td>
+</tr>
+<tr>
+<td>Alphabet</td>
+<td>GOOGL</td>
+<td>$1,700</td>
+<td>5.8x</td>
+<td>14.5x</td>
+<td>22.0x</td>
+<td>1.2x</td>
+<td class="positive">18.0%</td>
+<td class="positive">27.0%</td>
+<td class="positive">25.0%</td>
+</tr>
+<tr>
+<td>Meta</td>
+<td>META</td>
+<td>$1,150</td>
+<td>6.2x</td>
+<td>15.0x</td>
+<td>24.0x</td>
+<td>1.6x</td>
+<td class="positive">15.0%</td>
+<td class="positive">35.0%</td>
+<td class="positive">22.0%</td>
+</tr>
+<tr>
+<td>Samsung</td>
+<td>005930.KS</td>
+<td>$350</td>
+<td>1.2x</td>
+<td>8.5x</td>
+<td>15.0x</td>
+<td>2.0x</td>
+<td class="positive">5.0%</td>
+<td class="positive">15.0%</td>
+<td class="positive">12.0%</td>
+</tr>
+<tr>
+<td>Amazon</td>
+<td>AMZN</td>
+<td>$1,550</td>
+<td>2.8x</td>
+<td>25.0x</td>
+<td>45.0x</td>
+<td>2.5x</td>
+<td class="positive">20.0%</td>
+<td class="positive">8.0%</td>
+<td class="positive">12.0%</td>
+</tr>
+<tr>
+<td><strong>Peer Median</strong></td>
+<td></td>
+<td></td>
+<td>5.8x</td>
+<td>15.0x</td>
+<td>24.0x</td>
+<td>2.0x</td>
+<td class="positive">15.0%</td>
+<td class="positive">27.0%</td>
+<td class="positive">22.0%</td>
+</tr>
+<tr>
+<td><strong>Peer Mean</strong></td>
+<td></td>
+<td></td>
+<td>5.7x</td>
+<td>17.0x</td>
+<td>27.6x</td>
+<td>1.9x</td>
+<td class="positive">14.4%</td>
+<td class="positive">26.0%</td>
+<td class="positive">19.8%</td>
+</tr>
+<tr>
+<td><strong>Apple</strong></td>
+<td>AAPL</td>
+<td>$2,729</td>
+<td>7.1x</td>
+<td>21.5x</td>
+<td>28.2x</td>
+<td>2.8x</td>
+<td class="positive">4.0%</td>
+<td class="positive">32.6%</td>
+<td class="positive">55.0%</td>
+</tr>
+<tr>
+<td><strong>Premium/(Disc)</strong></td>
+<td></td>
+<td></td>
+<td class="positive">+22%</td>
+<td class="positive">+43%</td>
+<td class="positive">+18%</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Implied Valuation from Comps:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Multiple</th>
+<th>Peer Median</th>
+<th>Applied Metric</th>
+<th>Implied EV</th>
+<th>Less: Net Debt</th>
+<th>Implied Equity</th>
+<th>Per Share</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EV/Revenue (NTM)</td>
+<td>5.8x</td>
+<td>$405.0B</td>
+<td>$2,349B</td>
+<td class="negative">-$162B</td>
+<td>$2,511B</td>
+<td>$161.50</td>
+</tr>
+<tr>
+<td>EV/EBITDA (NTM)</td>
+<td>15.0x</td>
+<td>$132.0B</td>
+<td>$1,980B</td>
+<td class="negative">-$162B</td>
+<td>$2,142B</td>
+<td>$137.80</td>
+</tr>
+<tr>
+<td>P/E (NTM)</td>
+<td>24.0x</td>
+<td>$6.75 EPS</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>$162.00</td>
+</tr>
+<tr>
+<td><strong>Average</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><strong>$153.77</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Premium/Discount Justification:</strong>
+Apple trades at significant premiums (22% EV/Revenue, 43% EV/EBITDA) to peers, justified by superior ROIC (55% vs 22% peer median) and ecosystem moat. However, premium at risk from China exposure and regulatory pressure not faced by diversified peers.</p>
+<h3 id="24-sum-of-parts-valuation">2.4 Sum-of-Parts Valuation</h3>
+<table>
+<thead>
+<tr>
+<th>Segment</th>
+<th>FY+1E Revenue</th>
+<th>FY+1E EBITDA</th>
+<th>Assigned Multiple</th>
+<th>Implied EV</th>
+<th>% of Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>iPhone</td>
+<td>$205.0B</td>
+<td>$65.0B</td>
+<td>18.0x EV/EBITDA</td>
+<td>$1,170B</td>
+<td class="positive">42%</td>
+</tr>
+<tr>
+<td>Services</td>
+<td>$95.0B</td>
+<td>$68.0B</td>
+<td>25.0x EV/EBITDA</td>
+<td>$1,700B</td>
+<td class="positive">61%</td>
+</tr>
+<tr>
+<td>Mac</td>
+<td>$30.0B</td>
+<td>$9.0B</td>
+<td>12.0x EV/EBITDA</td>
+<td>$108B</td>
+<td class="positive">4%</td>
+</tr>
+<tr>
+<td>iPad</td>
+<td>$30.0B</td>
+<td>$9.0B</td>
+<td>10.0x EV/EBITDA</td>
+<td>$90B</td>
+<td class="positive">3%</td>
+</tr>
+<tr>
+<td>Wearables/Other</td>
+<td>$45.0B</td>
+<td>$13.0B</td>
+<td>15.0x EV/EBITDA</td>
+<td>$195B</td>
+<td class="positive">7%</td>
+</tr>
+<tr>
+<td><strong>Total Operating Value</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td><strong>$3,263B</strong></td>
+<td class="positive">117%</td>
+</tr>
+<tr>
+<td>Less: Corporate/Unallocated</td>
+<td></td>
+<td></td>
+<td></td>
+<td>($483B)</td>
+<td class="negative">-17%</td>
+</tr>
+<tr>
+<td><strong>Adjusted Operating Value</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td><strong>$2,780B</strong></td>
+<td class="positive">100%</td>
+</tr>
+<tr>
+<td>Plus: Cash &amp; Investments</td>
+<td></td>
+<td></td>
+<td></td>
+<td>$162.0B</td>
+<td></td>
+</tr>
+<tr>
+<td>Less: Total Debt</td>
+<td></td>
+<td></td>
+<td></td>
+<td>($0.0B)</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Equity Value</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td><strong>$2,942B</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>Diluted Shares Outstanding</td>
+<td></td>
+<td></td>
+<td></td>
+<td>15.55B</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Implied Share Price</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td><strong>$189.20</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="25-what-must-be-true-reverse-dcf-analysis">2.5 What Must Be True (Reverse DCF Analysis)</h3>
+<p>At the current price of <strong>$185.92</strong>, the market is implicitly assuming:
+- Revenue CAGR of <strong>5.5%</strong> through 2033 (vs. our 4.0% estimate)
+- Terminal EBITDA margin of <strong>33.0%</strong> (vs. our 32.0% estimate)
+- Terminal FCF conversion of <strong>85%</strong> (vs. our 85% estimate)
+- Perpetual growth rate of <strong>3.0%</strong> (vs. our 2.5% assumption)</p>
+<p><strong>Assessment:</strong>
+- [X] Market assumptions are AGGRESSIVE — stock is overvalued</p>
+<p>The market's implied 5.5% revenue CAGR appears optimistic given China headwinds (19% of revenue under pressure) and iPhone maturation. The 3.0% terminal growth rate is above GDP, suggesting market expects Apple to gain share in perpetuity despite regulatory and competitive pressures.</p>
+<h3 id="26-historical-valuation-context">2.6 Historical Valuation Context</h3>
+<p><strong>5-Year Valuation Ranges:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Multiple</th>
+<th>Current</th>
+<th>5Y Average</th>
+<th>5Y High</th>
+<th>5Y Low</th>
+<th>Current vs. Avg</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P/E (NTM)</td>
+<td>28.2x</td>
+<td>26.0x</td>
+<td>42.0x</td>
+<td>18.0x</td>
+<td>+0.8 std dev</td>
+</tr>
+<tr>
+<td>EV/EBITDA (NTM)</td>
+<td>21.5x</td>
+<td>18.0x</td>
+<td>28.0x</td>
+<td>12.0x</td>
+<td>+1.1 std dev</td>
+</tr>
+<tr>
+<td>EV/Revenue (NTM)</td>
+<td>7.1x</td>
+<td>6.0x</td>
+<td>8.5x</td>
+<td>4.0x</td>
+<td>+0.9 std dev</td>
+</tr>
+<tr>
+<td>P/FCF</td>
+<td>28.5x</td>
+<td>25.0x</td>
+<td>40.0x</td>
+<td>16.0x</td>
+<td>+0.7 std dev</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="section-3-key-charts-exhibits">SECTION 3: KEY CHARTS &amp; EXHIBITS</h2>
+<h3 id="31-stock-price-performance">3.1 Stock Price Performance</h3>
+<div class="chart-placeholder">
+    <div class="chart-title">1-Year Price Performance vs. S&P 500 and Technology Select Sector SPDR (XLK)</div>
+    <div class="chart-data"><pre>
+RELATIVE PERFORMANCE SUMMARY:
+                    1M      3M      6M      YTD     1Y      3Y
+AAPL              -2.1%    8.5%   15.2%    -2.1%   48.2%   65.3%
+S&P 500            3.2%   11.2%   12.5%     3.2%   24.1%   32.5%
+XLK                4.5%   15.3%   18.7%     4.5%   42.3%   58.2%
+Alpha vs. S&P     -5.3%   -2.7%    2.7%    -5.3%   24.1%   32.8%</pre></div>
+    <div class="chart-note">Note: Interactive charts available in full version</div>
+</div>
+
+<h3 id="32-revenue-bridge-fy2023a-to-fy2024e">3.2 Revenue Bridge (FY2023A to FY2024E)</h3>
+<div class="chart-placeholder">
+    <div class="chart-title">Waterfall showing revenue drivers</div>
+    <div class="chart-data"><pre>
+FY2023A Revenue:                      $383,285m  ████████████████████
+  + Services Growth:                    $10,000m  ████
+  + Wearables/Other Growth:              $2,000m  █
+  + Mac/iPad Recovery:                   $3,000m  ██
+  - iPhone Decline:                     ($5,000m) ▒▒
+  - FX Headwind:                        ($3,285m) ▒
+FY2024E Revenue:                      $390,000m  █████████████████████</pre></div>
+    <div class="chart-note">Note: Interactive charts available in full version</div>
+</div>
+
+<h3 id="33-margin-progression-5-year-forward">3.3 Margin Progression (5-Year + Forward)</h3>
+<div class="chart-placeholder">
+    <div class="chart-title">Line chart showing Gross Margin, EBITDA Margin, Net Margin</div>
+    <div class="chart-data"><pre>
+        FY2019A  FY2020A  FY2021A  FY2022A  FY2023A  FY2024E  FY2025E
+Gross    37.8%    38.2%    41.8%    43.3%    44.1%    44.0%    44.0%
+EBITDA   29.5%    28.9%    32.9%    33.1%    32.8%    32.6%    32.6%
+Net      21.2%    20.9%    25.9%    25.3%    25.0%    24.8%    24.8%
+
+Key Margin Drivers:
+► Services mix shift: +40bps annually from higher-margin services growth
+► Product margin pressure: -30bps from China competition and component costs
+► Operating leverage: Neutral as growth investments offset scale benefits</pre></div>
+    <div class="chart-note">Note: Interactive charts available in full version</div>
+</div>
+
+<h3 id="34-free-cash-flow-capital-allocation">3.4 Free Cash Flow &amp; Capital Allocation</h3>
+<div class="chart-placeholder">
+    <div class="chart-title">Stacked bar showing FCF uses over 5 years</div>
+    <div class="chart-data"><pre>
+                    FY2019A  FY2020A  FY2021A  FY2022A  FY2023A
+Operating CF         $69.4B   $80.7B  $104.0B  $122.2B  $110.5B
+CapEx               ($10.5B) ($7.3B)  ($11.1B) ($10.7B) ($10.9B)
+Free Cash Flow       $58.9B   $73.4B   $92.9B  $111.4B   $99.6B
+
+FCF USES:
+Dividends            $14.1B   $14.1B   $14.5B   $14.8B   $15.0B
+Buybacks             $66.9B   $72.4B   $85.5B   $89.4B   $77.6B
+M&A                   $0.5B    $1.5B    $0.3B    $0.2B    $0.1B
+Debt Paydown          $8.8B    $12.7B   $14.0B   $9.5B    $11.1B
+
+Capital Return % of FCF:  137%     139%     108%      94%      93%</pre></div>
+    <div class="chart-note">Note: Interactive charts available in full version</div>
+</div>
+
+<h3 id="35-consensus-estimate-revisions-12-month-trend">3.5 Consensus Estimate Revisions (12-Month Trend)</h3>
+<div class="chart-placeholder">
+    <div class="chart-title">FY2024 EPS consensus estimate over past 12 months</div>
+    <div class="chart-data"><pre>
+FY2024 EPS ESTIMATE HISTORY:
+12 mo ago:  $6.85  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+9 mo ago:   $6.75  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+6 mo ago:   $6.65  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+3 mo ago:   $6.60  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+Current:    $6.55  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
+REVISION TREND: NEGATIVE ↓
+Last 90 Days: 8 analysts raised | 15 maintained | 22 lowered</pre></div>
+    <div class="chart-note">Note: Interactive charts available in full version</div>
+</div>
+
+<h3 id="36-valuation-vs-history">3.6 Valuation vs. History</h3>
+<div class="chart-placeholder">
+    <div class="chart-title">Forward P/E with mean and ±1 std dev bands over 5 years</div>
+    <div class="chart-data"><pre>
+Current NTM P/E:        28.2x
+5-Year Average:         26.0x
++1 Std Dev:             32.5x
+-1 Std Dev:             19.5x
+
+Current Position: 0.8 standard deviations above mean
+Interpretation: Premium valuation not justified given elevated risk profile
+
+---</pre></div>
+    <div class="chart-note">Note: Interactive charts available in full version</div>
+</div>
+
+<h2 id="section-4-business-overview">SECTION 4: BUSINESS OVERVIEW</h2>
+<h3 id="41-company-description">4.1 Company Description</h3>
+<p>Apple Inc. designs, manufactures, and markets smartphones, personal computers, tablets, wearables, and accessories worldwide. Founded in 1976 and headquartered in Cupertino, California, Apple has evolved from a personal computer company to the world's most valuable corporation through its ecosystem of hardware, software, and services. The company employs approximately 161,000 people and operates 522 retail stores across 25 countries. Apple's success is built on premium consumer electronics integrated with proprietary software (iOS, macOS) and a growing services business that monetizes its installed base of over 2 billion active devices.</p>
+<h3 id="42-business-model-canvas">4.2 Business Model Canvas</h3>
+<table>
+<tr>
+<th>BUSINESS MODEL MAP</th>
+</tr>
+<tr>
+<td>KEY PARTNERS</td>
+<td>KEY ACTIVITIES</td>
+<td>VALUE PROPOSITIONS</td>
+</tr>
+<tr>
+<td>► TSMC (chips)</td>
+<td>► Product design</td>
+<td>► Premium user experience</td>
+</tr>
+<tr>
+<td>► Foxconn (mfg)</td>
+<td>► Software dev</td>
+<td>► Ecosystem integration</td>
+</tr>
+<tr>
+<td>► Carriers</td>
+<td>► Retail ops</td>
+<td>► Privacy & security</td>
+</tr>
+<tr>
+<td>► App developers</td>
+<td>► Services platform</td>
+<td>► Status symbol/brand</td>
+</tr>
+<tr>
+<td>KEY RESOURCES</td>
+<td>CHANNELS</td>
+<td>CUSTOMER RELATIONSHIPS</td>
+</tr>
+<tr>
+<td>► Brand ($500B)</td>
+<td>► Apple Stores</td>
+<td>► Direct retail experience</td>
+</tr>
+<tr>
+<td>► iOS/macOS</td>
+<td>► Online store</td>
+<td>► Genius Bar support</td>
+</tr>
+<tr>
+<td>► Silicon design</td>
+<td>► Carriers</td>
+<td>► Ecosystem lock-in</td>
+</tr>
+<tr>
+<td>► Retail network</td>
+<td>► Resellers</td>
+<td>► Subscription services</td>
+</tr>
+<tr>
+<td>COST STRUCTURE</td>
+<td>REVENUE STREAMS</td>
+</tr>
+<tr>
+<td class="positive">► Fixed: 25% - R&D, retail, corporate</td>
+<td class="positive">► iPhone: 52% of revenue</td>
+</tr>
+<tr>
+<td class="positive">► Variable: 75% - COGS, sales commissions</td>
+<td class="positive">► Services: 22% of revenue</td>
+</tr>
+<tr>
+<td class="positive">► R&D Intensity: 6.5% of revenue</td>
+<td class="positive">► Mac/iPad: 16% of revenue</td>
+</tr>
+<tr>
+<td class="positive">► Wearables/Other: 10%</td>
+</tr>
+</table>
+
+<h3 id="43-revenue-segmentation">4.3 Revenue Segmentation</h3>
+<p><strong>By Product/Service Line:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Segment</th>
+<th>FY2023 Revenue</th>
+<th>% of Total</th>
+<th>YoY Growth</th>
+<th>Gross Margin</th>
+<th>3Y CAGR</th>
+<th>Trend</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>iPhone</td>
+<td>$200.6B</td>
+<td class="positive">52.3%</td>
+<td class="negative">-2.4%</td>
+<td class="positive">36.5%</td>
+<td class="positive">+5.2%</td>
+<td>→ Stable</td>
+</tr>
+<tr>
+<td>Services</td>
+<td>$85.2B</td>
+<td class="positive">22.2%</td>
+<td class="positive">+9.0%</td>
+<td class="positive">70.8%</td>
+<td class="positive">+15.8%</td>
+<td class="positive">↑ Growing</td>
+</tr>
+<tr>
+<td>Mac</td>
+<td>$29.4B</td>
+<td class="positive">7.7%</td>
+<td class="negative">-26.9%</td>
+<td class="positive">35.2%</td>
+<td class="positive">+8.5%</td>
+<td class="negative">↓ Declining</td>
+</tr>
+<tr>
+<td>iPad</td>
+<td>$28.3B</td>
+<td class="positive">7.4%</td>
+<td class="negative">-3.4%</td>
+<td class="positive">34.8%</td>
+<td class="positive">+2.1%</td>
+<td>→ Stable</td>
+</tr>
+<tr>
+<td>Wearables/Other</td>
+<td>$39.8B</td>
+<td class="positive">10.4%</td>
+<td class="negative">-3.4%</td>
+<td class="positive">33.5%</td>
+<td class="positive">+12.3%</td>
+<td>→ Stable</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td>$383.3B</td>
+<td class="positive">100%</td>
+<td class="negative">-2.8%</td>
+<td class="positive">44.1%</td>
+<td class="positive">+6.8%</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>By Geography:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Region</th>
+<th>FY2023 Revenue</th>
+<th>% of Total</th>
+<th>YoY Growth</th>
+<th>FX Impact</th>
+<th>Key Markets</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Americas</td>
+<td>$162.6B</td>
+<td class="positive">42.4%</td>
+<td class="positive">+2.8%</td>
+<td class="positive">+0.5%</td>
+<td>US, Canada</td>
+</tr>
+<tr>
+<td>Europe</td>
+<td>$94.3B</td>
+<td class="positive">24.6%</td>
+<td class="negative">-0.9%</td>
+<td class="negative">-3.2%</td>
+<td>UK, Germany, France</td>
+</tr>
+<tr>
+<td>Greater China</td>
+<td>$72.6B</td>
+<td class="positive">18.9%</td>
+<td class="negative">-2.5%</td>
+<td class="negative">-1.8%</td>
+<td>China, HK, Taiwan</td>
+</tr>
+<tr>
+<td>Japan</td>
+<td>$24.3B</td>
+<td>6.3</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+    <div class="disclaimer">
+        <strong>DISCLAIMER:</strong> This report is generated by an AI-powered research system for informational purposes only.
+        It does not constitute investment advice, a recommendation, or an offer to buy or sell any securities.
+        Past performance is not indicative of future results. Investors should conduct their own due diligence
+        and consult with a qualified financial advisor before making any investment decisions.
+    </div>
+</body>
+</html>

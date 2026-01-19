@@ -1,0 +1,56 @@
+# Core dependencies
+python-dotenv>=1.0.0
+httpx>=0.27.0
+aiohttp>=3.9.0
+asyncio>=3.4.3
+pydantic-settings>=2.0.0
+
+# LLM Providers (install the ones you need)
+anthropic>=0.40.0          # For Claude (Anthropic)
+openai>=1.12.0             # For GPT-4o (OpenAI)
+google-generativeai>=0.4.0 # For Gemini (Google)
+# Note: Ollama requires no pip install - just run 'ollama serve' locally
+
+# Data Sources
+yfinance>=0.2.40
+pandas>=2.2.0
+numpy>=1.26.0
+
+# Reddit API
+praw>=7.7.0
+
+# Google Trends
+pytrends>=4.9.0
+
+# Web scraping (for fallback)
+beautifulsoup4>=4.12.0
+requests>=2.31.0
+
+# Rate limiting
+ratelimit>=2.2.1
+backoff>=2.2.1
+
+# Caching
+diskcache>=5.6.0
+
+# Output formatting
+markdown>=3.5.0
+jinja2>=3.1.0
+weasyprint>=61.0  # For PDF generation
+
+# Data validation
+pydantic>=2.6.0
+
+# Logging
+loguru>=0.7.0
+
+# Progress tracking
+tqdm>=4.66.0
+rich>=13.7.0
+
+# Testing
+pytest>=8.0.0
+pytest-asyncio>=0.23.0
+
+# Type hints
+typing-extensions>=4.9.0

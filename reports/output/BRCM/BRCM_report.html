@@ -1,0 +1,424 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>BRCM (BRCM) - Equity Research</title>
+    <style>
+        
+        @page {
+            size: A4;
+            margin: 1.5cm 2cm;
+            @top-right {
+                content: "Equity Research";
+                font-size: 9pt;
+                color: #666;
+            }
+            @bottom-center {
+                content: counter(page);
+                font-size: 9pt;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 10pt;
+            line-height: 1.5;
+            color: #1a1a1a;
+            max-width: 100%;
+        }
+
+        /* Header styling */
+        h1 {
+            font-size: 22pt;
+            font-weight: 700;
+            color: #003366;
+            border-bottom: 3px solid #003366;
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            page-break-after: avoid;
+        }
+
+        h2 {
+            font-size: 14pt;
+            font-weight: 700;
+            color: #003366;
+            border-bottom: 2px solid #003366;
+            padding-bottom: 5px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            page-break-after: avoid;
+        }
+
+        h3 {
+            font-size: 12pt;
+            font-weight: 600;
+            color: #003366;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            page-break-after: avoid;
+        }
+
+        h4 {
+            font-size: 11pt;
+            font-weight: 600;
+            color: #444;
+            margin-top: 15px;
+            margin-bottom: 8px;
+        }
+
+        /* Cover page styling */
+        .cover-section {
+            background: linear-gradient(135deg, #003366 0%, #004488 100%);
+            color: white;
+            padding: 30px;
+            margin: -20px -20px 30px -20px;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .company-title {
+            font-size: 28pt;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .ticker-line {
+            font-size: 14pt;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .rating-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .rating-item {
+            background: rgba(255,255,255,0.15);
+            padding: 12px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .rating-label {
+            font-size: 9pt;
+            opacity: 0.8;
+            text-transform: uppercase;
+        }
+
+        .rating-value {
+            font-size: 16pt;
+            font-weight: 700;
+        }
+
+        .rating-buy { color: #00ff88; }
+        .rating-sell { color: #ff6666; }
+        .rating-hold { color: #ffcc00; }
+
+        /* Tables - institutional style */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 9pt;
+            page-break-inside: avoid;
+        }
+
+        th {
+            background-color: #003366;
+            color: white;
+            padding: 10px 8px;
+            text-align: left;
+            font-weight: 600;
+            border: 1px solid #003366;
+        }
+
+        td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            vertical-align: top;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        /* Key metrics highlight */
+        .positive { color: #006600; font-weight: 600; }
+        .negative { color: #cc0000; font-weight: 600; }
+
+        /* Sensitivity matrix - special styling */
+        .sensitivity-matrix {
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .sensitivity-matrix table {
+            font-size: 9pt;
+            min-width: 500px;
+        }
+
+        .sensitivity-matrix th {
+            background-color: #003366;
+            padding: 8px 12px;
+            text-align: center;
+        }
+
+        .sensitivity-matrix td {
+            text-align: center;
+            padding: 8px 12px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+
+        .sensitivity-matrix .highlight {
+            background-color: #ffffcc;
+            font-weight: 700;
+            border: 2px solid #003366;
+        }
+
+        .sensitivity-matrix .row-header {
+            background-color: #e8f4ff;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        /* Bull/Bear points */
+        .bull-point {
+            background-color: #e8f5e9;
+            border-left: 4px solid #2e7d32;
+            padding: 15px 20px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .bear-point {
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            padding: 15px 20px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .point-title {
+            font-weight: 700;
+            font-size: 11pt;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .point-detail {
+            font-size: 9pt;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .point-detail strong {
+            color: #333;
+        }
+
+        /* WACC calculation box */
+        .wacc-box {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 9pt;
+            line-height: 1.8;
+        }
+
+        .wacc-box .section-title {
+            font-weight: 700;
+            color: #003366;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+        .wacc-box .section-title:first-child {
+            margin-top: 0;
+        }
+
+        .wacc-box .total-line {
+            border-top: 1px solid #003366;
+            padding-top: 5px;
+            margin-top: 5px;
+            font-weight: 700;
+        }
+
+        /* Code blocks for structured data */
+        pre {
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
+            font-size: 8.5pt;
+            overflow-x: auto;
+            white-space: pre;
+            line-height: 1.4;
+            margin: 15px 0;
+        }
+
+        /* Chart placeholders */
+        .chart-placeholder {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            border: 2px dashed #aaa;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .chart-title {
+            font-weight: 600;
+            font-size: 11pt;
+            color: #003366;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .chart-data {
+            background: white;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 8.5pt;
+            line-height: 1.5;
+        }
+
+        .chart-note {
+            font-size: 8pt;
+            font-style: italic;
+            color: #666;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* Blockquotes for key insights */
+        blockquote {
+            border-left: 4px solid #003366;
+            margin: 15px 0;
+            padding: 10px 20px;
+            background-color: #f0f5ff;
+            font-style: italic;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+
+        /* Horizontal rules */
+        hr {
+            border: none;
+            border-top: 2px solid #003366;
+            margin: 30px 0;
+        }
+
+        /* Disclaimer footer */
+        .disclaimer {
+            font-size: 7pt;
+            color: #666;
+            border-top: 1px solid #ccc;
+            padding-top: 15px;
+            margin-top: 40px;
+            line-height: 1.4;
+        }
+
+        /* Page breaks */
+        .page-break {
+            page-break-before: always;
+        }
+        
+        body { max-width: 900px; margin: 0 auto; padding: 20px; }
+    </style>
+</head>
+<body>
+    
+<div class="cover-section">
+    <div class="company-title">BRCM</div>
+    <div class="ticker-line">NASDAQ: BRCM</div>
+
+    <div class="rating-grid">
+        <div class="rating-item">
+            <div class="rating-label">Rating</div>
+            <div class="rating-value rating-hold">HOLD</div>
+        </div>
+        <div class="rating-item">
+            <div class="rating-label">Price Target</div>
+            <div class="rating-value">$0</div>
+        </div>
+        <div class="rating-item">
+            <div class="rating-label">Current Price</div>
+            <div class="rating-value">$0</div>
+        </div>
+        <div class="rating-item">
+            <div class="rating-label">Upside/Downside</div>
+            <div class="rating-value rating-hold">N/A</div>
+        </div>
+        <div class="rating-item">
+            <div class="rating-label">Risk Level</div>
+            <div class="rating-value">MEDIUM</div>
+        </div>
+        <div class="rating-item">
+            <div class="rating-label">Report Date</div>
+            <div class="rating-value">Jan 16, 2026</div>
+        </div>
+    </div>
+</div>
+
+    <h1 id="critical-investment-warning">CRITICAL INVESTMENT WARNING</h1>
+<h2 id="brcm-broadcom-corp-delistedacquired-entity">BRCM (Broadcom Corp.) - DELISTED/ACQUIRED ENTITY</h2>
+<p><strong>DO NOT INVEST</strong> - This company no longer exists as a publicly traded entity.</p>
+<h3 id="key-facts">Key Facts:</h3>
+<ul>
+<li><strong>Status</strong>: Delisted/Acquired in 2015-2016</li>
+<li><strong>Acquired by</strong>: Avago Technologies (now Broadcom Inc. - AVGO)</li>
+<li><strong>Last SEC Filing</strong>: October 2015</li>
+<li><strong>Trading Status</strong>: FALSE (not actively trading)</li>
+<li><strong>Current Alternative</strong>: AVGO (Broadcom Inc.)</li>
+</ul>
+<h3 id="critical-findings">Critical Findings:</h3>
+<ol>
+<li>BRCM was acquired by Avago Technologies in a ~$37 billion transaction completed in early 2016</li>
+<li>The company has not filed with the SEC since October 2015</li>
+<li>Profile data shows "isActivelyTrading: false"</li>
+<li>Any financial metrics shown are either 9+ years old or synthetic/corrupted</li>
+<li>Mathematical impossibilities in data (negative Enterprise Value of -$952M)</li>
+</ol>
+<h3 id="investment-implications">Investment Implications:</h3>
+<ul>
+<li><strong>Investment Risk</strong>: 100% loss probability if attempting to trade</li>
+<li><strong>Action Required</strong>: Do not attempt to purchase BRCM shares</li>
+<li><strong>Alternative</strong>: For Broadcom exposure, analyze AVGO (Broadcom Inc.)</li>
+</ul>
+<h3 id="why-this-matters">Why This Matters:</h3>
+<p>This case demonstrates the critical importance of verifying company status before conducting any investment analysis. The presence of a ticker symbol does not guarantee the company is actively trading. Always confirm:
+- Current trading status
+- Recent SEC filings (within 12 months)
+- No delisting or acquisition events</p>
+<h3 id="recommendation">Recommendation:</h3>
+<p>Investors seeking exposure to Broadcom's semiconductor business should analyze <strong>AVGO (Broadcom Inc.)</strong>, which is the current publicly traded entity resulting from the Avago-Broadcom merger.</p>
+<hr />
+<p><strong>Note</strong>: A full institutional research report cannot be generated for a delisted company. The data anomalies, lack of current filings, and confirmed inactive status make any traditional equity analysis impossible and potentially misleading.</p>
+
+    <div class="disclaimer">
+        <strong>DISCLAIMER:</strong> This report is generated by an AI-powered research system for informational purposes only.
+        It does not constitute investment advice, a recommendation, or an offer to buy or sell any securities.
+        Past performance is not indicative of future results. Investors should conduct their own due diligence
+        and consult with a qualified financial advisor before making any investment decisions.
+    </div>
+</body>
+</html>

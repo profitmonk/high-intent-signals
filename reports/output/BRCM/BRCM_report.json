@@ -1,0 +1,11 @@
+{
+  "raw_analysis": "# CRITICAL INVESTMENT WARNING\n\n## BRCM (Broadcom Corp.) - DELISTED/ACQUIRED ENTITY\n\n**DO NOT INVEST** - This company no longer exists as a publicly traded entity.\n\n### Key Facts:\n- **Status**: Delisted/Acquired in 2015-2016\n- **Acquired by**: Avago Technologies (now Broadcom Inc. - AVGO)\n- **Last SEC Filing**: October 2015\n- **Trading Status**: FALSE (not actively trading)\n- **Current Alternative**: AVGO (Broadcom Inc.)\n\n### Critical Findings:\n1. BRCM was acquired by Avago Technologies in a ~$37 billion transaction completed in early 2016\n2. The company has not filed with the SEC since October 2015\n3. Profile data shows \"isActivelyTrading: false\"\n4. Any financial metrics shown are either 9+ years old or synthetic/corrupted\n5. Mathematical impossibilities in data (negative Enterprise Value of -$952M)\n\n### Investment Implications:\n- **Investment Risk**: 100% loss probability if attempting to trade\n- **Action Required**: Do not attempt to purchase BRCM shares\n- **Alternative**: For Broadcom exposure, analyze AVGO (Broadcom Inc.)\n\n### Why This Matters:\nThis case demonstrates the critical importance of verifying company status before conducting any investment analysis. The presence of a ticker symbol does not guarantee the company is actively trading. Always confirm:\n- Current trading status\n- Recent SEC filings (within 12 months)\n- No delisting or acquisition events\n\n### Recommendation:\nInvestors seeking exposure to Broadcom's semiconductor business should analyze **AVGO (Broadcom Inc.)**, which is the current publicly traded entity resulting from the Avago-Broadcom merger.\n\n---\n\n**Note**: A full institutional research report cannot be generated for a delisted company. The data anomalies, lack of current filings, and confirmed inactive status make any traditional equity analysis impossible and potentially misleading.",
+  "_format": "text",
+  "_note": "LLM returned natural language analysis instead of JSON",
+  "_metadata": {
+    "agent": "Research Synthesis",
+    "model": "claude-opus-4-20250514",
+    "timestamp": "2026-01-16T20:34:04.247381",
+    "processing_time_seconds": 16.174108
+  }
+}

@@ -1,0 +1,244 @@
+{
+  "ticker": "MSFT",
+  "company_name": "Microsoft Corporation",
+  "sector": "Technology",
+  "company_profile_analysis": {
+    "company_overview": {
+      "name": "Microsoft Corporation",
+      "ticker": "MSFT",
+      "exchange": "NASDAQ",
+      "sector": "Technology",
+      "industry": "Software - Infrastructure",
+      "description": "Microsoft Corporation develops, licenses, and supports software, services, devices, and solutions worldwide. The company operates in three segments: Productivity and Business Processes, Intelligent Cloud, and More Personal Computing. The Productivity and Business Processes segment offers Office, Exchange, SharePoint, Microsoft Teams, Office 365 Security and Compliance, Microsoft Viva, and Skype for Business; Skype, Outlook.com, OneDrive, and LinkedIn; and Dynamics 365, a set of cloud-based and on-premises business solutions for organizations and enterprise divisions. The Intelligent Cloud segment licenses SQL, Windows Servers, Visual Studio, System Center, and related Client Access Licenses; GitHub that provides a collaboration platform and code hosting service for developers; Nuance provides healthcare and enterprise AI solutions; and Azure, a cloud platform. It also offers enterprise support, Microsoft consulting, and nuance professional services to assist customers in developing, deploying, and managing Microsoft server and desktop solutions; and training and certification on Microsoft products. The More Personal Computing segment provides Windows original equipment manufacturer (OEM) licensing and other non-volume licensing of the Windows operating system; Windows Commercial, such as volume licensing of the Windows operating system, Windows cloud services, and other Windows commercial offerings; patent licensing; and Windows Internet of Things. It also offers Surface, PC accessories, PCs, tablets, gaming and entertainment consoles, and other devices; Gaming, including Xbox hardware, and Xbox content and services; video games and third-party video game royalties; and Search, including Bing and Microsoft advertising. The company sells its products through OEMs, distributors, and resellers; and directly through digital marketplaces, online stores, and retail stores. Microsoft Corporation was founded in 1975 and is headquartered in Redmond, Washington.",
+      "website": "https://www.microsoft.com",
+      "headquarters": "Redmond, WA, US",
+      "founded": "1986-03-13",
+      "employees": "228000",
+      "ceo": "Satya Nadella",
+      "is_actively_trading": true
+    },
+    "market_data": {
+      "price": 459.86,
+      "market_cap": 3418215912200.9995,
+      "market_cap_formatted": "$3.42T",
+      "beta": 1.073,
+      "52_week_high": "555.45",
+      "52_week_low": "344.79",
+      "avg_volume": 23773804
+    },
+    "valuation_snapshot": {
+      "pe_ratio": 0,
+      "price_to_book": 0,
+      "price_to_sales": 0,
+      "enterprise_value": 0,
+      "ev_to_ebitda": 0
+    },
+    "key_executives": [],
+    "peer_companies": [],
+    "_source": "direct_formatting",
+    "_tokens_saved": "~3000 input tokens"
+  },
+  "sec_filings_analysis": {},
+  "financial_metrics": {
+    "financial_summary": {
+      "years": [],
+      "currency": "USD"
+    },
+    "key_ratios": {
+      "return_on_equity": "0.0%",
+      "return_on_assets": "0.0%",
+      "return_on_capital": "0.0%",
+      "roic": "0.0%",
+      "current_ratio": 0,
+      "quick_ratio": 0,
+      "cash_ratio": 0,
+      "debt_to_equity": 0,
+      "debt_to_assets": 0,
+      "interest_coverage": 0,
+      "asset_turnover": 0,
+      "inventory_turnover": 0,
+      "receivables_turnover": 0,
+      "days_sales_outstanding": 0,
+      "days_inventory": 0,
+      "pe_ratio": 0,
+      "peg_ratio": 0,
+      "price_to_book": 0,
+      "price_to_sales": 0,
+      "ev_to_ebitda": 0,
+      "price_to_fcf": 0
+    },
+    "ttm_metrics": {
+      "revenue_ttm": 0,
+      "net_income_ttm": 0,
+      "fcf_per_share_ttm": 0,
+      "dividend_yield_ttm": "0.0%",
+      "payout_ratio_ttm": "0.0%",
+      "pe_ratio_ttm": 0,
+      "ev_to_ebitda_ttm": 0
+    },
+    "growth_metrics": {},
+    "_source": "direct_formatting",
+    "_tokens_saved": "~8000 input tokens"
+  },
+  "news_analysis": {
+    "recent_news": [],
+    "press_releases": [],
+    "earnings": {
+      "history": [],
+      "beat_rate": "0%",
+      "next_earnings": null
+    },
+    "news_summary": {
+      "total_articles_30d": 0,
+      "press_releases_30d": 0
+    },
+    "_source": "direct_formatting",
+    "_tokens_saved": "~5000 input tokens"
+  },
+  "sentiment_analysis": {},
+  "technical_analysis": {
+    "current_price": 459.86,
+    "price_change": {
+      "1_day": 0,
+      "5_day": -3.629657571566284,
+      "1_month": -3.4698461344696514,
+      "3_month": -10.115126756709211,
+      "6_month": -9.840211743946671,
+      "1_year": 0,
+      "ytd": 0
+    },
+    "moving_averages": {
+      "sma_20": 478.23,
+      "sma_50": 484.83,
+      "sma_200": 482.26,
+      "price_vs_sma_20": "-3.8% below",
+      "price_vs_sma_50": "-5.2% below",
+      "price_vs_sma_200": "-4.6% below"
+    },
+    "52_week": {
+      "high": 542.07,
+      "low": 354.56,
+      "pct_from_high": -15.165937978489868,
+      "pct_from_low": 29.69878158844766
+    },
+    "volume": {
+      "current": 0,
+      "average_20d": 22999691,
+      "volume_vs_avg": 0.0
+    },
+    "volatility": {
+      "beta": 0
+    },
+    "support_resistance": {
+      "near_support": 354.56,
+      "near_resistance": 542.07
+    },
+    "indicators": {},
+    "_source": "direct_formatting",
+    "_tokens_saved": "~3000 input tokens"
+  },
+  "industry_analysis": {},
+  "transcript_analysis": {},
+  "etf_analysis": {
+    "total_etf_holders": 0,
+    "passive_ownership_estimate": "N/A",
+    "top_etf_holders": [],
+    "_source": "direct_formatting"
+  },
+  "moat_analysis": {},
+  "forensics_analysis": {},
+  "risk_assessment": {},
+  "valuation_analysis": {},
+  "synthesis": {},
+  "execution_summary": {
+    "start_time": "2026-01-17T15:46:20.430497",
+    "end_time": "2026-01-17T15:46:33.413249",
+    "total_duration_seconds": 12.982752,
+    "agent_results": [
+      {
+        "agent": "Company Profiler (Direct)",
+        "status": "completed",
+        "duration_seconds": 0.000166,
+        "error": null
+      },
+      {
+        "agent": "Sec Filings",
+        "status": "failed",
+        "duration_seconds": 1.931185,
+        "error": "APIError: LLM API error: OpenAI API error: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+      },
+      {
+        "agent": "Financial Metrics (Direct)",
+        "status": "completed",
+        "duration_seconds": 0.00014,
+        "error": null
+      },
+      {
+        "agent": "News Events (Direct)",
+        "status": "completed",
+        "duration_seconds": 5.9e-05,
+        "error": null
+      },
+      {
+        "agent": "Social Sentiment",
+        "status": "failed",
+        "duration_seconds": 1.767268,
+        "error": "APIError: LLM API error: OpenAI API error: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+      },
+      {
+        "agent": "Technical Analysis (Direct)",
+        "status": "completed",
+        "duration_seconds": 0.00011,
+        "error": null
+      },
+      {
+        "agent": "Industry Sector",
+        "status": "failed",
+        "duration_seconds": 1.825758,
+        "error": "APIError: LLM API error: OpenAI API error: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+      },
+      {
+        "agent": "Transcript Analysis",
+        "status": "failed",
+        "duration_seconds": 2.288339,
+        "error": "APIError: LLM API error: OpenAI API error: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+      },
+      {
+        "agent": "Etf Exposure (Direct)",
+        "status": "completed",
+        "duration_seconds": 6.7e-05,
+        "error": null
+      },
+      {
+        "agent": "Moat Analyzer",
+        "status": "failed",
+        "duration_seconds": 1.376957,
+        "error": "APIError: LLM API error: OpenAI API error: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+      },
+      {
+        "agent": "Financial Forensics",
+        "status": "failed",
+        "duration_seconds": 1.494084,
+        "error": "APIError: LLM API error: OpenAI API error: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+      },
+      {
+        "agent": "Risk Assessment",
+        "status": "failed",
+        "duration_seconds": 1.654071,
+        "error": "APIError: LLM API error: OpenAI API error: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+      },
+      {
+        "agent": "Valuation",
+        "status": "failed",
+        "duration_seconds": 1.581094,
+        "error": "APIError: LLM API error: OpenAI API error: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+      },
+      {
+        "agent": "Synthesis",
+        "status": "failed",
+        "duration_seconds": 1.520898,
+        "error": "APIError: LLM API error: OpenAI API error: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+      }
+    ]
+  }
+}

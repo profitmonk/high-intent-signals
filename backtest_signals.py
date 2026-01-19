@@ -1,0 +1,424 @@
+#!/usr/bin/env python3
+"""
+Backtest Historical Signals.
+
+Generates signals week-by-week from mid-2025 to present,
+tracks forward returns (3M/6M/current), and creates performance reports.
+
+Usage:
+    python backtest_signals.py                    # Run full backtest
+    python backtest_signals.py --start 2025-07-01 # Custom start date
+    python backtest_signals.py --update           # Just update returns for existing signals
+"""
+
+import argparse
+import asyncio
+import json
+import sys
+from datetime import datetime, timedelta
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+from dataclasses import dataclass, asdict
+
+import pandas as pd
+
+sys.path.insert(0, str(Path(__file__).parent))
+
+from scanner.historical import HistoricalScanner, HistoricalConfig
+from data.fmp_client import FMPClient
+from config.settings import get_settings
+from utils.logging import setup_logging, get_logger
+
+logger = get_logger("backtest")
+
+SIGNALS_DB_PATH = Path("data/signals_history.json")
+PERFORMANCE_MD_PATH = Path("docs/performance.md")
+ARCHIVE_DIR = Path("docs/archive")
+
+
+@dataclass
+class TrackedSignal:
+    """A signal with tracked returns."""
+    signal_date: str
+    ticker: str
+    company_name: str
+    score: int
+    signal_price: float
+    signal_types: str
+    price_3m: Optional[float] = None
+    price_6m: Optional[float] = None
+    price_current: Optional[float] = None
+    return_3m: Optional[float] = None
+    return_6m: Optional[float] = None
+    return_current: Optional[float] = None
+
+    def to_dict(self) -> dict:
+        return asdict(self)
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "TrackedSignal":
+        return cls(**d)
+
+
+class SignalBacktester:
+    """Backtests signals and tracks performance."""
+
+    def __init__(self):
+        self.settings = get_settings()
+        self.fmp = FMPClient(settings=self.settings)
+        self.scanner = HistoricalScanner(HistoricalConfig())
+        self.signals_db: List[TrackedSignal] = []
+        self._load_signals_db()
+
+    def _load_signals_db(self):
+        """Load existing signals database."""
+        if SIGNALS_DB_PATH.exists():
+            data = json.loads(SIGNALS_DB_PATH.read_text())
+            self.signals_db = [TrackedSignal.from_dict(s) for s in data]
+            logger.info(f"Loaded {len(self.signals_db)} existing signals")
+
+    def _save_signals_db(self):
+        """Save signals database."""
+        SIGNALS_DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+        data = [s.to_dict() for s in self.signals_db]
+        SIGNALS_DB_PATH.write_text(json.dumps(data, indent=2))
+        logger.info(f"Saved {len(self.signals_db)} signals to database")
+
+    def _get_existing_signal_dates(self) -> set:
+        """Get dates that already have signals."""
+        return {s.signal_date for s in self.signals_db}
+
+    async def get_price_on_date(self, ticker: str, target_date: str) -> Optional[float]:
+        """Get closing price on or near a specific date."""
+        try:
+            # Rate limit: small delay between requests
+            await asyncio.sleep(0.3)
+
+            # Get historical data around the target date
+            target = datetime.strptime(target_date, "%Y-%m-%d")
+            from_date = (target - timedelta(days=10)).strftime("%Y-%m-%d")
+            to_date = (target + timedelta(days=10)).strftime("%Y-%m-%d")
+
+            hist = await self.fmp.get_historical_prices(ticker, from_date=from_date, to_date=to_date)
+            if not hist:
+                return None
+
+            # Handle response format - may be dict with 'historical' key
+            if isinstance(hist, dict) and 'historical' in hist:
+                hist = hist['historical']
+
+            if not hist:
+                return None
+
+            # Convert to dataframe
+            df = pd.DataFrame(hist)
+            df['date'] = pd.to_datetime(df['date'])
+            df = df.sort_values('date')
+
+            target_dt = pd.to_datetime(target_date)
+
+            # Find closest date on or after target
+            mask = df['date'] >= target_dt
+            if mask.any():
+                return float(df[mask].iloc[0]['close'])
+
+            # If no date after, get the last available
+            return float(df.iloc[-1]['close'])
+
+        except Exception as e:
+            logger.warning(f"Failed to get price for {ticker} on {target_date}: {e}")
+            return None
+
+    async def get_company_name(self, ticker: str) -> str:
+        """Get company name."""
+        try:
+            profile = await self.fmp.get_company_profile(ticker)
+            if profile:
+                return profile.get("companyName", ticker)
+        except Exception:
+            pass
+        return ticker
+
+    async def generate_signals_for_week(self, week_end_date: str, min_score: int = 5) -> List[TrackedSignal]:
+        """Generate signals as of a specific week end date."""
+        logger.info(f"Generating signals for week ending {week_end_date}")
+
+        # Get high intent signals up to this date
+        scored_weeks = await self.scanner.get_high_intent_signals(
+            min_score=min_score,
+            days=7,  # Just this week
+            as_of_date=week_end_date,
+        )
+
+        signals = []
+        for sw in scored_weeks[:10]:  # Top 10 per week
+            company_name = await self.get_company_name(sw.ticker)
+
+            signal = TrackedSignal(
+                signal_date=week_end_date,
+                ticker=sw.ticker,
+                company_name=company_name,
+                score=sw.total_score,
+                signal_price=sw.price,
+                signal_types=sw.signal_summary,
+            )
+            signals.append(signal)
+
+        return signals
+
+    async def update_returns(self, signal: TrackedSignal) -> TrackedSignal:
+        """Update forward returns for a signal."""
+        signal_date = datetime.strptime(signal.signal_date, "%Y-%m-%d")
+        today = datetime.now()
+
+        # Calculate target dates
+        date_3m = signal_date + timedelta(days=90)
+        date_6m = signal_date + timedelta(days=180)
+
+        # Get current price
+        current_price = await self.get_price_on_date(signal.ticker, today.strftime("%Y-%m-%d"))
+        if current_price:
+            signal.price_current = current_price
+            signal.return_current = (current_price - signal.signal_price) / signal.signal_price
+
+        # Get 3M price if date has passed
+        if date_3m <= today:
+            price_3m = await self.get_price_on_date(signal.ticker, date_3m.strftime("%Y-%m-%d"))
+            if price_3m:
+                signal.price_3m = price_3m
+                signal.return_3m = (price_3m - signal.signal_price) / signal.signal_price
+
+        # Get 6M price if date has passed
+        if date_6m <= today:
+            price_6m = await self.get_price_on_date(signal.ticker, date_6m.strftime("%Y-%m-%d"))
+            if price_6m:
+                signal.price_6m = price_6m
+                signal.return_6m = (price_6m - signal.signal_price) / signal.signal_price
+
+        return signal
+
+    async def run_backtest(self, start_date: str = "2025-07-01", min_score: int = 5):
+        """Run backtest from start date to now."""
+        start = datetime.strptime(start_date, "%Y-%m-%d")
+        end = datetime.now()
+
+        existing_dates = self._get_existing_signal_dates()
+
+        # Generate week-end dates (Fridays)
+        current = start
+        while current.weekday() != 4:  # Find first Friday
+            current += timedelta(days=1)
+
+        weeks_to_process = []
+        while current <= end:
+            week_str = current.strftime("%Y-%m-%d")
+            if week_str not in existing_dates:
+                weeks_to_process.append(week_str)
+            current += timedelta(days=7)
+
+        logger.info(f"Processing {len(weeks_to_process)} new weeks")
+
+        # Process each week
+        for idx, week_date in enumerate(weeks_to_process):
+            try:
+                signals = await self.generate_signals_for_week(week_date, min_score)
+
+                # Update returns for each signal
+                for signal in signals:
+                    signal = await self.update_returns(signal)
+                    self.signals_db.append(signal)
+
+                logger.info(f"Added {len(signals)} signals for {week_date} ({idx + 1}/{len(weeks_to_process)})")
+
+                # Save after each week
+                self._save_signals_db()
+
+                # Rate limit: pause between weeks to avoid API limits
+                await asyncio.sleep(2)
+
+            except Exception as e:
+                logger.error(f"Error processing week {week_date}: {e}")
+                await asyncio.sleep(5)  # Longer pause on error
+                continue
+
+    async def update_all_returns(self):
+        """Update returns for all existing signals."""
+        logger.info(f"Updating returns for {len(self.signals_db)} signals")
+
+        for i, signal in enumerate(self.signals_db):
+            self.signals_db[i] = await self.update_returns(signal)
+
+            if (i + 1) % 20 == 0:
+                logger.info(f"Updated {i + 1}/{len(self.signals_db)} signals")
+                self._save_signals_db()
+
+        self._save_signals_db()
+
+    def generate_performance_page(self):
+        """Generate the performance.md page."""
+        if not self.signals_db:
+            logger.warning("No signals to generate performance page")
+            return
+
+        # Sort by date descending
+        signals = sorted(self.signals_db, key=lambda s: s.signal_date, reverse=True)
+
+        # Calculate stats
+        returns_3m = [s.return_3m for s in signals if s.return_3m is not None]
+        returns_6m = [s.return_6m for s in signals if s.return_6m is not None]
+        returns_current = [s.return_current for s in signals if s.return_current is not None]
+
+        avg_3m = sum(returns_3m) / len(returns_3m) * 100 if returns_3m else 0
+        avg_6m = sum(returns_6m) / len(returns_6m) * 100 if returns_6m else 0
+        avg_current = sum(returns_current) / len(returns_current) * 100 if returns_current else 0
+
+        win_rate_3m = len([r for r in returns_3m if r > 0]) / len(returns_3m) * 100 if returns_3m else 0
+        win_rate_6m = len([r for r in returns_6m if r > 0]) / len(returns_6m) * 100 if returns_6m else 0
+
+        # Find best/worst
+        best_current = max(signals, key=lambda s: s.return_current or -999)
+        worst_current = min(signals, key=lambda s: s.return_current if s.return_current is not None else 999)
+
+        now = datetime.now()
+
+        md = f"""---
+layout: default
+title: Performance Track Record
+---
+
+# Signal Performance Track Record
+
+**Last Updated:** {now.strftime("%B %d, %Y")}
+
+[← Back to Latest Signals](index.md)
+
+---
+
+## Summary Statistics
+
+| Metric | 3-Month | 6-Month | Current |
+|--------|---------|---------|---------|
+| **Avg Return** | {avg_3m:+.1f}% | {avg_6m:+.1f}% | {avg_current:+.1f}% |
+| **Win Rate** | {win_rate_3m:.0f}% | {win_rate_6m:.0f}% | - |
+| **Sample Size** | {len(returns_3m)} | {len(returns_6m)} | {len(returns_current)} |
+
+**Best Pick:** {best_current.ticker} ({best_current.signal_date}) → {best_current.return_current * 100 if best_current.return_current else 0:+.1f}%
+
+**Worst Pick:** {worst_current.ticker} ({worst_current.signal_date}) → {worst_current.return_current * 100 if worst_current.return_current else 0:+.1f}%
+
+---
+
+## All Signals
+
+| Date | Ticker | Company | Score | Entry | 3M | 6M | Current |
+|------|--------|---------|-------|-------|-----|-----|---------|
+"""
+
+        for s in signals:
+            ret_3m = f"{s.return_3m * 100:+.1f}%" if s.return_3m is not None else "-"
+            ret_6m = f"{s.return_6m * 100:+.1f}%" if s.return_6m is not None else "-"
+            ret_curr = f"{s.return_current * 100:+.1f}%" if s.return_current is not None else "-"
+
+            md += f"| {s.signal_date} | **{s.ticker}** | {s.company_name[:25]} | {s.score} | ${s.signal_price:.2f} | {ret_3m} | {ret_6m} | {ret_curr} |\n"
+
+        md += f"""
+---
+
+## Methodology
+
+- **Signal Generation:** Composite scoring system identifying high-intent technical breakouts
+- **Entry Price:** Closing price on the signal week
+- **Returns:** Calculated from entry price to price on target date
+- **Win Rate:** Percentage of signals with positive returns
+
+*Past performance does not guarantee future results.*
+
+---
+
+[← Back to Latest Signals](index.md)
+"""
+
+        PERFORMANCE_MD_PATH.parent.mkdir(parents=True, exist_ok=True)
+        PERFORMANCE_MD_PATH.write_text(md)
+        logger.info(f"Generated performance page: {PERFORMANCE_MD_PATH}")
+
+    def generate_archive_page(self, week_date: str, signals: List[TrackedSignal]):
+        """Generate archive page for a specific week."""
+        ARCHIVE_DIR.mkdir(parents=True, exist_ok=True)
+
+        week_signals = [s for s in signals if s.signal_date == week_date]
+        if not week_signals:
+            return
+
+        dt = datetime.strptime(week_date, "%Y-%m-%d")
+
+        md = f"""---
+layout: default
+title: Signals - {week_date}
+---
+
+# High Intent Signals - Week of {dt.strftime("%B %d, %Y")}
+
+[← Back to Latest](../index.md) | [Performance Track Record](../performance.md)
+
+---
+
+| Ticker | Company | Score | Price | Signals |
+|--------|---------|-------|-------|---------|
+"""
+
+        for s in week_signals:
+            md += f"| **{s.ticker}** | {s.company_name[:30]} | {s.score} | ${s.signal_price:.2f} | {s.signal_types} |\n"
+
+        md += "\n---\n"
+
+        archive_path = ARCHIVE_DIR / f"{week_date}.md"
+        archive_path.write_text(md)
+        logger.info(f"Generated archive: {archive_path}")
+
+    def generate_all_archives(self):
+        """Generate archive pages for all weeks."""
+        dates = sorted(set(s.signal_date for s in self.signals_db))
+        for date in dates:
+            self.generate_archive_page(date, self.signals_db)
+
+    async def close(self):
+        """Cleanup."""
+        await self.fmp.close()
+        await self.scanner.close()
+
+
+async def main():
+    parser = argparse.ArgumentParser(description="Backtest signal performance")
+    parser.add_argument("--start", type=str, default="2025-07-01", help="Start date (default: 2025-07-01)")
+    parser.add_argument("--min-score", type=int, default=5, help="Minimum score (default: 5)")
+    parser.add_argument("--update", action="store_true", help="Only update returns, don't generate new signals")
+    parser.add_argument("--verbose", "-v", action="store_true", help="Verbose output")
+    args = parser.parse_args()
+
+    setup_logging(level="DEBUG" if args.verbose else "INFO")
+
+    backtester = SignalBacktester()
+
+    try:
+        if args.update:
+            await backtester.update_all_returns()
+        else:
+            await backtester.run_backtest(start_date=args.start, min_score=args.min_score)
+            await backtester.update_all_returns()
+
+        # Generate outputs
+        backtester.generate_performance_page()
+        backtester.generate_all_archives()
+
+        print(f"\nBacktest complete!")
+        print(f"- Signals tracked: {len(backtester.signals_db)}")
+        print(f"- Performance page: {PERFORMANCE_MD_PATH}")
+        print(f"- Archive pages: {ARCHIVE_DIR}/")
+
+    finally:
+        await backtester.close()
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
