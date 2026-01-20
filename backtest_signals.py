@@ -39,17 +39,21 @@ ARCHIVE_DIR = Path("docs/archive")
 @dataclass
 class TrackedSignal:
     """A signal with tracked returns."""
-    signal_date: str
-    ticker: str
-    company_name: str
-    score: int
-    signal_price: float
-    signal_types: str
+    signal_date: str          # Friday when signal was detected
+    entry_date: str = ""      # Monday when you could actually buy
+    ticker: str = ""
+    company_name: str = ""
+    score: int = 0
+    signal_price: float = 0   # Friday close (for reference)
+    entry_price: float = 0    # Monday open (actual buy price)
+    signal_types: str = ""
     price_3m: Optional[float] = None
     price_6m: Optional[float] = None
+    price_12m: Optional[float] = None
     price_current: Optional[float] = None
     return_3m: Optional[float] = None
     return_6m: Optional[float] = None
+    return_12m: Optional[float] = None
     return_current: Optional[float] = None
 
     def to_dict(self) -> dict:
@@ -154,12 +158,22 @@ class SignalBacktester:
         for sw in scored_weeks[:10]:  # Top 10 per week
             company_name = await self.get_company_name(sw.ticker)
 
+            # Calculate Monday entry date (next trading day after Friday signal)
+            signal_dt = datetime.strptime(week_end_date, "%Y-%m-%d")
+            entry_dt = signal_dt + timedelta(days=3)  # Friday + 3 = Monday
+            entry_date = entry_dt.strftime("%Y-%m-%d")
+
+            # Get Monday's open price as actual entry price
+            entry_price = await self.get_price_on_date(sw.ticker, entry_date)
+
             signal = TrackedSignal(
                 signal_date=week_end_date,
+                entry_date=entry_date,
                 ticker=sw.ticker,
                 company_name=company_name,
                 score=sw.total_score,
-                signal_price=sw.price,
+                signal_price=sw.price,  # Friday close (reference)
+                entry_price=entry_price or sw.price,  # Monday open (actual buy)
                 signal_types=sw.signal_summary,
             )
             signals.append(signal)
@@ -167,33 +181,63 @@ class SignalBacktester:
         return signals
 
     async def update_returns(self, signal: TrackedSignal) -> TrackedSignal:
-        """Update forward returns for a signal."""
+        """Update forward returns for a signal based on Monday entry price."""
         signal_date = datetime.strptime(signal.signal_date, "%Y-%m-%d")
+        entry_date = signal_date + timedelta(days=3)  # Monday after Friday signal
         today = datetime.now()
 
-        # Calculate target dates
-        date_3m = signal_date + timedelta(days=90)
-        date_6m = signal_date + timedelta(days=180)
+        # Use entry_price if set, otherwise fall back to signal_price
+        base_price = signal.entry_price if signal.entry_price else signal.signal_price
+        if not base_price or base_price <= 0:
+            return signal
 
-        # Get current price
-        current_price = await self.get_price_on_date(signal.ticker, today.strftime("%Y-%m-%d"))
-        if current_price:
-            signal.price_current = current_price
-            signal.return_current = (current_price - signal.signal_price) / signal.signal_price
+        # Set entry date if not already set
+        if not signal.entry_date:
+            signal.entry_date = entry_date.strftime("%Y-%m-%d")
+
+        # Get entry price if not already set
+        if not signal.entry_price or signal.entry_price == signal.signal_price:
+            entry_price = await self.get_price_on_date(signal.ticker, signal.entry_date)
+            if entry_price:
+                signal.entry_price = entry_price
+                base_price = entry_price
+
+        # Calculate target dates from ENTRY date (Monday), not signal date (Friday)
+        date_3m = entry_date + timedelta(days=90)
+        date_6m = entry_date + timedelta(days=180)
+        date_12m = entry_date + timedelta(days=365)
 
         # Get 3M price if date has passed
         if date_3m <= today:
             price_3m = await self.get_price_on_date(signal.ticker, date_3m.strftime("%Y-%m-%d"))
             if price_3m:
                 signal.price_3m = price_3m
-                signal.return_3m = (price_3m - signal.signal_price) / signal.signal_price
+                signal.return_3m = (price_3m - base_price) / base_price
 
         # Get 6M price if date has passed
         if date_6m <= today:
             price_6m = await self.get_price_on_date(signal.ticker, date_6m.strftime("%Y-%m-%d"))
             if price_6m:
                 signal.price_6m = price_6m
-                signal.return_6m = (price_6m - signal.signal_price) / signal.signal_price
+                signal.return_6m = (price_6m - base_price) / base_price
+
+        # Get 12M price if date has passed
+        if date_12m <= today:
+            price_12m = await self.get_price_on_date(signal.ticker, date_12m.strftime("%Y-%m-%d"))
+            if price_12m:
+                signal.price_12m = price_12m
+                signal.return_12m = (price_12m - base_price) / base_price
+
+        # Only show current price for signals less than 12 months old
+        if date_12m > today:
+            current_price = await self.get_price_on_date(signal.ticker, today.strftime("%Y-%m-%d"))
+            if current_price:
+                signal.price_current = current_price
+                signal.return_current = (current_price - base_price) / base_price
+        else:
+            # For older signals, clear current (12M is the final result)
+            signal.price_current = None
+            signal.return_current = None
 
         return signal
 
@@ -266,18 +310,31 @@ class SignalBacktester:
         # Calculate stats
         returns_3m = [s.return_3m for s in signals if s.return_3m is not None]
         returns_6m = [s.return_6m for s in signals if s.return_6m is not None]
+        returns_12m = [s.return_12m for s in signals if s.return_12m is not None]
         returns_current = [s.return_current for s in signals if s.return_current is not None]
 
         avg_3m = sum(returns_3m) / len(returns_3m) * 100 if returns_3m else 0
         avg_6m = sum(returns_6m) / len(returns_6m) * 100 if returns_6m else 0
+        avg_12m = sum(returns_12m) / len(returns_12m) * 100 if returns_12m else 0
         avg_current = sum(returns_current) / len(returns_current) * 100 if returns_current else 0
 
         win_rate_3m = len([r for r in returns_3m if r > 0]) / len(returns_3m) * 100 if returns_3m else 0
         win_rate_6m = len([r for r in returns_6m if r > 0]) / len(returns_6m) * 100 if returns_6m else 0
+        win_rate_12m = len([r for r in returns_12m if r > 0]) / len(returns_12m) * 100 if returns_12m else 0
 
-        # Find best/worst
-        best_current = max(signals, key=lambda s: s.return_current or -999)
-        worst_current = min(signals, key=lambda s: s.return_current if s.return_current is not None else 999)
+        # Find best/worst based on best available return (12M > 6M > 3M > current)
+        def best_return(s):
+            if s.return_12m is not None:
+                return s.return_12m
+            if s.return_current is not None:
+                return s.return_current
+            return -999
+
+        best_signal = max(signals, key=best_return)
+        worst_signal = min(signals, key=lambda s: best_return(s) if best_return(s) != -999 else 999)
+
+        best_ret = best_return(best_signal)
+        worst_ret = best_return(worst_signal)
 
         now = datetime.now()
 
@@ -296,39 +353,48 @@ title: Performance Track Record
 
 ## Summary Statistics
 
-| Metric | 3-Month | 6-Month | Current |
-|--------|---------|---------|---------|
-| **Avg Return** | {avg_3m:+.1f}% | {avg_6m:+.1f}% | {avg_current:+.1f}% |
-| **Win Rate** | {win_rate_3m:.0f}% | {win_rate_6m:.0f}% | - |
-| **Sample Size** | {len(returns_3m)} | {len(returns_6m)} | {len(returns_current)} |
+| Metric | 3-Month | 6-Month | 12-Month |
+|--------|---------|---------|----------|
+| **Avg Return** | {avg_3m:+.1f}% | {avg_6m:+.1f}% | {avg_12m:+.1f}% |
+| **Win Rate** | {win_rate_3m:.0f}% | {win_rate_6m:.0f}% | {win_rate_12m:.0f}% |
+| **Sample Size** | {len(returns_3m)} | {len(returns_6m)} | {len(returns_12m)} |
 
-**Best Pick:** {best_current.ticker} ({best_current.signal_date}) → {best_current.return_current * 100 if best_current.return_current else 0:+.1f}%
+**Recent Signals (< 12M old):** {len(returns_current)} signals, avg {avg_current:+.1f}% to date
 
-**Worst Pick:** {worst_current.ticker} ({worst_current.signal_date}) → {worst_current.return_current * 100 if worst_current.return_current else 0:+.1f}%
+**Best Pick:** {best_signal.ticker} ({best_signal.signal_date}) → {best_ret * 100:+.1f}%
+
+**Worst Pick:** {worst_signal.ticker} ({worst_signal.signal_date}) → {worst_ret * 100:+.1f}%
 
 ---
 
 ## All Signals
 
-| Date | Ticker | Company | Score | Entry | 3M | 6M | Current |
-|------|--------|---------|-------|-------|-----|-----|---------|
+*Entry = Monday open price after Friday signal (when you can actually buy)*
+
+| Signal | Entry | Ticker | Company | Score | Entry$ | 3M | 6M | 12M | Current |
+|--------|-------|--------|---------|-------|--------|-----|-----|-----|---------|
 """
 
         for s in signals:
             ret_3m = f"{s.return_3m * 100:+.1f}%" if s.return_3m is not None else "-"
             ret_6m = f"{s.return_6m * 100:+.1f}%" if s.return_6m is not None else "-"
+            ret_12m = f"{s.return_12m * 100:+.1f}%" if s.return_12m is not None else "-"
             ret_curr = f"{s.return_current * 100:+.1f}%" if s.return_current is not None else "-"
+            entry_price = s.entry_price if s.entry_price else s.signal_price
+            entry_date = s.entry_date if s.entry_date else "-"
 
-            md += f"| {s.signal_date} | **{s.ticker}** | {s.company_name[:25]} | {s.score} | ${s.signal_price:.2f} | {ret_3m} | {ret_6m} | {ret_curr} |\n"
+            md += f"| {s.signal_date} | {entry_date} | **{s.ticker}** | {s.company_name[:20]} | {s.score} | ${entry_price:.2f} | {ret_3m} | {ret_6m} | {ret_12m} | {ret_curr} |\n"
 
         md += f"""
 ---
 
 ## Methodology
 
-- **Signal Generation:** Composite scoring system identifying high-intent technical breakouts
-- **Entry Price:** Closing price on the signal week
-- **Returns:** Calculated from entry price to price on target date
+- **Signal Detection:** Friday (based on weekly data through Friday close)
+- **Entry Price:** Monday open (next trading day - when you can actually buy)
+- **Returns:** Calculated from Monday entry to price on target date
+- **3M/6M/12M:** Fixed measurement periods from entry date
+- **Current:** Only shown for signals < 12 months old
 - **Win Rate:** Percentage of signals with positive returns
 
 *Past performance does not guarantee future results.*
