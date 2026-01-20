@@ -33,6 +33,19 @@ git push -u origin main
 
 Your site will be live at: `https://YOUR_USERNAME.github.io/YOUR_REPO/`
 
+## Weekly Update (Recommended)
+
+Run this every Friday after market close:
+
+```bash
+./run_weekly.sh
+```
+
+This script:
+1. Generates this week's signal report with news synthesis
+2. Adds new signals to performance tracker + updates all returns
+3. Commits and pushes to GitHub
+
 ## Generating Reports
 
 ```bash
@@ -42,6 +55,32 @@ python generate_report.py
 # Custom options
 python generate_report.py --min-score 5 --limit 20 --days 30
 ```
+
+## Performance Tracking (Backtest)
+
+### Backtest Options
+
+```bash
+# 1. WEEKLY UPDATE (adds new week, updates returns - skips existing weeks)
+python backtest_signals.py --start 2023-01-01
+
+# 2. ONLY UPDATE RETURNS (no new signals)
+python backtest_signals.py --update
+
+# 3. FORCE FULL RERUN (deletes database, rebuilds from scratch ~35 min)
+python backtest_signals.py --start 2023-01-01 --force
+```
+
+### Performance Assumptions
+
+| Step | Description |
+|------|-------------|
+| **Signal** | Detected Friday at market close |
+| **Entry** | Monday OPEN price (next trading day) |
+| **3M Return** | Price at 90 days vs entry |
+| **6M Return** | Price at 180 days vs entry |
+| **12M Return** | Price at 365 days vs entry |
+| **Current** | Only shown for signals < 12 months old |
 
 ## Local Preview
 

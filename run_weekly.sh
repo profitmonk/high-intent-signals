@@ -5,6 +5,36 @@
 #
 # Usage: ./run_weekly.sh
 #
+# =============================================================================
+# BACKTEST OPTIONS (for manual runs):
+# =============================================================================
+#
+# 1. WEEKLY UPDATE (default - what this script does):
+#    python backtest_signals.py --start 2023-01-01
+#    - Adds new week's signals (skips existing weeks)
+#    - Updates 3M/6M/12M returns for all signals
+#    - Regenerates performance.md and archive pages
+#
+# 2. ONLY UPDATE RETURNS (no new signals):
+#    python backtest_signals.py --update
+#    - Recalculates returns for existing signals only
+#    - Use when you just want fresh return numbers
+#
+# 3. FORCE FULL RERUN (nuclear option):
+#    python backtest_signals.py --start 2023-01-01 --force
+#    - Deletes existing database and rebuilds from scratch
+#    - Takes ~35 minutes for 3 years of data
+#    - Only use if data is corrupted or you changed signal logic
+#
+# =============================================================================
+# PERFORMANCE ASSUMPTIONS:
+# =============================================================================
+# - Signal detected: Friday at market close
+# - Entry price: Monday OPEN (next trading day)
+# - Returns: Calculated at 3M (90 days), 6M (180 days), 12M (365 days)
+# - Recent signals (<12M old): Also show current return
+# =============================================================================
+#
 
 set -e  # Exit on error
 

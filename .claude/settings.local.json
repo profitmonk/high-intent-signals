@@ -11,7 +11,8 @@
       "WebFetch(domain:hedgefollow.com)",
       "WebFetch(domain:whalewisdom.com)",
       "WebSearch",
-      "WebFetch(domain:www.sec.gov)"
+      "WebFetch(domain:www.sec.gov)",
+      "WebFetch(domain:profitmonk.github.io)"
     ]
   }
 }

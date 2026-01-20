@@ -455,14 +455,44 @@ title: Signals - {week_date}
 
 
 async def main():
-    parser = argparse.ArgumentParser(description="Backtest signal performance")
-    parser.add_argument("--start", type=str, default="2025-07-01", help="Start date (default: 2025-07-01)")
-    parser.add_argument("--min-score", type=int, default=5, help="Minimum score (default: 5)")
-    parser.add_argument("--update", action="store_true", help="Only update returns, don't generate new signals")
+    parser = argparse.ArgumentParser(
+        description="Backtest signal performance with forward returns tracking",
+        epilog="""
+Examples:
+  Weekly update (adds new week, updates returns):
+    python backtest_signals.py --start 2023-01-01
+
+  Only update returns (no new signals):
+    python backtest_signals.py --update
+
+  Force full rerun from scratch (~35 min):
+    python backtest_signals.py --start 2023-01-01 --force
+
+Performance Assumptions:
+  - Entry: Monday OPEN after Friday signal
+  - Returns: 3M (90d), 6M (180d), 12M (365d) from entry
+        """,
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    parser.add_argument("--start", type=str, default="2025-07-01",
+                        help="Start date for backtest (default: 2025-07-01). Skips weeks already in database.")
+    parser.add_argument("--min-score", type=int, default=5,
+                        help="Minimum signal score to include (default: 5)")
+    parser.add_argument("--update", action="store_true",
+                        help="Only update returns for existing signals, don't add new weeks")
+    parser.add_argument("--force", action="store_true",
+                        help="Delete existing database and rerun from scratch")
     parser.add_argument("--verbose", "-v", action="store_true", help="Verbose output")
     args = parser.parse_args()
 
     setup_logging(level="DEBUG" if args.verbose else "INFO")
+
+    # Clear database if --force is used
+    if args.force:
+        db_path = Path(SIGNALS_DB_PATH)
+        if db_path.exists():
+            db_path.unlink()
+            logger.info(f"Cleared existing database: {SIGNALS_DB_PATH}")
 
     backtester = SignalBacktester()
 
