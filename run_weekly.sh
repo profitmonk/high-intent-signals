@@ -22,7 +22,7 @@ python generate_report.py --min-score 5 --limit 20
 # 2. Update backtest (adds new week + updates all returns)
 echo ""
 echo "[2/4] Updating performance tracking (this may take a few minutes)..."
-python backtest_signals.py --update
+python backtest_signals.py --start 2023-01-01
 
 # 3. Stage all changes
 echo ""
