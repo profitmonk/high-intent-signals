@@ -33,21 +33,26 @@ logger = get_logger("report_generator")
 class ReportGenerator:
     """Generates high-intent signal reports with news synthesis."""
 
-    def __init__(self, min_score: int = 4, days: int = 30):
+    def __init__(self, min_score: int = 5, max_score: int = 7, days: int = 30, min_market_cap: int = 1_000_000_000):
         self.min_score = min_score
+        self.max_score = max_score
         self.days = days
+        self.min_market_cap = min_market_cap
         self.settings = get_settings()
         self.fmp = FMPClient(settings=self.settings)
         self.synthesizer = NewsSynthesizer(settings=self.settings)
         self.scanner = HistoricalScanner(HistoricalConfig())
 
     async def fetch_signals(self) -> List[ScoredStockWeek]:
-        """Fetch high-intent signals."""
+        """Fetch high-intent signals filtered by score range and market cap."""
         signals = await self.scanner.scan_universe(force_refresh=False)
         scored = await self.scanner.get_high_intent_signals(
             min_score=self.min_score,
             days=self.days,
+            min_market_cap=self.min_market_cap,
         )
+        # Filter by max_score (scores 5-7 only)
+        scored = [s for s in scored if s.total_score <= self.max_score]
         return scored
 
     async def fetch_news_for_stock(self, ticker: str, limit: int = 5) -> List[Dict[str, Any]]:
@@ -171,9 +176,14 @@ title: High Intent Signals
 <p style="margin: 8px 0 0 0; color: #9ca3af; font-size: 0.9em;">See historical returns: 3M, 6M, and current performance for all signals</p>
 </div>
 
-**Criteria:** Score >= {self.min_score} | Last {self.days} days | {len(scored_weeks)} signals
+<div style="background: linear-gradient(135deg, #1e3a5f 0%, #2d4a6f 100%); border-radius: 8px; padding: 16px 20px; margin: 20px 0;">
+<strong style="font-size: 1.1em;">📄 <a href="research.html" style="color: #60a5fa;">Research Paper: Monte Carlo Analysis →</a></strong>
+<p style="margin: 8px 0 0 0; color: #9ca3af; font-size: 0.9em;">100% of 69 simulations profitable | Mean +127% return | Full methodology</p>
+</div>
 
-| [📈 Performance](performance.html) | [📁 Archive](archive/) |
+**Criteria:** Score {self.min_score}-{self.max_score} | Market Cap $1B+ | Last {self.days} days | {len(scored_weeks)} signals
+
+| [📈 Performance](performance.html) | [📁 Archive](archive/) | [📄 Research](research.html) |
 
 ---
 
@@ -247,8 +257,10 @@ Check back later or lower the minimum score threshold.
 async def main():
     parser = argparse.ArgumentParser(description="Generate high-intent signal report")
     parser.add_argument("--min-score", type=int, default=5, help="Minimum score threshold (default: 5)")
+    parser.add_argument("--max-score", type=int, default=7, help="Maximum score threshold (default: 7)")
     parser.add_argument("--days", type=int, default=30, help="Days to look back (default: 30)")
     parser.add_argument("--limit", type=int, default=20, help="Max stocks to include (default: 20)")
+    parser.add_argument("--min-market-cap", type=int, default=1_000_000_000, help="Minimum market cap (default: $1B)")
     parser.add_argument("--output", type=str, default="docs/index.md", help="Output file path")
     parser.add_argument("--dry-run", action="store_true", help="Print to stdout instead of saving")
     parser.add_argument("--verbose", "-v", action="store_true", help="Verbose output")
@@ -256,7 +268,12 @@ async def main():
 
     setup_logging(level="DEBUG" if args.verbose else "INFO")
 
-    generator = ReportGenerator(min_score=args.min_score, days=args.days)
+    generator = ReportGenerator(
+        min_score=args.min_score,
+        max_score=args.max_score,
+        days=args.days,
+        min_market_cap=args.min_market_cap
+    )
 
     try:
         report = await generator.generate_report(limit=args.limit)

@@ -18,7 +18,7 @@ import sys
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any, Dict, List, Optional
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, fields
 
 import pandas as pd
 
@@ -31,7 +31,8 @@ from utils.logging import setup_logging, get_logger
 
 logger = get_logger("backtest")
 
-SIGNALS_DB_PATH = Path("data/signals_history.json")
+# Use $1B+ market cap signals database (consistent with research paper)
+SIGNALS_DB_PATH = Path("data/signals_history_1b_2023.json")
 PERFORMANCE_MD_PATH = Path("docs/performance.md")
 ARCHIVE_DIR = Path("docs/archive")
 
@@ -61,7 +62,10 @@ class TrackedSignal:
 
     @classmethod
     def from_dict(cls, d: dict) -> "TrackedSignal":
-        return cls(**d)
+        # Filter to only fields that exist in the dataclass
+        valid_fields = {f.name for f in fields(cls)}
+        filtered = {k: v for k, v in d.items() if k in valid_fields}
+        return cls(**filtered)
 
 
 class SignalBacktester:
@@ -71,8 +75,10 @@ class SignalBacktester:
         self,
         use_sp500_pit: bool = False,
         use_marketcap_pit: bool = False,
-        min_market_cap: Optional[int] = None,
+        min_market_cap: Optional[int] = 1_000_000_000,  # Default $1B+
         max_market_cap: Optional[int] = None,
+        min_score: int = 5,  # Default score range 5-7 (consistent with research)
+        max_score: int = 7,
     ):
         """
         Initialize the backtester.
@@ -82,8 +88,10 @@ class SignalBacktester:
                           in S&P 500 at the signal date (survivorship-bias-free)
             use_marketcap_pit: If True, filter by point-in-time market cap
                               ($3B for 2016-2019, $5B for 2020+)
-            min_market_cap: Override minimum market cap threshold (uses dynamic if None)
+            min_market_cap: Override minimum market cap threshold (default: $1B)
             max_market_cap: Maximum market cap filter (no max if None)
+            min_score: Minimum signal score to include (default: 5)
+            max_score: Maximum signal score to include (default: 7)
         """
         self.settings = get_settings()
         self.fmp = FMPClient(settings=self.settings)
@@ -93,15 +101,22 @@ class SignalBacktester:
         self.use_marketcap_pit = use_marketcap_pit
         self.min_market_cap = min_market_cap
         self.max_market_cap = max_market_cap
+        self.min_score = min_score
+        self.max_score = max_score
         self.marketcap_universe = None
         self._load_signals_db()
 
     def _load_signals_db(self):
-        """Load existing signals database."""
+        """Load existing signals database and filter by score range."""
         if SIGNALS_DB_PATH.exists():
             data = json.loads(SIGNALS_DB_PATH.read_text())
-            self.signals_db = [TrackedSignal.from_dict(s) for s in data]
-            logger.info(f"Loaded {len(self.signals_db)} existing signals")
+            all_signals = [TrackedSignal.from_dict(s) for s in data]
+            # Filter by score range (5-7 consistent with research paper)
+            self.signals_db = [
+                s for s in all_signals
+                if self.min_score <= s.score <= self.max_score
+            ]
+            logger.info(f"Loaded {len(self.signals_db)} signals (filtered from {len(all_signals)} by score {self.min_score}-{self.max_score})")
 
     def _save_signals_db(self):
         """Save signals database."""
@@ -165,9 +180,13 @@ class SignalBacktester:
             pass
         return ticker
 
-    async def generate_signals_for_week(self, week_end_date: str, min_score: int = 5) -> List[TrackedSignal]:
+    async def generate_signals_for_week(self, week_end_date: str, min_score: Optional[int] = None) -> List[TrackedSignal]:
         """Generate signals as of a specific week end date."""
         logger.info(f"Generating signals for week ending {week_end_date}")
+
+        # Use instance min_score if not overridden
+        if min_score is None:
+            min_score = self.min_score
 
         # Get high intent signals up to this date
         scored_weeks = await self.scanner.get_high_intent_signals(
@@ -180,6 +199,9 @@ class SignalBacktester:
             min_market_cap=self.min_market_cap,
             max_market_cap=self.max_market_cap,
         )
+
+        # Filter by max_score (scores 5-7 only, consistent with research paper)
+        scored_weeks = [sw for sw in scored_weeks if sw.total_score <= self.max_score]
 
         signals = []
         for sw in scored_weeks[:10]:  # Top 10 per week
@@ -393,6 +415,8 @@ title: Performance Track Record
 ---
 
 ## Individual Signal Performance
+
+**Universe:** $1B+ Market Cap | **Scores:** {self.min_score}-{self.max_score} | **Signals:** {len(self.signals_db)}
 
 This page tracks the performance of **each individual signal** independently. For portfolio-level analysis with position sizing and compounding, see the [Research Paper](research.html).
 
