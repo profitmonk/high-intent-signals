@@ -7,23 +7,44 @@ title: Performance Track Record
 
 **Last Updated:** January 21, 2026
 
-[← Back to Latest Signals](index.md)
+[← Back to Latest Signals](index.md) | [📄 Research Paper](research.html)
 
 ---
 
-## Summary Statistics
+## Individual Signal Performance
+
+This page tracks the performance of **each individual signal** independently. For portfolio-level analysis with position sizing and compounding, see the [Research Paper](research.html).
 
 | Metric | 3-Month | 6-Month | 12-Month |
 |--------|---------|---------|----------|
-| **Avg Return** | +5.6% | +11.8% | +33.7% |
+| **Mean Return** | +5.6% | +11.8% | +33.7% |
+| **Median Return** | +0.9% | +2.9% | +12.7% |
 | **Win Rate** | 52% | 55% | 63% |
 | **Sample Size** | 1434 | 1304 | 1044 |
 
-**Recent Signals (< 12M old):** 520 signals, avg +27.6% to date
+**Recent Signals (< 12M old):** 520 signals, mean +27.6% to date
 
 **Best Pick:** SMCI (2023-03-24) → +824.3%
 
 **Worst Pick:** FLNC (2024-05-24) → -79.7%
+
+---
+
+## Portfolio Simulation Results
+
+When signals are filtered and combined into a portfolio with capital constraints, returns compound significantly higher. See [Research Paper](research.html) for full methodology.
+
+| Metric | Individual Signals | Portfolio ($1B+ segment) |
+|--------|-------------------|--------------------------|
+| **12-Month Return** | +33.7% (mean) | +127% (mean across 23 simulations) |
+| **Win Rate** | 63% | 72.5% |
+| **Methodology** | Simple average | Compounded with $100K, max 40 positions, -60% stop-loss |
+
+**Why the difference?**
+- Portfolio simulation uses **compounded returns** (gains reinvested)
+- Filters to **scores 5-7** and **$1B+ market cap** only
+- Applies **-60% stop-loss** to limit catastrophic losses
+- **Position sizing** (4% per position) prevents concentration risk
 
 ---
 
@@ -1600,6 +1621,15 @@ title: Performance Track Record
 
 ---
 
+## Definitions
+
+| Term | Definition |
+|------|------------|
+| **Mean Return** | Arithmetic average: sum of all returns ÷ number of signals |
+| **Median Return** | Middle value when returns are sorted (less affected by outliers) |
+| **Win Rate** | Percentage of signals with positive returns |
+| **CAGR** | Compound Annual Growth Rate: (Final/Initial)^(1/years) - 1 |
+
 ## Methodology
 
 - **Signal Detection:** Friday (based on weekly data through Friday close)
@@ -1607,10 +1637,12 @@ title: Performance Track Record
 - **Returns:** Calculated from Monday entry to price on target date
 - **3M/6M/12M:** Fixed measurement periods from entry date
 - **Current:** Only shown for signals < 12 months old
-- **Win Rate:** Percentage of signals with positive returns
+- **No Stop-Loss:** Individual signals tracked to completion (portfolio simulation uses -60% stop-loss)
+
+**Important:** This page shows **individual signal performance** (each signal tracked independently). The [Research Paper](research.html) shows **portfolio performance** (signals combined with position sizing, compounding, and risk management).
 
 *Past performance does not guarantee future results.*
 
 ---
 
-[← Back to Latest Signals](index.md)
+[← Back to Latest Signals](index.md) | [📄 Research Paper](research.html)

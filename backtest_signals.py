@@ -345,6 +345,20 @@ class SignalBacktester:
         avg_12m = sum(returns_12m) / len(returns_12m) * 100 if returns_12m else 0
         avg_current = sum(returns_current) / len(returns_current) * 100 if returns_current else 0
 
+        # Calculate medians
+        def median(lst):
+            if not lst:
+                return 0
+            sorted_lst = sorted(lst)
+            n = len(sorted_lst)
+            if n % 2 == 0:
+                return (sorted_lst[n//2 - 1] + sorted_lst[n//2]) / 2
+            return sorted_lst[n//2]
+
+        median_3m = median(returns_3m) * 100 if returns_3m else 0
+        median_6m = median(returns_6m) * 100 if returns_6m else 0
+        median_12m = median(returns_12m) * 100 if returns_12m else 0
+
         win_rate_3m = len([r for r in returns_3m if r > 0]) / len(returns_3m) * 100 if returns_3m else 0
         win_rate_6m = len([r for r in returns_6m if r > 0]) / len(returns_6m) * 100 if returns_6m else 0
         win_rate_12m = len([r for r in returns_12m if r > 0]) / len(returns_12m) * 100 if returns_12m else 0
@@ -374,23 +388,44 @@ title: Performance Track Record
 
 **Last Updated:** {now.strftime("%B %d, %Y")}
 
-[← Back to Latest Signals](index.md)
+[← Back to Latest Signals](index.md) | [📄 Research Paper](research.html)
 
 ---
 
-## Summary Statistics
+## Individual Signal Performance
+
+This page tracks the performance of **each individual signal** independently. For portfolio-level analysis with position sizing and compounding, see the [Research Paper](research.html).
 
 | Metric | 3-Month | 6-Month | 12-Month |
 |--------|---------|---------|----------|
-| **Avg Return** | {avg_3m:+.1f}% | {avg_6m:+.1f}% | {avg_12m:+.1f}% |
+| **Mean Return** | {avg_3m:+.1f}% | {avg_6m:+.1f}% | {avg_12m:+.1f}% |
+| **Median Return** | {median_3m:+.1f}% | {median_6m:+.1f}% | {median_12m:+.1f}% |
 | **Win Rate** | {win_rate_3m:.0f}% | {win_rate_6m:.0f}% | {win_rate_12m:.0f}% |
 | **Sample Size** | {len(returns_3m)} | {len(returns_6m)} | {len(returns_12m)} |
 
-**Recent Signals (< 12M old):** {len(returns_current)} signals, avg {avg_current:+.1f}% to date
+**Recent Signals (< 12M old):** {len(returns_current)} signals, mean {avg_current:+.1f}% to date
 
 **Best Pick:** {best_signal.ticker} ({best_signal.signal_date}) → {best_ret * 100:+.1f}%
 
 **Worst Pick:** {worst_signal.ticker} ({worst_signal.signal_date}) → {worst_ret * 100:+.1f}%
+
+---
+
+## Portfolio Simulation Results
+
+When signals are filtered and combined into a portfolio with capital constraints, returns compound significantly higher. See [Research Paper](research.html) for full methodology.
+
+| Metric | Individual Signals | Portfolio ($1B+ segment) |
+|--------|-------------------|--------------------------|
+| **12-Month Return** | {avg_12m:+.1f}% (mean) | +127% (mean across 23 simulations) |
+| **Win Rate** | {win_rate_12m:.0f}% | 72.5% |
+| **Methodology** | Simple average | Compounded with $100K, max 40 positions, -60% stop-loss |
+
+**Why the difference?**
+- Portfolio simulation uses **compounded returns** (gains reinvested)
+- Filters to **scores 5-7** and **$1B+ market cap** only
+- Applies **-60% stop-loss** to limit catastrophic losses
+- **Position sizing** (4% per position) prevents concentration risk
 
 ---
 
@@ -415,6 +450,15 @@ title: Performance Track Record
         md += f"""
 ---
 
+## Definitions
+
+| Term | Definition |
+|------|------------|
+| **Mean Return** | Arithmetic average: sum of all returns ÷ number of signals |
+| **Median Return** | Middle value when returns are sorted (less affected by outliers) |
+| **Win Rate** | Percentage of signals with positive returns |
+| **CAGR** | Compound Annual Growth Rate: (Final/Initial)^(1/years) - 1 |
+
 ## Methodology
 
 - **Signal Detection:** Friday (based on weekly data through Friday close)
@@ -422,13 +466,15 @@ title: Performance Track Record
 - **Returns:** Calculated from Monday entry to price on target date
 - **3M/6M/12M:** Fixed measurement periods from entry date
 - **Current:** Only shown for signals < 12 months old
-- **Win Rate:** Percentage of signals with positive returns
+- **No Stop-Loss:** Individual signals tracked to completion (portfolio simulation uses -60% stop-loss)
+
+**Important:** This page shows **individual signal performance** (each signal tracked independently). The [Research Paper](research.html) shows **portfolio performance** (signals combined with position sizing, compounding, and risk management).
 
 *Past performance does not guarantee future results.*
 
 ---
 
-[← Back to Latest Signals](index.md)
+[← Back to Latest Signals](index.md) | [📄 Research Paper](research.html)
 """
 
         PERFORMANCE_MD_PATH.parent.mkdir(parents=True, exist_ok=True)
