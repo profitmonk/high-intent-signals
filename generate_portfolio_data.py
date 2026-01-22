@@ -106,9 +106,10 @@ def result_to_json(result: SimulationResult, dataset_name: str) -> dict:
     # Sort holdings by current value descending
     holdings_data.sort(key=lambda x: x["current_value"], reverse=True)
 
-    # Build closed positions data (recent trades only, last 20)
+    # Build closed positions data (exclude end_of_sim - those are duplicates of current_holdings)
     closed_data = []
-    for pos in sorted(result.closed_positions, key=lambda x: x.exit_date, reverse=True)[:20]:
+    real_exits = [p for p in result.closed_positions if p.exit_reason != "end_of_sim"]
+    for pos in sorted(real_exits, key=lambda x: x.exit_date, reverse=True)[:30]:
         closed_data.append({
             "ticker": pos.ticker,
             "entry_date": pos.entry_date,

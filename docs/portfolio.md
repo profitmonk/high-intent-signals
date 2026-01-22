@@ -93,7 +93,7 @@ title: Portfolio Visualization
     </tr>
   </thead>
   <tbody>
-    {% for holding in site.data.portfolio_state.current_holdings limit:20 %}
+    {% for holding in site.data.portfolio_state.current_holdings %}
     <tr>
       <td><strong>{{ holding.ticker }}</strong></td>
       <td>{{ holding.entry_date }}</td>
@@ -109,9 +109,6 @@ title: Portfolio Visualization
 </table>
 </div>
 
-{% if site.data.portfolio_state.current_holdings.size > 20 %}
-<p class="table-note">Showing top 20 of {{ site.data.portfolio_state.current_holdings | size }} holdings by value</p>
-{% endif %}
 
 ---
 
