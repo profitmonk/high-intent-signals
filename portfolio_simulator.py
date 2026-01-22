@@ -31,9 +31,18 @@ except ImportError:
     HAS_MATPLOTLIB = False
 
 # Paths
-SIGNALS_DB_PATH = Path("data/signals_history.json")
 PRICE_CACHE_DIR = Path("data/cache")
 RESULTS_DIR = Path("simulation_results")
+
+# Dataset options - maps dataset name to (description, signals file path)
+# Default is $1B+ to match the documented research methodology
+DATASET_OPTIONS = {
+    '1b': ("$1B+ Market Cap", Path("data/signals_history_1b_2023.json")),
+    'micro-small': ("Micro-Small ($500M-$2B)", Path("data/signals_history_micro_small.json")),
+    'small-cap': ("Small-Cap ($1B-$5B)", Path("data/signals_history_small_cap.json")),
+}
+DEFAULT_DATASET = '1b'
+SIGNALS_DB_PATH = DATASET_OPTIONS[DEFAULT_DATASET][1]
 
 
 @dataclass
@@ -116,6 +125,7 @@ class SimulationResult:
     # Risk metrics
     max_drawdown: float = 0.0
     sharpe_ratio: float = 0.0
+    sortino_ratio: float = 0.0
 
     # Trade stats
     total_trades: int = 0
@@ -133,9 +143,13 @@ class SimulationResult:
 
     # Time series
     equity_curve: List[Tuple[str, float]] = field(default_factory=list)
+    drawdown_series: List[Tuple[str, float]] = field(default_factory=list)
 
     # Closed positions
     closed_positions: List[ClosedPosition] = field(default_factory=list)
+
+    # Current holdings (open positions at end of simulation)
+    current_holdings: List[Position] = field(default_factory=list)
 
 
 class PortfolioSimulator:
@@ -711,6 +725,9 @@ class PortfolioSimulator:
 
             current_date += timedelta(days=1)
 
+        # Save current holdings BEFORE closing for end-of-simulation reporting
+        result.current_holdings = list(positions.values())
+
         # Close any remaining positions at current prices
         for ticker, position in positions.items():
             signal = signal_map.get(ticker)
@@ -756,16 +773,58 @@ class PortfolioSimulator:
             if years > 0:
                 result.cagr = (cash / config.initial_capital) ** (1 / years) - 1
 
-        # Max drawdown
+        # Max drawdown and drawdown series
         peak = config.initial_capital
         max_dd = 0
+        drawdown_series = []
         for date, value in equity_curve:
             if value > peak:
                 peak = value
             dd = (peak - value) / peak
+            drawdown_series.append((date, dd))
             if dd > max_dd:
                 max_dd = dd
         result.max_drawdown = max_dd
+        result.drawdown_series = drawdown_series
+
+        # Calculate weekly returns for Sharpe/Sortino
+        if len(equity_curve) >= 2:
+            weekly_returns = []
+            for i in range(1, len(equity_curve)):
+                prev_value = equity_curve[i - 1][1]
+                curr_value = equity_curve[i][1]
+                if prev_value > 0:
+                    weekly_return = (curr_value - prev_value) / prev_value
+                    weekly_returns.append(weekly_return)
+
+            if weekly_returns:
+                # Annualization factor (52 weeks per year)
+                risk_free_weekly = 0.05 / 52  # Assume 5% annual risk-free rate
+
+                # Mean and std of weekly returns
+                mean_return = sum(weekly_returns) / len(weekly_returns)
+                variance = sum((r - mean_return) ** 2 for r in weekly_returns) / len(weekly_returns)
+                std_return = math.sqrt(variance) if variance > 0 else 0
+
+                # Sharpe Ratio (annualized)
+                if std_return > 0:
+                    sharpe_weekly = (mean_return - risk_free_weekly) / std_return
+                    result.sharpe_ratio = sharpe_weekly * math.sqrt(52)  # Annualize
+                else:
+                    result.sharpe_ratio = 0.0
+
+                # Sortino Ratio (only downside deviation)
+                downside_returns = [r for r in weekly_returns if r < risk_free_weekly]
+                if downside_returns:
+                    downside_variance = sum((r - risk_free_weekly) ** 2 for r in downside_returns) / len(downside_returns)
+                    downside_std = math.sqrt(downside_variance) if downside_variance > 0 else 0
+                    if downside_std > 0:
+                        sortino_weekly = (mean_return - risk_free_weekly) / downside_std
+                        result.sortino_ratio = sortino_weekly * math.sqrt(52)  # Annualize
+                    else:
+                        result.sortino_ratio = float('inf')
+                else:
+                    result.sortino_ratio = float('inf')  # No downside weeks
 
         # Trade statistics
         result.total_trades = len(result.closed_positions)
@@ -814,6 +873,8 @@ class PortfolioSimulator:
         print(f"  Total Return:       {result.total_return:+.1%}")
         print(f"  CAGR:               {result.cagr:+.1%}")
         print(f"  Max Drawdown:       {result.max_drawdown:.1%}")
+        print(f"  Sharpe Ratio:       {result.sharpe_ratio:.2f}")
+        print(f"  Sortino Ratio:      {result.sortino_ratio:.2f}")
         print(f"  Profit Factor:      {result.profit_factor:.2f}")
 
         print(f"\nTrade Statistics:")
@@ -1293,14 +1354,18 @@ async def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  Run default comparison:
+  Run default comparison ($1B+ market cap):
     python portfolio_simulator.py
+
+  Run with different dataset:
+    python portfolio_simulator.py --dataset small-cap
+    python portfolio_simulator.py --dataset micro-small
 
   Run rolling analysis (removes start-date bias):
     python portfolio_simulator.py --rolling
 
   Custom settings:
-    python portfolio_simulator.py --capital 50000 --stop-loss 0.20
+    python portfolio_simulator.py --capital 50000 --stop-loss 0.60
         """
     )
     parser.add_argument("--capital", type=float, default=100000,
@@ -1317,12 +1382,28 @@ Examples:
                         help="Minimum weeks between rolling start dates (default: 4)")
     parser.add_argument("--max-gap", type=int, default=6,
                         help="Maximum weeks between rolling start dates (default: 6)")
+    parser.add_argument("--dataset", type=str, choices=list(DATASET_OPTIONS.keys()),
+                        default=DEFAULT_DATASET,
+                        help=f"Dataset to use (default: {DEFAULT_DATASET})")
 
     args = parser.parse_args()
 
-    # Create simulator
+    # Get signals file for selected dataset
+    dataset_name, signals_path = DATASET_OPTIONS[args.dataset]
+    print(f"\nDataset: {dataset_name}")
+    print(f"Signals file: {signals_path}")
+
+    # Create simulator and load signals from selected dataset
     sim = PortfolioSimulator()
-    sim.load_signals()
+    if signals_path.exists():
+        with open(signals_path) as f:
+            sim.signals = json.load(f)
+        sim.signals.sort(key=lambda x: x.get('entry_date', x.get('signal_date', '')))
+        print(f"Loaded {len(sim.signals)} signals")
+        sim._load_price_cache()
+    else:
+        print(f"Warning: Signals file not found, using default")
+        sim.load_signals()
 
     # Rolling analysis mode
     if args.rolling:

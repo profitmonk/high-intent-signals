@@ -1,0 +1,1826 @@
+{
+  "generated_at": "2026-01-22T12:06:31.539037",
+  "dataset": "$1B+ Market Cap",
+  "simulation_config": {
+    "initial_capital": 100000,
+    "holding_period_days": 365,
+    "stop_loss_pct": 0.6,
+    "max_position_pct": 0.04,
+    "max_positions": 40,
+    "min_score": 5,
+    "max_score": 7,
+    "strategy_name": "Score 5-7, 12M Hold"
+  },
+  "summary_metrics": {
+    "final_value": 346079.8,
+    "total_return": 2.4608,
+    "cagr": 0.6158,
+    "max_drawdown": 0.2463,
+    "sharpe_ratio": 1.63,
+    "sortino_ratio": 1.74,
+    "win_rate": 0.6932,
+    "profit_factor": 9.68,
+    "total_trades": 88,
+    "winning_trades": 61,
+    "losing_trades": 27,
+    "long_term_pct": 0.0
+  },
+  "equity_curve": [
+    {
+      "date": "2023-06-16",
+      "value": 100287.22
+    },
+    {
+      "date": "2023-06-23",
+      "value": 97983.31
+    },
+    {
+      "date": "2023-06-30",
+      "value": 102700.75
+    },
+    {
+      "date": "2023-07-07",
+      "value": 100882.92
+    },
+    {
+      "date": "2023-07-14",
+      "value": 102514.44
+    },
+    {
+      "date": "2023-07-21",
+      "value": 103987.67
+    },
+    {
+      "date": "2023-07-28",
+      "value": 107303.88
+    },
+    {
+      "date": "2023-08-04",
+      "value": 103096.69
+    },
+    {
+      "date": "2023-08-11",
+      "value": 99511.31
+    },
+    {
+      "date": "2023-08-18",
+      "value": 94815.77
+    },
+    {
+      "date": "2023-08-25",
+      "value": 97626.77
+    },
+    {
+      "date": "2023-09-01",
+      "value": 103056.14
+    },
+    {
+      "date": "2023-09-08",
+      "value": 99651.64
+    },
+    {
+      "date": "2023-09-15",
+      "value": 97889.83
+    },
+    {
+      "date": "2023-09-22",
+      "value": 92701.88
+    },
+    {
+      "date": "2023-09-29",
+      "value": 93446.78
+    },
+    {
+      "date": "2023-10-06",
+      "value": 92884.75
+    },
+    {
+      "date": "2023-10-13",
+      "value": 91539.57
+    },
+    {
+      "date": "2023-10-20",
+      "value": 87422.13
+    },
+    {
+      "date": "2023-10-27",
+      "value": 86269.31
+    },
+    {
+      "date": "2023-11-03",
+      "value": 93585.54
+    },
+    {
+      "date": "2023-11-10",
+      "value": 92473.3
+    },
+    {
+      "date": "2023-11-17",
+      "value": 97893.5
+    },
+    {
+      "date": "2023-11-24",
+      "value": 103829.22
+    },
+    {
+      "date": "2023-12-01",
+      "value": 107615.41
+    },
+    {
+      "date": "2023-12-08",
+      "value": 108392.75
+    },
+    {
+      "date": "2023-12-15",
+      "value": 111591.62
+    },
+    {
+      "date": "2023-12-22",
+      "value": 114280.6
+    },
+    {
+      "date": "2023-12-29",
+      "value": 113452.28
+    },
+    {
+      "date": "2024-01-05",
+      "value": 107788.31
+    },
+    {
+      "date": "2024-01-12",
+      "value": 108027.91
+    },
+    {
+      "date": "2024-01-19",
+      "value": 110356.6
+    },
+    {
+      "date": "2024-01-26",
+      "value": 112791.55
+    },
+    {
+      "date": "2024-02-02",
+      "value": 116402.49
+    },
+    {
+      "date": "2024-02-09",
+      "value": 122931.79
+    },
+    {
+      "date": "2024-02-16",
+      "value": 123480.22
+    },
+    {
+      "date": "2024-02-23",
+      "value": 123704.45
+    },
+    {
+      "date": "2024-03-01",
+      "value": 132585.12
+    },
+    {
+      "date": "2024-03-08",
+      "value": 139431.99
+    },
+    {
+      "date": "2024-03-15",
+      "value": 141880.37
+    },
+    {
+      "date": "2024-03-22",
+      "value": 142300.71
+    },
+    {
+      "date": "2024-03-29",
+      "value": 143745.79
+    },
+    {
+      "date": "2024-04-05",
+      "value": 138890.95
+    },
+    {
+      "date": "2024-04-12",
+      "value": 136302.39
+    },
+    {
+      "date": "2024-04-19",
+      "value": 125939.04
+    },
+    {
+      "date": "2024-04-26",
+      "value": 134465.86
+    },
+    {
+      "date": "2024-05-03",
+      "value": 136719.85
+    },
+    {
+      "date": "2024-05-10",
+      "value": 137318.53
+    },
+    {
+      "date": "2024-05-17",
+      "value": 145778.62
+    },
+    {
+      "date": "2024-05-24",
+      "value": 142873.5
+    },
+    {
+      "date": "2024-05-31",
+      "value": 140880.24
+    },
+    {
+      "date": "2024-06-07",
+      "value": 136967.87
+    },
+    {
+      "date": "2024-06-14",
+      "value": 138047.36
+    },
+    {
+      "date": "2024-06-21",
+      "value": 137029.53
+    },
+    {
+      "date": "2024-06-28",
+      "value": 135974.81
+    },
+    {
+      "date": "2024-07-05",
+      "value": 135547.14
+    },
+    {
+      "date": "2024-07-12",
+      "value": 141482.12
+    },
+    {
+      "date": "2024-07-19",
+      "value": 138260.88
+    },
+    {
+      "date": "2024-07-26",
+      "value": 136758.39
+    },
+    {
+      "date": "2024-08-02",
+      "value": 126896.53
+    },
+    {
+      "date": "2024-08-09",
+      "value": 127647.26
+    },
+    {
+      "date": "2024-08-16",
+      "value": 133666.06
+    },
+    {
+      "date": "2024-08-23",
+      "value": 140767.28
+    },
+    {
+      "date": "2024-08-30",
+      "value": 141977.55
+    },
+    {
+      "date": "2024-09-06",
+      "value": 134019.18
+    },
+    {
+      "date": "2024-09-13",
+      "value": 142145.91
+    },
+    {
+      "date": "2024-09-20",
+      "value": 143425.34
+    },
+    {
+      "date": "2024-09-27",
+      "value": 147364.08
+    },
+    {
+      "date": "2024-10-04",
+      "value": 146760.5
+    },
+    {
+      "date": "2024-10-11",
+      "value": 149051.12
+    },
+    {
+      "date": "2024-10-18",
+      "value": 168134.33
+    },
+    {
+      "date": "2024-10-25",
+      "value": 161247.53
+    },
+    {
+      "date": "2024-11-01",
+      "value": 162480.43
+    },
+    {
+      "date": "2024-11-08",
+      "value": 173496.3
+    },
+    {
+      "date": "2024-11-15",
+      "value": 166896.74
+    },
+    {
+      "date": "2024-11-22",
+      "value": 179051.86
+    },
+    {
+      "date": "2024-11-29",
+      "value": 182196.18
+    },
+    {
+      "date": "2024-12-06",
+      "value": 187043.19
+    },
+    {
+      "date": "2024-12-13",
+      "value": 186056.53
+    },
+    {
+      "date": "2024-12-20",
+      "value": 181226.96
+    },
+    {
+      "date": "2024-12-27",
+      "value": 183058.91
+    },
+    {
+      "date": "2025-01-03",
+      "value": 187954.82
+    },
+    {
+      "date": "2025-01-10",
+      "value": 180000.51
+    },
+    {
+      "date": "2025-01-17",
+      "value": 185092.4
+    },
+    {
+      "date": "2025-01-24",
+      "value": 194081.28
+    },
+    {
+      "date": "2025-01-31",
+      "value": 186454.63
+    },
+    {
+      "date": "2025-02-07",
+      "value": 187424.87
+    },
+    {
+      "date": "2025-02-14",
+      "value": 192358.61
+    },
+    {
+      "date": "2025-02-21",
+      "value": 177673.83
+    },
+    {
+      "date": "2025-02-28",
+      "value": 181537.22
+    },
+    {
+      "date": "2025-03-07",
+      "value": 171526.5
+    },
+    {
+      "date": "2025-03-14",
+      "value": 171228.93
+    },
+    {
+      "date": "2025-03-21",
+      "value": 171873.66
+    },
+    {
+      "date": "2025-03-28",
+      "value": 162238.09
+    },
+    {
+      "date": "2025-04-04",
+      "value": 146281.36
+    },
+    {
+      "date": "2025-04-11",
+      "value": 157729.61
+    },
+    {
+      "date": "2025-04-18",
+      "value": 156272.37
+    },
+    {
+      "date": "2025-04-25",
+      "value": 163744.71
+    },
+    {
+      "date": "2025-05-02",
+      "value": 170861.66
+    },
+    {
+      "date": "2025-05-09",
+      "value": 170270.83
+    },
+    {
+      "date": "2025-05-16",
+      "value": 179377.06
+    },
+    {
+      "date": "2025-05-23",
+      "value": 176076.68
+    },
+    {
+      "date": "2025-05-30",
+      "value": 178056.93
+    },
+    {
+      "date": "2025-06-06",
+      "value": 183306.18
+    },
+    {
+      "date": "2025-06-13",
+      "value": 186231.69
+    },
+    {
+      "date": "2025-06-20",
+      "value": 188162.14
+    },
+    {
+      "date": "2025-06-27",
+      "value": 195204.98
+    },
+    {
+      "date": "2025-07-04",
+      "value": 202235.29
+    },
+    {
+      "date": "2025-07-11",
+      "value": 206946.31
+    },
+    {
+      "date": "2025-07-18",
+      "value": 217722.69
+    },
+    {
+      "date": "2025-07-25",
+      "value": 219687.55
+    },
+    {
+      "date": "2025-08-01",
+      "value": 211143.61
+    },
+    {
+      "date": "2025-08-08",
+      "value": 223289.28
+    },
+    {
+      "date": "2025-08-15",
+      "value": 222095.92
+    },
+    {
+      "date": "2025-08-22",
+      "value": 221349.53
+    },
+    {
+      "date": "2025-08-29",
+      "value": 234958.11
+    },
+    {
+      "date": "2025-09-05",
+      "value": 238449.22
+    },
+    {
+      "date": "2025-09-12",
+      "value": 252759.37
+    },
+    {
+      "date": "2025-09-19",
+      "value": 267994.84
+    },
+    {
+      "date": "2025-09-26",
+      "value": 266739.86
+    },
+    {
+      "date": "2025-10-03",
+      "value": 279655.15
+    },
+    {
+      "date": "2025-10-10",
+      "value": 285612.13
+    },
+    {
+      "date": "2025-10-17",
+      "value": 295120.95
+    },
+    {
+      "date": "2025-10-24",
+      "value": 285619.63
+    },
+    {
+      "date": "2025-10-31",
+      "value": 289780.92
+    },
+    {
+      "date": "2025-11-07",
+      "value": 275025.71
+    },
+    {
+      "date": "2025-11-14",
+      "value": 266621.53
+    },
+    {
+      "date": "2025-11-21",
+      "value": 252473.0
+    },
+    {
+      "date": "2025-11-28",
+      "value": 285655.25
+    },
+    {
+      "date": "2025-12-05",
+      "value": 282586.59
+    },
+    {
+      "date": "2025-12-12",
+      "value": 295005.18
+    },
+    {
+      "date": "2025-12-19",
+      "value": 296363.78
+    },
+    {
+      "date": "2025-12-26",
+      "value": 300399.46
+    },
+    {
+      "date": "2026-01-02",
+      "value": 302072.56
+    },
+    {
+      "date": "2026-01-09",
+      "value": 325471.03
+    },
+    {
+      "date": "2026-01-16",
+      "value": 348310.92
+    }
+  ],
+  "drawdown_series": [
+    {
+      "date": "2023-06-16",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2023-06-23",
+      "drawdown": 0.023
+    },
+    {
+      "date": "2023-06-30",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2023-07-07",
+      "drawdown": 0.0177
+    },
+    {
+      "date": "2023-07-14",
+      "drawdown": 0.0018
+    },
+    {
+      "date": "2023-07-21",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2023-07-28",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2023-08-04",
+      "drawdown": 0.0392
+    },
+    {
+      "date": "2023-08-11",
+      "drawdown": 0.0726
+    },
+    {
+      "date": "2023-08-18",
+      "drawdown": 0.1164
+    },
+    {
+      "date": "2023-08-25",
+      "drawdown": 0.0902
+    },
+    {
+      "date": "2023-09-01",
+      "drawdown": 0.0396
+    },
+    {
+      "date": "2023-09-08",
+      "drawdown": 0.0713
+    },
+    {
+      "date": "2023-09-15",
+      "drawdown": 0.0877
+    },
+    {
+      "date": "2023-09-22",
+      "drawdown": 0.1361
+    },
+    {
+      "date": "2023-09-29",
+      "drawdown": 0.1291
+    },
+    {
+      "date": "2023-10-06",
+      "drawdown": 0.1344
+    },
+    {
+      "date": "2023-10-13",
+      "drawdown": 0.1469
+    },
+    {
+      "date": "2023-10-20",
+      "drawdown": 0.1853
+    },
+    {
+      "date": "2023-10-27",
+      "drawdown": 0.196
+    },
+    {
+      "date": "2023-11-03",
+      "drawdown": 0.1278
+    },
+    {
+      "date": "2023-11-10",
+      "drawdown": 0.1382
+    },
+    {
+      "date": "2023-11-17",
+      "drawdown": 0.0877
+    },
+    {
+      "date": "2023-11-24",
+      "drawdown": 0.0324
+    },
+    {
+      "date": "2023-12-01",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2023-12-08",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2023-12-15",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2023-12-22",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2023-12-29",
+      "drawdown": 0.0072
+    },
+    {
+      "date": "2024-01-05",
+      "drawdown": 0.0568
+    },
+    {
+      "date": "2024-01-12",
+      "drawdown": 0.0547
+    },
+    {
+      "date": "2024-01-19",
+      "drawdown": 0.0343
+    },
+    {
+      "date": "2024-01-26",
+      "drawdown": 0.013
+    },
+    {
+      "date": "2024-02-02",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2024-02-09",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2024-02-16",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2024-02-23",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2024-03-01",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2024-03-08",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2024-03-15",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2024-03-22",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2024-03-29",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2024-04-05",
+      "drawdown": 0.0338
+    },
+    {
+      "date": "2024-04-12",
+      "drawdown": 0.0518
+    },
+    {
+      "date": "2024-04-19",
+      "drawdown": 0.1239
+    },
+    {
+      "date": "2024-04-26",
+      "drawdown": 0.0646
+    },
+    {
+      "date": "2024-05-03",
+      "drawdown": 0.0489
+    },
+    {
+      "date": "2024-05-10",
+      "drawdown": 0.0447
+    },
+    {
+      "date": "2024-05-17",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2024-05-24",
+      "drawdown": 0.0199
+    },
+    {
+      "date": "2024-05-31",
+      "drawdown": 0.0336
+    },
+    {
+      "date": "2024-06-07",
+      "drawdown": 0.0604
+    },
+    {
+      "date": "2024-06-14",
+      "drawdown": 0.053
+    },
+    {
+      "date": "2024-06-21",
+      "drawdown": 0.06
+    },
+    {
+      "date": "2024-06-28",
+      "drawdown": 0.0673
+    },
+    {
+      "date": "2024-07-05",
+      "drawdown": 0.0702
+    },
+    {
+      "date": "2024-07-12",
+      "drawdown": 0.0295
+    },
+    {
+      "date": "2024-07-19",
+      "drawdown": 0.0516
+    },
+    {
+      "date": "2024-07-26",
+      "drawdown": 0.0619
+    },
+    {
+      "date": "2024-08-02",
+      "drawdown": 0.1295
+    },
+    {
+      "date": "2024-08-09",
+      "drawdown": 0.1244
+    },
+    {
+      "date": "2024-08-16",
+      "drawdown": 0.0831
+    },
+    {
+      "date": "2024-08-23",
+      "drawdown": 0.0344
+    },
+    {
+      "date": "2024-08-30",
+      "drawdown": 0.0261
+    },
+    {
+      "date": "2024-09-06",
+      "drawdown": 0.0807
+    },
+    {
+      "date": "2024-09-13",
+      "drawdown": 0.0249
+    },
+    {
+      "date": "2024-09-20",
+      "drawdown": 0.0161
+    },
+    {
+      "date": "2024-09-27",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2024-10-04",
+      "drawdown": 0.0041
+    },
+    {
+      "date": "2024-10-11",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2024-10-18",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2024-10-25",
+      "drawdown": 0.041
+    },
+    {
+      "date": "2024-11-01",
+      "drawdown": 0.0336
+    },
+    {
+      "date": "2024-11-08",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2024-11-15",
+      "drawdown": 0.038
+    },
+    {
+      "date": "2024-11-22",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2024-11-29",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2024-12-06",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2024-12-13",
+      "drawdown": 0.0053
+    },
+    {
+      "date": "2024-12-20",
+      "drawdown": 0.0311
+    },
+    {
+      "date": "2024-12-27",
+      "drawdown": 0.0213
+    },
+    {
+      "date": "2025-01-03",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2025-01-10",
+      "drawdown": 0.0423
+    },
+    {
+      "date": "2025-01-17",
+      "drawdown": 0.0152
+    },
+    {
+      "date": "2025-01-24",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2025-01-31",
+      "drawdown": 0.0393
+    },
+    {
+      "date": "2025-02-07",
+      "drawdown": 0.0343
+    },
+    {
+      "date": "2025-02-14",
+      "drawdown": 0.0089
+    },
+    {
+      "date": "2025-02-21",
+      "drawdown": 0.0845
+    },
+    {
+      "date": "2025-02-28",
+      "drawdown": 0.0646
+    },
+    {
+      "date": "2025-03-07",
+      "drawdown": 0.1162
+    },
+    {
+      "date": "2025-03-14",
+      "drawdown": 0.1177
+    },
+    {
+      "date": "2025-03-21",
+      "drawdown": 0.1144
+    },
+    {
+      "date": "2025-03-28",
+      "drawdown": 0.1641
+    },
+    {
+      "date": "2025-04-04",
+      "drawdown": 0.2463
+    },
+    {
+      "date": "2025-04-11",
+      "drawdown": 0.1873
+    },
+    {
+      "date": "2025-04-18",
+      "drawdown": 0.1948
+    },
+    {
+      "date": "2025-04-25",
+      "drawdown": 0.1563
+    },
+    {
+      "date": "2025-05-02",
+      "drawdown": 0.1196
+    },
+    {
+      "date": "2025-05-09",
+      "drawdown": 0.1227
+    },
+    {
+      "date": "2025-05-16",
+      "drawdown": 0.0758
+    },
+    {
+      "date": "2025-05-23",
+      "drawdown": 0.0928
+    },
+    {
+      "date": "2025-05-30",
+      "drawdown": 0.0826
+    },
+    {
+      "date": "2025-06-06",
+      "drawdown": 0.0555
+    },
+    {
+      "date": "2025-06-13",
+      "drawdown": 0.0404
+    },
+    {
+      "date": "2025-06-20",
+      "drawdown": 0.0305
+    },
+    {
+      "date": "2025-06-27",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2025-07-04",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2025-07-11",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2025-07-18",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2025-07-25",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2025-08-01",
+      "drawdown": 0.0389
+    },
+    {
+      "date": "2025-08-08",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2025-08-15",
+      "drawdown": 0.0053
+    },
+    {
+      "date": "2025-08-22",
+      "drawdown": 0.0087
+    },
+    {
+      "date": "2025-08-29",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2025-09-05",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2025-09-12",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2025-09-19",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2025-09-26",
+      "drawdown": 0.0047
+    },
+    {
+      "date": "2025-10-03",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2025-10-10",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2025-10-17",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2025-10-24",
+      "drawdown": 0.0322
+    },
+    {
+      "date": "2025-10-31",
+      "drawdown": 0.0181
+    },
+    {
+      "date": "2025-11-07",
+      "drawdown": 0.0681
+    },
+    {
+      "date": "2025-11-14",
+      "drawdown": 0.0966
+    },
+    {
+      "date": "2025-11-21",
+      "drawdown": 0.1445
+    },
+    {
+      "date": "2025-11-28",
+      "drawdown": 0.0321
+    },
+    {
+      "date": "2025-12-05",
+      "drawdown": 0.0425
+    },
+    {
+      "date": "2025-12-12",
+      "drawdown": 0.0004
+    },
+    {
+      "date": "2025-12-19",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2025-12-26",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2026-01-02",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2026-01-09",
+      "drawdown": 0.0
+    },
+    {
+      "date": "2026-01-16",
+      "drawdown": 0.0
+    }
+  ],
+  "current_holdings": [
+    {
+      "ticker": "SATS",
+      "entry_date": "2025-06-25",
+      "entry_price": 24.63,
+      "current_price": 122,
+      "shares": 313,
+      "cost_basis": 7709.19,
+      "current_value": 38186,
+      "pnl_pct": 395.33,
+      "score": 7
+    },
+    {
+      "ticker": "HL",
+      "entry_date": "2025-06-11",
+      "entry_price": 6.07,
+      "current_price": 28.24,
+      "shares": 1226,
+      "cost_basis": 7441.82,
+      "current_value": 34622.24,
+      "pnl_pct": 365.24,
+      "score": 6
+    },
+    {
+      "ticker": "RKLB",
+      "entry_date": "2025-07-02",
+      "entry_price": 35.68,
+      "current_price": 89.16,
+      "shares": 226,
+      "cost_basis": 8063.68,
+      "current_value": 20150.16,
+      "pnl_pct": 149.89,
+      "score": 7
+    },
+    {
+      "ticker": "AG",
+      "entry_date": "2025-06-11",
+      "entry_price": 8.34,
+      "current_price": 22.46,
+      "shares": 893,
+      "cost_basis": 7447.62,
+      "current_value": 20056.78,
+      "pnl_pct": 169.3,
+      "score": 7
+    },
+    {
+      "ticker": "CDE",
+      "entry_date": "2025-06-11",
+      "entry_price": 9.15,
+      "current_price": 22.87,
+      "shares": 813,
+      "cost_basis": 7438.95,
+      "current_value": 18593.31,
+      "pnl_pct": 149.95,
+      "score": 6
+    },
+    {
+      "ticker": "PAAS",
+      "entry_date": "2025-06-11",
+      "entry_price": 28.66,
+      "current_price": 58.62,
+      "shares": 259,
+      "cost_basis": 7422.94,
+      "current_value": 15182.58,
+      "pnl_pct": 104.54,
+      "score": 7
+    },
+    {
+      "ticker": "SYM",
+      "entry_date": "2025-06-25",
+      "entry_price": 34.91,
+      "current_price": 63.12,
+      "shares": 221,
+      "cost_basis": 7715.11,
+      "current_value": 13949.52,
+      "pnl_pct": 80.81,
+      "score": 6
+    },
+    {
+      "ticker": "MP",
+      "entry_date": "2025-06-18",
+      "entry_price": 37.22,
+      "current_price": 68.38,
+      "shares": 203,
+      "cost_basis": 7555.66,
+      "current_value": 13881.14,
+      "pnl_pct": 83.72,
+      "score": 7
+    },
+    {
+      "ticker": "AGX",
+      "entry_date": "2025-06-11",
+      "entry_price": 224.31,
+      "current_price": 384.34,
+      "shares": 33,
+      "cost_basis": 7402.23,
+      "current_value": 12683.22,
+      "pnl_pct": 71.34,
+      "score": 6
+    },
+    {
+      "ticker": "CCJ",
+      "entry_date": "2025-06-18",
+      "entry_price": 69.67,
+      "current_price": 115.8,
+      "shares": 108,
+      "cost_basis": 7524.36,
+      "current_value": 12506.4,
+      "pnl_pct": 66.21,
+      "score": 5
+    },
+    {
+      "ticker": "FSLR",
+      "entry_date": "2025-07-09",
+      "entry_price": 165.99,
+      "current_price": 242.11,
+      "shares": 49,
+      "cost_basis": 8133.51,
+      "current_value": 11863.39,
+      "pnl_pct": 45.86,
+      "score": 6
+    },
+    {
+      "ticker": "ASTS",
+      "entry_date": "2025-06-25",
+      "entry_price": 49.97,
+      "current_price": 112.44,
+      "shares": 98,
+      "cost_basis": 4897.06,
+      "current_value": 11019.12,
+      "pnl_pct": 125.02,
+      "score": 6
+    },
+    {
+      "ticker": "OKLO",
+      "entry_date": "2025-06-18",
+      "entry_price": 62.02,
+      "current_price": 89.93,
+      "shares": 121,
+      "cost_basis": 7504.42,
+      "current_value": 10881.53,
+      "pnl_pct": 45.0,
+      "score": 6
+    },
+    {
+      "ticker": "MIR",
+      "entry_date": "2025-07-02",
+      "entry_price": 20.42,
+      "current_price": 26.26,
+      "shares": 395,
+      "cost_basis": 8065.9,
+      "current_value": 10372.7,
+      "pnl_pct": 28.6,
+      "score": 6
+    },
+    {
+      "ticker": "GTLS",
+      "entry_date": "2025-07-02",
+      "entry_price": 168.15,
+      "current_price": 207.33,
+      "shares": 47,
+      "cost_basis": 7903.05,
+      "current_value": 9744.51,
+      "pnl_pct": 23.3,
+      "score": 6
+    },
+    {
+      "ticker": "IMO",
+      "entry_date": "2025-06-18",
+      "entry_price": 81.12,
+      "current_price": 97.31,
+      "shares": 93,
+      "cost_basis": 7544.16,
+      "current_value": 9049.83,
+      "pnl_pct": 19.96,
+      "score": 5
+    },
+    {
+      "ticker": "CASY",
+      "entry_date": "2025-06-18",
+      "entry_price": 506.31,
+      "current_price": 638.57,
+      "shares": 14,
+      "cost_basis": 7088.34,
+      "current_value": 8939.98,
+      "pnl_pct": 26.12,
+      "score": 5
+    },
+    {
+      "ticker": "JBL",
+      "entry_date": "2025-06-25",
+      "entry_price": 214.66,
+      "current_price": 246.75,
+      "shares": 36,
+      "cost_basis": 7727.76,
+      "current_value": 8883.0,
+      "pnl_pct": 14.95,
+      "score": 7
+    },
+    {
+      "ticker": "NTRS",
+      "entry_date": "2025-07-02",
+      "entry_price": 132.06,
+      "current_price": 143.3,
+      "shares": 61,
+      "cost_basis": 8055.66,
+      "current_value": 8741.3,
+      "pnl_pct": 8.51,
+      "score": 7
+    },
+    {
+      "ticker": "TTMI",
+      "entry_date": "2025-06-18",
+      "entry_price": 36.97,
+      "current_price": 97.83,
+      "shares": 81,
+      "cost_basis": 2994.57,
+      "current_value": 7924.23,
+      "pnl_pct": 164.62,
+      "score": 5
+    },
+    {
+      "ticker": "BNTX",
+      "entry_date": "2025-06-11",
+      "entry_price": 105.46,
+      "current_price": 105.56,
+      "shares": 70,
+      "cost_basis": 7382.2,
+      "current_value": 7389.2,
+      "pnl_pct": 0.09,
+      "score": 6
+    },
+    {
+      "ticker": "EQNR",
+      "entry_date": "2025-06-18",
+      "entry_price": 27.82,
+      "current_price": 24.84,
+      "shares": 271,
+      "cost_basis": 7539.22,
+      "current_value": 6731.64,
+      "pnl_pct": -10.71,
+      "score": 5
+    },
+    {
+      "ticker": "ORCL",
+      "entry_date": "2025-06-18",
+      "entry_price": 210.87,
+      "current_price": 179.92,
+      "shares": 35,
+      "cost_basis": 7380.45,
+      "current_value": 6297.2,
+      "pnl_pct": -14.68,
+      "score": 7
+    },
+    {
+      "ticker": "NEU",
+      "entry_date": "2025-07-02",
+      "entry_price": 720.1,
+      "current_price": 635.69,
+      "shares": 9,
+      "cost_basis": 6480.9,
+      "current_value": 5721.21,
+      "pnl_pct": -11.72,
+      "score": 6
+    },
+    {
+      "ticker": "SBSW",
+      "entry_date": "2025-06-11",
+      "entry_price": 6.98,
+      "current_price": 17.28,
+      "shares": 304,
+      "cost_basis": 2121.92,
+      "current_value": 5253.12,
+      "pnl_pct": 147.56,
+      "score": 5
+    },
+    {
+      "ticker": "COIN",
+      "entry_date": "2025-07-02",
+      "entry_price": 354.45,
+      "current_price": 227.73,
+      "shares": 22,
+      "cost_basis": 7797.9,
+      "current_value": 5010.06,
+      "pnl_pct": -35.75,
+      "score": 6
+    },
+    {
+      "ticker": "GWRE",
+      "entry_date": "2025-06-11",
+      "entry_price": 250.75,
+      "current_price": 155.45,
+      "shares": 29,
+      "cost_basis": 7271.75,
+      "current_value": 4508.05,
+      "pnl_pct": -38.01,
+      "score": 6
+    },
+    {
+      "ticker": "RCB",
+      "entry_date": "2025-04-02",
+      "entry_price": 24.79,
+      "current_price": 24.5,
+      "shares": 170,
+      "cost_basis": 4214.3,
+      "current_value": 4165.0,
+      "pnl_pct": -1.17,
+      "score": 5
+    },
+    {
+      "ticker": "IREN",
+      "entry_date": "2025-07-09",
+      "entry_price": 16.96,
+      "current_price": 54.26,
+      "shares": 45,
+      "cost_basis": 763.2,
+      "current_value": 2441.7,
+      "pnl_pct": 219.93,
+      "score": 6
+    },
+    {
+      "ticker": "ENLT",
+      "entry_date": "2025-06-25",
+      "entry_price": 23.46,
+      "current_price": 53.88,
+      "shares": 12,
+      "cost_basis": 281.52,
+      "current_value": 646.56,
+      "pnl_pct": 129.67,
+      "score": 6
+    },
+    {
+      "ticker": "HWM",
+      "entry_date": "2025-07-02",
+      "entry_price": 175.95,
+      "current_price": 220.36,
+      "shares": 2,
+      "cost_basis": 351.9,
+      "current_value": 440.72,
+      "pnl_pct": 25.24,
+      "score": 5
+    },
+    {
+      "ticker": "WRB",
+      "entry_date": "2025-04-02",
+      "entry_price": 69.75,
+      "current_price": 67.73,
+      "shares": 3,
+      "cost_basis": 209.25,
+      "current_value": 203.19,
+      "pnl_pct": -2.9,
+      "score": 5
+    }
+  ],
+  "closed_positions": [
+    {
+      "ticker": "RCB",
+      "entry_date": "2025-04-02",
+      "exit_date": "2026-01-22",
+      "entry_price": 24.79,
+      "exit_price": 24.5,
+      "pnl_pct": -1.17,
+      "holding_days": 295,
+      "exit_reason": "end_of_sim",
+      "score": 5
+    },
+    {
+      "ticker": "WRB",
+      "entry_date": "2025-04-02",
+      "exit_date": "2026-01-22",
+      "entry_price": 69.75,
+      "exit_price": 67.73,
+      "pnl_pct": -2.9,
+      "holding_days": 295,
+      "exit_reason": "end_of_sim",
+      "score": 5
+    },
+    {
+      "ticker": "PAAS",
+      "entry_date": "2025-06-11",
+      "exit_date": "2026-01-22",
+      "entry_price": 28.66,
+      "exit_price": 58.62,
+      "pnl_pct": 104.54,
+      "holding_days": 225,
+      "exit_reason": "end_of_sim",
+      "score": 7
+    },
+    {
+      "ticker": "AG",
+      "entry_date": "2025-06-11",
+      "exit_date": "2026-01-22",
+      "entry_price": 8.34,
+      "exit_price": 22.46,
+      "pnl_pct": 169.3,
+      "holding_days": 225,
+      "exit_reason": "end_of_sim",
+      "score": 7
+    },
+    {
+      "ticker": "BNTX",
+      "entry_date": "2025-06-11",
+      "exit_date": "2026-01-22",
+      "entry_price": 105.46,
+      "exit_price": 105.56,
+      "pnl_pct": 0.09,
+      "holding_days": 225,
+      "exit_reason": "end_of_sim",
+      "score": 6
+    },
+    {
+      "ticker": "HL",
+      "entry_date": "2025-06-11",
+      "exit_date": "2026-01-22",
+      "entry_price": 6.07,
+      "exit_price": 28.24,
+      "pnl_pct": 365.24,
+      "holding_days": 225,
+      "exit_reason": "end_of_sim",
+      "score": 6
+    },
+    {
+      "ticker": "CDE",
+      "entry_date": "2025-06-11",
+      "exit_date": "2026-01-22",
+      "entry_price": 9.15,
+      "exit_price": 22.87,
+      "pnl_pct": 149.95,
+      "holding_days": 225,
+      "exit_reason": "end_of_sim",
+      "score": 6
+    },
+    {
+      "ticker": "GWRE",
+      "entry_date": "2025-06-11",
+      "exit_date": "2026-01-22",
+      "entry_price": 250.75,
+      "exit_price": 155.45,
+      "pnl_pct": -38.01,
+      "holding_days": 225,
+      "exit_reason": "end_of_sim",
+      "score": 6
+    },
+    {
+      "ticker": "AGX",
+      "entry_date": "2025-06-11",
+      "exit_date": "2026-01-22",
+      "entry_price": 224.31,
+      "exit_price": 384.34,
+      "pnl_pct": 71.34,
+      "holding_days": 225,
+      "exit_reason": "end_of_sim",
+      "score": 6
+    },
+    {
+      "ticker": "SBSW",
+      "entry_date": "2025-06-11",
+      "exit_date": "2026-01-22",
+      "entry_price": 6.98,
+      "exit_price": 17.28,
+      "pnl_pct": 147.56,
+      "holding_days": 225,
+      "exit_reason": "end_of_sim",
+      "score": 5
+    },
+    {
+      "ticker": "ORCL",
+      "entry_date": "2025-06-18",
+      "exit_date": "2026-01-22",
+      "entry_price": 210.87,
+      "exit_price": 179.92,
+      "pnl_pct": -14.68,
+      "holding_days": 218,
+      "exit_reason": "end_of_sim",
+      "score": 7
+    },
+    {
+      "ticker": "MP",
+      "entry_date": "2025-06-18",
+      "exit_date": "2026-01-22",
+      "entry_price": 37.22,
+      "exit_price": 68.38,
+      "pnl_pct": 83.72,
+      "holding_days": 218,
+      "exit_reason": "end_of_sim",
+      "score": 7
+    },
+    {
+      "ticker": "OKLO",
+      "entry_date": "2025-06-18",
+      "exit_date": "2026-01-22",
+      "entry_price": 62.02,
+      "exit_price": 89.93,
+      "pnl_pct": 45.0,
+      "holding_days": 218,
+      "exit_reason": "end_of_sim",
+      "score": 6
+    },
+    {
+      "ticker": "EQNR",
+      "entry_date": "2025-06-18",
+      "exit_date": "2026-01-22",
+      "entry_price": 27.82,
+      "exit_price": 24.84,
+      "pnl_pct": -10.71,
+      "holding_days": 218,
+      "exit_reason": "end_of_sim",
+      "score": 5
+    },
+    {
+      "ticker": "CCJ",
+      "entry_date": "2025-06-18",
+      "exit_date": "2026-01-22",
+      "entry_price": 69.67,
+      "exit_price": 115.8,
+      "pnl_pct": 66.21,
+      "holding_days": 218,
+      "exit_reason": "end_of_sim",
+      "score": 5
+    },
+    {
+      "ticker": "IMO",
+      "entry_date": "2025-06-18",
+      "exit_date": "2026-01-22",
+      "entry_price": 81.12,
+      "exit_price": 97.31,
+      "pnl_pct": 19.96,
+      "holding_days": 218,
+      "exit_reason": "end_of_sim",
+      "score": 5
+    },
+    {
+      "ticker": "CASY",
+      "entry_date": "2025-06-18",
+      "exit_date": "2026-01-22",
+      "entry_price": 506.31,
+      "exit_price": 638.57,
+      "pnl_pct": 26.12,
+      "holding_days": 218,
+      "exit_reason": "end_of_sim",
+      "score": 5
+    },
+    {
+      "ticker": "TTMI",
+      "entry_date": "2025-06-18",
+      "exit_date": "2026-01-22",
+      "entry_price": 36.97,
+      "exit_price": 97.83,
+      "pnl_pct": 164.62,
+      "holding_days": 218,
+      "exit_reason": "end_of_sim",
+      "score": 5
+    },
+    {
+      "ticker": "SATS",
+      "entry_date": "2025-06-25",
+      "exit_date": "2026-01-22",
+      "entry_price": 24.63,
+      "exit_price": 122,
+      "pnl_pct": 395.33,
+      "holding_days": 211,
+      "exit_reason": "end_of_sim",
+      "score": 7
+    },
+    {
+      "ticker": "JBL",
+      "entry_date": "2025-06-25",
+      "exit_date": "2026-01-22",
+      "entry_price": 214.66,
+      "exit_price": 246.75,
+      "pnl_pct": 14.95,
+      "holding_days": 211,
+      "exit_reason": "end_of_sim",
+      "score": 7
+    }
+  ],
+  "monthly_returns": [
+    {
+      "month": "2023-06",
+      "return": 0.0241
+    },
+    {
+      "month": "2023-07",
+      "return": 0.0448
+    },
+    {
+      "month": "2023-08",
+      "return": -0.0902
+    },
+    {
+      "month": "2023-09",
+      "return": -0.0428
+    },
+    {
+      "month": "2023-10",
+      "return": -0.0768
+    },
+    {
+      "month": "2023-11",
+      "return": 0.2035
+    },
+    {
+      "month": "2023-12",
+      "return": 0.0927
+    },
+    {
+      "month": "2024-01",
+      "return": -0.0058
+    },
+    {
+      "month": "2024-02",
+      "return": 0.0968
+    },
+    {
+      "month": "2024-03",
+      "return": 0.162
+    },
+    {
+      "month": "2024-04",
+      "return": -0.0646
+    },
+    {
+      "month": "2024-05",
+      "return": 0.0477
+    },
+    {
+      "month": "2024-06",
+      "return": -0.0348
+    },
+    {
+      "month": "2024-07",
+      "return": 0.0058
+    },
+    {
+      "month": "2024-08",
+      "return": 0.0382
+    },
+    {
+      "month": "2024-09",
+      "return": 0.0379
+    },
+    {
+      "month": "2024-10",
+      "return": 0.0942
+    },
+    {
+      "month": "2024-11",
+      "return": 0.1299
+    },
+    {
+      "month": "2024-12",
+      "return": 0.0047
+    },
+    {
+      "month": "2025-01",
+      "return": 0.0185
+    },
+    {
+      "month": "2025-02",
+      "return": -0.0264
+    },
+    {
+      "month": "2025-03",
+      "return": -0.1063
+    },
+    {
+      "month": "2025-04",
+      "return": 0.0093
+    },
+    {
+      "month": "2025-05",
+      "return": 0.0874
+    },
+    {
+      "month": "2025-06",
+      "return": 0.0963
+    },
+    {
+      "month": "2025-07",
+      "return": 0.1254
+    },
+    {
+      "month": "2025-08",
+      "return": 0.0695
+    },
+    {
+      "month": "2025-09",
+      "return": 0.1353
+    },
+    {
+      "month": "2025-10",
+      "return": 0.0864
+    },
+    {
+      "month": "2025-11",
+      "return": -0.0142
+    },
+    {
+      "month": "2025-12",
+      "return": 0.0516
+    },
+    {
+      "month": "2026-01",
+      "return": 0.1595
+    }
+  ]
+}

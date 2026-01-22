@@ -7,7 +7,7 @@ title: Performance Track Record
 
 **Last Updated:** January 21, 2026
 
-[← Back to Latest Signals](index.md) | [📄 Research Paper](research.html)
+[← Back to Latest Signals](index.md) | [📊 Portfolio](portfolio.html) | [📄 Research Paper](research.html)
 
 ---
 

@@ -9,6 +9,10 @@ plugins:
 markdown: kramdown
 highlighter: rouge
 
+# Include data directory
+include:
+  - _data
+
 # Exclude from processing
 exclude:
   - README.md

@@ -8,8 +8,8 @@ title: High Intent Signals
 **Generated:** January 21, 2026 at 11:40 PM
 
 <div style="background: linear-gradient(135deg, #1a472a 0%, #2d5a3d 100%); border-radius: 8px; padding: 16px 20px; margin: 20px 0;">
-<strong style="font-size: 1.1em;">📊 <a href="performance.html" style="color: #4ade80;">View Performance Track Record →</a></strong>
-<p style="margin: 8px 0 0 0; color: #9ca3af; font-size: 0.9em;">See historical returns: 3M, 6M, and current performance for all signals</p>
+<strong style="font-size: 1.1em;">📊 <a href="portfolio.html" style="color: #4ade80;">Interactive Portfolio Visualization →</a></strong>
+<p style="margin: 8px 0 0 0; color: #9ca3af; font-size: 0.9em;">Equity curve, drawdowns, monthly returns, and live holdings</p>
 </div>
 
 <div style="background: linear-gradient(135deg, #1e3a5f 0%, #2d4a6f 100%); border-radius: 8px; padding: 16px 20px; margin: 20px 0;">
@@ -19,7 +19,7 @@ title: High Intent Signals
 
 **Criteria:** Score 5-7 | Market Cap $1B+ | Last 30 days | 20 signals
 
-| [📈 Performance](performance.html) | [📁 Archive](archive/) | [📄 Research](research.html) |
+| [📊 Portfolio](portfolio.html) | [📈 Performance](performance.html) | [📁 Archive](archive/) | [📄 Research](research.html) |
 
 ---
 
