@@ -20,6 +20,21 @@ from data.fmp_client import FMPClient
 logger = logging.getLogger(__name__)
 
 
+def get_most_recent_sunday(reference_date: Optional[datetime] = None) -> datetime:
+    """
+    Get the most recent Sunday (or the reference date if it's already Sunday).
+
+    This ensures consistent date convention across all data sources.
+    The $1B+ signals database uses Sunday dates.
+    """
+    if reference_date is None:
+        reference_date = datetime.now()
+
+    # weekday(): Monday = 0, Sunday = 6
+    days_since_sunday = (reference_date.weekday() + 1) % 7
+    return reference_date - timedelta(days=days_since_sunday)
+
+
 @dataclass
 class HistoricalSignal:
     """A signal detected on a specific date."""
@@ -190,9 +205,10 @@ class HistoricalDataManager:
                 except Exception:
                     pass  # Re-download if cache is corrupted
 
-        # Calculate date range
-        end_date = datetime.now().strftime("%Y-%m-%d")
-        start_date = (datetime.now() - timedelta(days=years * 365)).strftime("%Y-%m-%d")
+        # Calculate date range - align to Sunday for consistent week boundaries
+        end_dt = get_most_recent_sunday()
+        end_date = end_dt.strftime("%Y-%m-%d")
+        start_date = (end_dt - timedelta(days=years * 365)).strftime("%Y-%m-%d")
 
         try:
             data = await self.fmp.get_historical_prices(ticker, start_date, end_date)
@@ -254,7 +270,7 @@ class HistoricalDataManager:
         # Resample to weekly
         daily = daily.set_index("date")
 
-        weekly = daily.resample("W-FRI").agg({
+        weekly = daily.resample("W-SUN").agg({
             "open": "first",
             "high": "max",
             "low": "min",

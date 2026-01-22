@@ -40,7 +40,7 @@ ARCHIVE_DIR = Path("docs/archive")
 @dataclass
 class TrackedSignal:
     """A signal with tracked returns."""
-    signal_date: str          # Friday when signal was detected
+    signal_date: str          # Sunday when signal was detected (week-end date)
     entry_date: str = ""      # Monday when you could actually buy
     ticker: str = ""
     company_name: str = ""
@@ -207,9 +207,9 @@ class SignalBacktester:
         for sw in scored_weeks[:10]:  # Top 10 per week
             company_name = await self.get_company_name(sw.ticker)
 
-            # Calculate Monday entry date (next trading day after Friday signal)
+            # Calculate Monday entry date (next trading day after Sunday signal)
             signal_dt = datetime.strptime(week_end_date, "%Y-%m-%d")
-            entry_dt = signal_dt + timedelta(days=3)  # Friday + 3 = Monday
+            entry_dt = signal_dt + timedelta(days=1)  # Sunday + 1 = Monday
             entry_date = entry_dt.strftime("%Y-%m-%d")
 
             # Get Monday's open price as actual entry price
@@ -232,7 +232,7 @@ class SignalBacktester:
     async def update_returns(self, signal: TrackedSignal) -> TrackedSignal:
         """Update forward returns for a signal based on Monday entry price."""
         signal_date = datetime.strptime(signal.signal_date, "%Y-%m-%d")
-        entry_date = signal_date + timedelta(days=3)  # Monday after Friday signal
+        entry_date = signal_date + timedelta(days=1)  # Monday after Sunday signal
         today = datetime.now()
 
         # Use entry_price if set, otherwise fall back to signal_price
@@ -297,9 +297,9 @@ class SignalBacktester:
 
         existing_dates = self._get_existing_signal_dates()
 
-        # Generate week-end dates (Fridays)
+        # Generate week-end dates (Sundays)
         current = start
-        while current.weekday() != 4:  # Find first Friday
+        while current.weekday() != 6:  # Find first Sunday
             current += timedelta(days=1)
 
         weeks_to_process = []
@@ -485,7 +485,7 @@ When signals are filtered and combined into a portfolio with capital constraints
 
 ## Methodology
 
-- **Signal Detection:** Friday (based on weekly data through Friday close)
+- **Signal Detection:** Sunday (week-end date, based on weekly data through Friday close)
 - **Entry Price:** Monday open (next trading day - when you can actually buy)
 - **Returns:** Calculated from Monday entry to price on target date
 - **3M/6M/12M:** Fixed measurement periods from entry date

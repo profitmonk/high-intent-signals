@@ -1030,7 +1030,7 @@ When signals are filtered and combined into a portfolio with capital constraints
 
 ## Methodology
 
-- **Signal Detection:** Friday (based on weekly data through Friday close)
+- **Signal Detection:** Sunday (week-end date, based on weekly data through Friday close)
 - **Entry Price:** Monday open (next trading day - when you can actually buy)
 - **Returns:** Calculated from Monday entry to price on target date
 - **3M/6M/12M:** Fixed measurement periods from entry date
