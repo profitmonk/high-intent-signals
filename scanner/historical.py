@@ -273,14 +273,24 @@ class HistoricalDataManager:
         self,
         max_concurrent: int = 10,
         weekly: bool = True,
+        custom_tickers: Optional[List[str]] = None,
     ) -> Dict[str, pd.DataFrame]:
         """
         Download historical data for entire universe.
 
+        Args:
+            max_concurrent: Maximum concurrent downloads
+            weekly: If True, resample to weekly data
+            custom_tickers: Optional list of tickers to download (overrides default universe)
+
         Returns dict mapping ticker -> DataFrame.
         """
-        universe = await self.get_universe()
-        tickers = [s["symbol"] for s in universe]
+        if custom_tickers:
+            tickers = custom_tickers
+            logger.info(f"Using custom universe of {len(tickers)} tickers")
+        else:
+            universe = await self.get_universe()
+            tickers = [s["symbol"] for s in universe]
 
         logger.info(f"Downloading historical data for {len(tickers)} stocks...")
 
@@ -690,21 +700,41 @@ class HistoricalScanner:
         self.data_manager = HistoricalDataManager(self.config)
         self.detector = HistoricalSignalDetector(self.config)
         self._signals_cache: Optional[List[HistoricalSignal]] = None
+        self._sp500_universe = None  # Lazy-loaded SP500Universe
+
+    async def _get_sp500_universe(self):
+        """Lazy-load the S&P 500 universe manager."""
+        if self._sp500_universe is None:
+            from scanner.universe import SP500Universe
+            self._sp500_universe = SP500Universe()
+            await self._sp500_universe.load()
+        return self._sp500_universe
 
     async def scan_universe(
         self,
         max_concurrent: int = 10,
         force_refresh: bool = False,
+        custom_tickers: Optional[List[str]] = None,
     ) -> List[HistoricalSignal]:
         """
         Scan entire universe for historical signals.
 
         Downloads data if needed, then calculates signals.
+
+        Args:
+            max_concurrent: Maximum concurrent API requests
+            force_refresh: Force refresh of cached data
+            custom_tickers: Optional list of tickers to scan (instead of default universe)
         """
         logger.info("Starting historical scan...")
 
-        # Check for cached signals
-        signals_cache_file = self.config.cache_dir / "all_signals.json"
+        # Determine cache file name based on whether custom tickers are used
+        if custom_tickers:
+            # Use a different cache file for custom universes
+            cache_key = hash(tuple(sorted(custom_tickers))) % 10**8
+            signals_cache_file = self.config.cache_dir / f"signals_custom_{cache_key}.json"
+        else:
+            signals_cache_file = self.config.cache_dir / "all_signals.json"
 
         if not force_refresh and signals_cache_file.exists():
             cache_age = datetime.now() - datetime.fromtimestamp(signals_cache_file.stat().st_mtime)
@@ -719,6 +749,7 @@ class HistoricalScanner:
         data = await self.data_manager.download_universe_data(
             max_concurrent=max_concurrent,
             weekly=self.config.resample_to_weekly,
+            custom_tickers=custom_tickers,
         )
 
         # Calculate signals for each stock
@@ -829,6 +860,11 @@ class HistoricalScanner:
         days: Optional[int] = None,
         ticker: Optional[str] = None,
         as_of_date: Optional[str] = None,
+        use_sp500_pit: bool = False,
+        use_marketcap_pit: bool = False,
+        marketcap_universe: Optional[Any] = None,
+        min_market_cap: Optional[int] = None,
+        max_market_cap: Optional[int] = None,
     ) -> List[ScoredStockWeek]:
         """
         Get high-intent signals aggregated by stock-week with composite scoring.
@@ -839,6 +875,12 @@ class HistoricalScanner:
             ticker: Filter to specific ticker (default: all)
             as_of_date: Only include signals on or before this date (YYYY-MM-DD)
                        Used for point-in-time backtesting
+            use_sp500_pit: If True, filter to only stocks that were in S&P 500
+                          at the as_of_date (point-in-time, survivorship-bias-free)
+            use_marketcap_pit: If True, filter by point-in-time market cap threshold
+            marketcap_universe: HistoricalMarketCapUniverse instance (required if use_marketcap_pit=True)
+            min_market_cap: Override minimum market cap filter (uses dynamic threshold if None)
+            max_market_cap: Maximum market cap filter (no max if None)
 
         Returns:
             List of ScoredStockWeek sorted by score descending
@@ -861,6 +903,21 @@ class HistoricalScanner:
         # Filter by ticker if specified
         if ticker:
             signals = [s for s in signals if s.ticker == ticker.upper()]
+
+        # Filter to point-in-time S&P 500 members (survivorship-bias-free)
+        if use_sp500_pit and as_of_date:
+            sp500 = await self._get_sp500_universe()
+            pit_members = sp500.get_members_on_date(as_of_date)
+            signals = [s for s in signals if s.ticker in pit_members]
+
+        # Filter by point-in-time market cap (survivorship-bias-free)
+        if use_marketcap_pit and as_of_date and marketcap_universe:
+            pit_members = marketcap_universe.get_members_on_date(
+                as_of_date,
+                min_cap=min_market_cap,
+                max_cap=max_market_cap,
+            )
+            signals = [s for s in signals if s.ticker in pit_members]
 
         # Aggregate by stock-week and calculate scores
         scored_weeks = self.detector.aggregate_by_stock_week(signals)
@@ -922,5 +979,112 @@ class HistoricalScanner:
             "top_tickers": top_tickers,
         }
 
+    async def scan_sp500_historical(
+        self,
+        start_date: str = "2016-01-01",
+        end_date: Optional[str] = None,
+        max_concurrent: int = 10,
+        force_refresh: bool = False,
+    ) -> List[HistoricalSignal]:
+        """
+        Scan all historical S&P 500 members (survivorship-bias-free).
+
+        Downloads data for ALL stocks that were ever in S&P 500 during the period,
+        not just current members. This avoids survivorship bias.
+
+        Args:
+            start_date: Start of backtest period (YYYY-MM-DD)
+            end_date: End of backtest period (default: today)
+            max_concurrent: Maximum concurrent API requests
+            force_refresh: Force refresh of cached data
+
+        Returns:
+            List of all signals for the extended universe
+        """
+        if end_date is None:
+            end_date = datetime.now().strftime("%Y-%m-%d")
+
+        # Calculate years of data needed (from start_date to now + 1 year buffer)
+        start_dt = datetime.strptime(start_date, "%Y-%m-%d")
+        years_needed = (datetime.now() - start_dt).days // 365 + 2  # +2 for buffer
+
+        # Update config to fetch enough historical data
+        if years_needed > self.config.years_of_data:
+            logger.info(f"Updating years_of_data from {self.config.years_of_data} to {years_needed}")
+            self.config.years_of_data = years_needed
+            # Also update data manager's config
+            self.data_manager.config.years_of_data = years_needed
+
+        logger.info(f"Scanning survivorship-bias-free S&P 500 universe: {start_date} to {end_date}")
+        logger.info(f"Using {years_needed} years of historical data")
+
+        # Get all stocks that were ever in S&P 500 during the period
+        sp500 = await self._get_sp500_universe()
+        all_historical_members = sp500.get_all_historical_members(start_date, end_date)
+
+        logger.info(f"Total unique S&P 500 members in period: {len(all_historical_members)}")
+
+        # Scan this extended universe
+        return await self.scan_universe(
+            max_concurrent=max_concurrent,
+            force_refresh=force_refresh,
+            custom_tickers=list(all_historical_members),
+        )
+
+    async def scan_marketcap_historical(
+        self,
+        marketcap_universe,
+        start_date: str = "2016-01-01",
+        end_date: Optional[str] = None,
+        max_concurrent: int = 10,
+        force_refresh: bool = False,
+    ) -> List[HistoricalSignal]:
+        """
+        Scan all stocks with historical market cap data (survivorship-bias-free).
+
+        Downloads data for ALL stocks that have market cap history,
+        then filters by point-in-time threshold during signal retrieval.
+
+        Args:
+            marketcap_universe: HistoricalMarketCapUniverse instance
+            start_date: Start of backtest period (YYYY-MM-DD)
+            end_date: End of backtest period (default: today)
+            max_concurrent: Maximum concurrent API requests
+            force_refresh: Force refresh of cached data
+
+        Returns:
+            List of all signals for the market cap universe
+        """
+        if end_date is None:
+            end_date = datetime.now().strftime("%Y-%m-%d")
+
+        # Calculate years of data needed (from start_date to now + 1 year buffer)
+        start_dt = datetime.strptime(start_date, "%Y-%m-%d")
+        years_needed = (datetime.now() - start_dt).days // 365 + 2  # +2 for buffer
+
+        # Update config to fetch enough historical data
+        if years_needed > self.config.years_of_data:
+            logger.info(f"Updating years_of_data from {self.config.years_of_data} to {years_needed}")
+            self.config.years_of_data = years_needed
+            # Also update data manager's config
+            self.data_manager.config.years_of_data = years_needed
+
+        logger.info(f"Scanning market cap universe: {start_date} to {end_date}")
+        logger.info(f"Using {years_needed} years of historical data")
+
+        # Get all tickers with market cap history
+        all_tickers = list(marketcap_universe._market_cap_history.keys())
+
+        logger.info(f"Total tickers with market cap history: {len(all_tickers)}")
+
+        # Scan this extended universe
+        return await self.scan_universe(
+            max_concurrent=max_concurrent,
+            force_refresh=force_refresh,
+            custom_tickers=all_tickers,
+        )
+
     async def close(self):
         await self.data_manager.close()
+        if self._sp500_universe:
+            await self._sp500_universe.close()

@@ -67,11 +67,33 @@ class TrackedSignal:
 class SignalBacktester:
     """Backtests signals and tracks performance."""
 
-    def __init__(self):
+    def __init__(
+        self,
+        use_sp500_pit: bool = False,
+        use_marketcap_pit: bool = False,
+        min_market_cap: Optional[int] = None,
+        max_market_cap: Optional[int] = None,
+    ):
+        """
+        Initialize the backtester.
+
+        Args:
+            use_sp500_pit: If True, only include signals from stocks that were
+                          in S&P 500 at the signal date (survivorship-bias-free)
+            use_marketcap_pit: If True, filter by point-in-time market cap
+                              ($3B for 2016-2019, $5B for 2020+)
+            min_market_cap: Override minimum market cap threshold (uses dynamic if None)
+            max_market_cap: Maximum market cap filter (no max if None)
+        """
         self.settings = get_settings()
         self.fmp = FMPClient(settings=self.settings)
         self.scanner = HistoricalScanner(HistoricalConfig())
         self.signals_db: List[TrackedSignal] = []
+        self.use_sp500_pit = use_sp500_pit
+        self.use_marketcap_pit = use_marketcap_pit
+        self.min_market_cap = min_market_cap
+        self.max_market_cap = max_market_cap
+        self.marketcap_universe = None
         self._load_signals_db()
 
     def _load_signals_db(self):
@@ -152,6 +174,11 @@ class SignalBacktester:
             min_score=min_score,
             days=7,  # Just this week
             as_of_date=week_end_date,
+            use_sp500_pit=self.use_sp500_pit,  # S&P 500 survivorship-bias-free mode
+            use_marketcap_pit=self.use_marketcap_pit,  # Market cap survivorship-bias-free mode
+            marketcap_universe=self.marketcap_universe,
+            min_market_cap=self.min_market_cap,
+            max_market_cap=self.max_market_cap,
         )
 
         signals = []
@@ -454,6 +481,18 @@ title: Signals - {week_date}
         await self.scanner.close()
 
 
+def parse_market_cap(value: str) -> int:
+    """Parse market cap string like '500M', '1B', '5B' into integer."""
+    if not value:
+        return None
+    value = value.upper().strip()
+    multipliers = {'M': 1_000_000, 'B': 1_000_000_000, 'T': 1_000_000_000_000}
+    for suffix, mult in multipliers.items():
+        if value.endswith(suffix):
+            return int(float(value[:-1]) * mult)
+    return int(value)
+
+
 async def main():
     parser = argparse.ArgumentParser(
         description="Backtest signal performance with forward returns tracking",
@@ -467,6 +506,13 @@ Examples:
 
   Force full rerun from scratch (~35 min):
     python backtest_signals.py --start 2023-01-01 --force
+
+  Survivorship-bias-free 10-year backtest (S&P 500 only):
+    python backtest_signals.py --start 2016-01-01 --sp500 --force
+
+  Survivorship-bias-free 10-year backtest (market cap threshold):
+    python backtest_signals.py --start 2016-01-01 --marketcap --force
+    (Uses $3B threshold for 2016-2019, $5B for 2020+)
 
 Performance Assumptions:
   - Entry: Monday OPEN after Friday signal
@@ -482,6 +528,16 @@ Performance Assumptions:
                         help="Only update returns for existing signals, don't add new weeks")
     parser.add_argument("--force", action="store_true",
                         help="Delete existing database and rerun from scratch")
+    parser.add_argument("--sp500", action="store_true",
+                        help="Survivorship-bias-free mode: only include signals from stocks "
+                             "that were in S&P 500 at signal date (point-in-time)")
+    parser.add_argument("--marketcap", action="store_true",
+                        help="Survivorship-bias-free mode: filter by point-in-time market cap "
+                             "($3B for 2016-2019, $5B for 2020+)")
+    parser.add_argument("--min-marketcap", type=str, default=None,
+                        help="Override minimum market cap (e.g., '500M', '1B', '5B')")
+    parser.add_argument("--max-marketcap", type=str, default=None,
+                        help="Maximum market cap filter (e.g., '2B', '5B', '10B')")
     parser.add_argument("--verbose", "-v", action="store_true", help="Verbose output")
     args = parser.parse_args()
 
@@ -494,12 +550,56 @@ Performance Assumptions:
             db_path.unlink()
             logger.info(f"Cleared existing database: {SIGNALS_DB_PATH}")
 
-    backtester = SignalBacktester()
+    # Parse market cap arguments
+    min_cap = parse_market_cap(args.min_marketcap) if args.min_marketcap else None
+    max_cap = parse_market_cap(args.max_marketcap) if args.max_marketcap else None
+
+    # Print mode info
+    if args.sp500:
+        logger.info("Running in SURVIVORSHIP-BIAS-FREE mode (S&P 500 point-in-time)")
+    if args.marketcap:
+        if min_cap or max_cap:
+            min_str = f"${min_cap/1e9:.1f}B" if min_cap else "dynamic"
+            max_str = f"${max_cap/1e9:.1f}B" if max_cap else "no max"
+            logger.info(f"Running in SURVIVORSHIP-BIAS-FREE mode (Market cap: {min_str} - {max_str})")
+        else:
+            logger.info("Running in SURVIVORSHIP-BIAS-FREE mode (Market cap point-in-time: $3B 2016-2019, $5B 2020+)")
+
+    backtester = SignalBacktester(
+        use_sp500_pit=args.sp500,
+        use_marketcap_pit=args.marketcap,
+        min_market_cap=min_cap,
+        max_market_cap=max_cap,
+    )
+
+    # Load market cap universe if needed
+    if args.marketcap:
+        from scanner.historical_universe import HistoricalMarketCapUniverse
+        logger.info("Loading historical market cap universe...")
+        backtester.marketcap_universe = HistoricalMarketCapUniverse()
+        await backtester.marketcap_universe.load()
 
     try:
         if args.update:
             await backtester.update_all_returns()
         else:
+            # If using S&P 500 mode, scan the extended historical universe first
+            if args.sp500:
+                logger.info("Scanning historical S&P 500 universe (this may take a while on first run)...")
+                await backtester.scanner.scan_sp500_historical(
+                    start_date=args.start,
+                    force_refresh=args.force,
+                )
+
+            # If using market cap mode, scan the extended historical universe first
+            if args.marketcap:
+                logger.info("Scanning historical market cap universe (this may take a while on first run)...")
+                await backtester.scanner.scan_marketcap_historical(
+                    marketcap_universe=backtester.marketcap_universe,
+                    start_date=args.start,
+                    force_refresh=args.force,
+                )
+
             await backtester.run_backtest(start_date=args.start, min_score=args.min_score)
             await backtester.update_all_returns()
 

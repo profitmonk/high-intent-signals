@@ -1,2 +1,16 @@
 .env
 .envOrig
+__pycache__/
+*.pyc
+.claude/
+data/cache/
+logs/
+
+# Duplicate/intermediate signal files
+data/signals_history\ *.json
+
+# OS files
+.DS_Store
+
+# Reports output (generated HTML)
+reports/output/
